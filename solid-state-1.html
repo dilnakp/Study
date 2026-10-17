@@ -1,0 +1,3572 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Saturday 17 • Properties of Solids (Mobile-Ready 3D & MathJax Study Tool)</title>
+
+  <!-- Google Material Symbols (Strictly Zero Emojis) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500,0,0" />
+
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      chtml: {
+        scale: 0.96,
+        mtextInheritFont: true
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #0f3b7a;
+      --primary-mid: #1d5bb0;
+      --primary-light: #e6eefc;
+      --accent: #e69d00;
+      --accent-soft: #fff8e5;
+      --success: #167c46;
+      --success-bg: #e6f6ed;
+      --danger: #c92a2a;
+      --danger-bg: #fcebeb;
+      --text: #1c273c;
+      --muted: #5a6882;
+      --border: #d8e1f0;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .material-symbols-outlined {
+      vertical-align: middle;
+      font-size: 1.18rem;
+      line-height: 1;
+    }
+
+    /* =========================================================================
+       MOBILE LATEX OVERFLOW FIXES
+       ========================================================================= */
+    mjx-container {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      vertical-align: middle;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    mjx-container[display="true"] {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      padding: 6px 2px !important;
+      margin: 8px 0 !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    mjx-container::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    mjx-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .eq-stack {
+      background: #f8faff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin: 10px 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    /* Sticky Header & Quick Jump Scroll Bar */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 14px 8px;
+      box-shadow: 0 2px 12px rgba(15, 59, 122, 0.07);
+    }
+
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .planner-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .date-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .date-num {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .date-day {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .topic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--accent-soft);
+      border: 1px solid #f0d48a;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #6b4900;
+      white-space: nowrap;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .prog-box {
+      background: #f0f4fa;
+      border-radius: 10px;
+      padding: 6px 10px;
+    }
+
+    .prog-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .prog-track {
+      width: 100%;
+      height: 8px;
+      background: #dce3ef;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f5b027, #e08e00);
+      border-radius: 99px;
+      transition: width 0.35s ease;
+    }
+
+    .prog-fill.blue {
+      background: linear-gradient(90deg, #164e9f, #2884f5);
+    }
+
+    /* Quick Jump Anchor Strip */
+    .jump-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-top: 2px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .jump-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .jump-link {
+      flex: 0 0 auto;
+      text-decoration: none;
+      background: #edf2fb;
+      color: var(--primary);
+      border: 1px solid #cddbf2;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Main Direct Scroll Container */
+    .container {
+      max-width: 860px;
+      margin: 16px auto;
+      padding: 0 12px;
+      width: 100%;
+    }
+
+    .section-block {
+      scroll-margin-top: 140px;
+      margin-bottom: 34px;
+    }
+
+    .section-banner {
+      background: linear-gradient(135deg, #0f3b7a, #1d5bb0);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(15, 59, 122, 0.15);
+    }
+
+    .section-banner h2 {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-banner p {
+      margin: 0;
+      font-size: 0.88rem;
+      opacity: 0.92;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(15, 59, 122, 0.04);
+      overflow-x: hidden;
+    }
+
+    h3 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h4 {
+      margin: 14px 0 8px;
+      color: var(--primary-mid);
+      font-size: 0.96rem;
+    }
+
+    .simple-note {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    .result-box {
+      background: var(--success-bg);
+      border-left: 4px solid var(--success);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+
+    /* Recall Grid */
+    .recall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .recall-card {
+      background: #fffdf7;
+      border: 1.5px solid #edd489;
+      border-radius: 14px;
+      padding: 14px;
+      min-width: 0;
+      overflow-x: hidden;
+    }
+
+    .recall-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    .recall-card h4 {
+      margin: 4px 0 8px;
+      color: #6b4900;
+      font-size: 0.95rem;
+    }
+
+    .recall-card p {
+      margin: 6px 0;
+      font-size: 0.86rem;
+    }
+
+    /* =========================================================================
+       DIAGRAM STAGE WITH LIVE MATHJAX OVERLAY LAYER (FOR SVGs & 3D CANVASES)
+       ========================================================================= */
+    .visual-box {
+      background: #0f172a;
+      border-radius: 14px;
+      padding: 14px 10px;
+      color: #e2e8f0;
+      margin: 14px 0;
+      text-align: center;
+    }
+
+    .visual-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #fbbf24;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 6px;
+    }
+
+    .diagram-stage {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      background: #162238;
+      border-radius: 10px;
+      border: 1px solid #293d61;
+      overflow: hidden;
+    }
+
+    .diagram-stage svg.interactive-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+    }
+
+    .diagram-stage canvas.interactive-canvas {
+      width: 100%;
+      height: 320px;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .diagram-stage canvas.interactive-canvas:active {
+      cursor: grabbing;
+    }
+
+    /* MathJax Overlay Layer inside Diagrams */
+    .math-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .math-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      color: #f8fafc;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      white-space: nowrap;
+      line-height: 1.2;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.35);
+    }
+
+    .math-pin.cyan { color: #38bdf8; border-color: rgba(56, 189, 248, 0.5); }
+    .math-pin.amber { color: #fbbf24; border-color: rgba(251, 191, 36, 0.5); }
+    .math-pin.green { color: #4ade80; border-color: rgba(74, 222, 128, 0.5); }
+    .math-pin.rose { color: #fb7185; border-color: rgba(251, 113, 133, 0.5); }
+
+    .math-pin mjx-container {
+      overflow: visible !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .visual-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .ctrl-btn {
+      background: #233554;
+      color: #f1f5f9;
+      border: 1px solid #3b537d;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ctrl-btn.active {
+      background: #f5b027;
+      color: #0f172a;
+      border-color: #f5b027;
+      font-weight: 700;
+    }
+
+    .visual-caption {
+      font-size: 0.81rem;
+      color: #cbd5e1;
+      margin-top: 8px;
+      padding: 0 6px;
+      overflow-x: auto;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+    }
+
+    input[type="range"] {
+      accent-color: #f5b027;
+      width: 165px;
+    }
+
+    /* =========================================================================
+       MOBILE-OPTIMIZED TABLES (RESPONSIVE CARDS + HORIZONTAL SCROLL TOGGLE)
+       ========================================================================= */
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0 6px;
+      gap: 8px;
+    }
+
+    .table-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .table-toggle-btn {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #c2d4f2;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    table.clean-table {
+      width: 100%;
+      min-width: 540px;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      background: #fff;
+    }
+
+    table.clean-table th,
+    table.clean-table td {
+      border: 1px solid var(--border);
+      padding: 9px 11px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.clean-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Mobile Card-Table Mode (< 640px unless .force-scroll is toggled) */
+    @media (max-width: 640px) {
+      .table-toggle-btn {
+        display: inline-flex;
+      }
+
+      .table-scroll.mobile-cards {
+        border: none;
+        overflow-x: visible;
+      }
+
+      .table-scroll.mobile-cards table.clean-table {
+        min-width: 100%;
+        background: transparent;
+      }
+
+      .table-scroll.mobile-cards table.clean-table thead {
+        display: none;
+      }
+
+      .table-scroll.mobile-cards table.clean-table tbody,
+      .table-scroll.mobile-cards table.clean-table tr {
+        display: block;
+        width: 100%;
+      }
+
+      .table-scroll.mobile-cards table.clean-table tr {
+        background: #fff;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 10px;
+        padding: 6px 10px;
+        box-shadow: 0 1px 4px rgba(15, 59, 122, 0.04);
+      }
+
+      .table-scroll.mobile-cards table.clean-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        border: none;
+        border-bottom: 1px dashed #e2e8f0;
+        padding: 7px 4px;
+        text-align: right;
+      }
+
+      .table-scroll.mobile-cards table.clean-table td:last-child {
+        border-bottom: none;
+      }
+
+      .table-scroll.mobile-cards table.clean-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--primary);
+        text-align: left;
+        flex-shrink: 0;
+        font-size: 0.78rem;
+      }
+    }
+
+    /* OMR Sheet Styling */
+    .omr-box {
+      background: #f8faff;
+      border: 1.5px solid #cbd7f0;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .omr-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .omr-badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .omr-question {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 11px;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .omr-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .omr-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      padding: 10px;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 0.88rem;
+      min-width: 0;
+    }
+
+    .omr-option-text {
+      min-width: 0;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .omr-bubble {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #b51f66;
+      color: #b51f66;
+      font-weight: 800;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #fff;
+    }
+
+    .omr-option.selected .omr-bubble {
+      background: #1f2937;
+      border-color: #1f2937;
+      color: #fff;
+      box-shadow: inset 0 0 0 2px #fff;
+    }
+
+    .omr-option.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .omr-option.correct .omr-bubble {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+    }
+
+    .omr-option.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .omr-option.wrong .omr-bubble {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    .omr-feedback {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      display: none;
+      overflow-x: auto;
+    }
+
+    .omr-feedback.show {
+      display: block;
+    }
+
+    .omr-feedback.ok {
+      background: var(--success-bg);
+      color: #0d522c;
+      border: 1px solid #a9e2c2;
+    }
+
+    .omr-feedback.err {
+      background: var(--danger-bg);
+      color: #8c1919;
+      border: 1px solid #f3b7b8;
+    }
+
+    /* Guided Derivations */
+    .derivation-card {
+      background: #ffffff;
+      border: 2px solid var(--primary-mid);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+      overflow-x: hidden;
+    }
+
+    .deriv-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .deriv-step-pill {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.76rem;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .unlocked-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .unlocked-step {
+      background: #f2f7ff;
+      border-left: 4px solid var(--primary);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      overflow-x: auto;
+    }
+
+    .next-step-intent {
+      background: #fff8e6;
+      border: 1.5px dashed var(--accent);
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 0.89rem;
+      overflow-x: auto;
+    }
+
+    .full-derivation-summary {
+      background: #ecfdf5;
+      border: 2px solid var(--success);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 14px;
+      display: none;
+      overflow-x: auto;
+    }
+
+    .full-derivation-summary.show {
+      display: block;
+    }
+
+    @media (max-width: 540px) {
+      .progress-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .card, .derivation-card {
+        padding: 13px;
+      }
+      .section-block {
+        scroll-margin-top: 165px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- STICKY HEADER WITH PROGRESS BARS & DIRECT-SCROLL JUMP BAR -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="planner-row">
+        <div class="date-badge">
+          <span class="date-num">17</span>
+          <span class="date-day">Saturday • Properties of Solids</span>
+        </div>
+        <span class="topic-pill">
+          <span class="material-symbols-outlined">schedule</span> 6 Hours
+        </span>
+      </div>
+
+      <div class="progress-grid">
+        <div class="prog-box">
+          <div class="prog-label">
+            <span>Today's Interactive Tasks</span>
+            <span id="session-prog-text">0 / 37 (0%)</span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill blue" id="session-prog-bar" style="width: 0%;"></div>
+          </div>
+        </div>
+        <div class="prog-box">
+          <div class="prog-label">
+            <span>Course Coverage</span>
+            <span id="course-prog-text">23.0% covered</span>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="course-prog-bar" style="width: 23%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="jump-bar">
+        <a class="jump-link" href="#sec-recall"><span class="material-symbols-outlined">history_edu</span> 0. Plus Two Recall</a>
+        <a class="jump-link" href="#sec-1"><span class="material-symbols-outlined">grid_4x4</span> 1. Lattice & Basis</a>
+        <a class="jump-link" href="#sec-2"><span class="material-symbols-outlined">rotate_right</span> 2. Symmetry & Groups</a>
+        <a class="jump-link" href="#sec-3"><span class="material-symbols-outlined">layers</span> 3. Bravais & Miller (3D)</a>
+        <a class="jump-link" href="#sec-4"><span class="material-symbols-outlined">view_in_ar</span> 4. Crystal Structures (3D)</a>
+        <a class="jump-link" href="#sec-5"><span class="material-symbols-outlined">blur_on</span> 5. X-Ray & Brillouin (3D)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- =====================================================================
+         SECTION 0: HIGH SCHOOL ("PLUS TWO") PREREQUISITES RECALL SESSION
+         ===================================================================== -->
+    <section class="section-block" id="sec-recall">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">school</span> Prerequisite Recall Session (Plus Two Foundations)</h2>
+        <p>All 9 high-school math and physics recall boxes from Module I, explained in simple words with our first 3D interactive tool.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">3d_rotation</span> 3D Tool 1: Vector Cross Product, Parallelepiped Volume & 3D Symmetry Operations</h3>
+        <p>Touch and drag the 3D canvas below to inspect how vectors $\mathbf{a}, \mathbf{b}, \mathbf{c}$ form a 3D unit cell of volume $V = |\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})|$, how the 3D Wigner–Seitz cell is trapped by bisector planes, and how 3D inversion ($\mathbf{r}\to -\mathbf{r}$), reflection ($m$), and rotation ($\theta=2\pi/n$) work in space. Notice that all labels inside the diagram are rendered with live <strong>MathJax</strong>!</p>
+
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">touch_app</span> 3D Interactive Tool: Parallelepiped Volume, Wigner–Seitz & 3D Symmetry</div>
+          <div class="diagram-stage">
+            <canvas id="tool1Canvas" class="interactive-canvas" width="480" height="310"></canvas>
+            <div id="tool1MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="t1-vol" onclick="setTool1Mode('vol')">Parallelepiped Volume</button>
+            <button class="ctrl-btn" id="t1-ws" onclick="setTool1Mode('ws')">3D Wigner–Seitz Cell</button>
+            <button class="ctrl-btn" id="t1-inv" onclick="setTool1Mode('inv')">3D Inversion ($\bar{1}$)</button>
+            <button class="ctrl-btn" id="t1-mir" onclick="setTool1Mode('mir')">3D Mirror Plane ($m$)</button>
+            <button class="ctrl-btn" id="t1-rot" onclick="setTool1Mode('rot')">6-Fold Rotation Axis</button>
+          </div>
+          <div class="visual-caption" id="tool1Caption">Base area $= |\mathbf{a}\times\mathbf{b}|$, normal $\hat{\mathbf{n}} = (\mathbf{a}\times\mathbf{b})/|\mathbf{a}\times\mathbf{b}|$, volume $V = |\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})|$.</div>
+        </div>
+
+        <div class="recall-grid">
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_one</span> Page 1</span>
+            <h4>Area & Volume from Vectors</h4>
+            <p>Parallelogram with sides $a, b$ and angle $\theta$ has area $ab\sin\theta = |\mathbf{a}\times\mathbf{b}|$. Adding third edge $\mathbf{c}$ gives height $|\mathbf{c}\cdot\hat{\mathbf{n}}|$ where $\hat{\mathbf{n}} = (\mathbf{a}\times\mathbf{b})/|\mathbf{a}\times\mathbf{b}|$:</p>
+            <p>$$V = |\mathbf{a}\times\mathbf{b}||\mathbf{c}\cdot\hat{\mathbf{n}}| = |\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})|$$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_two</span> Page 3</span>
+            <h4>Full Turn & Integral Multiples</h4>
+            <p>A full turn is $2\pi$. If $\theta$ is the smallest rotation mapping a lattice to itself after $n$ steps:</p>
+            <p>$$n\theta = 2\pi \implies \theta = \frac{2\pi}{n}$$</p>
+            <p>where $n$ is a positive integer.</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_3</span> Page 4</span>
+            <h4>Sharing a Quantity Among Cells</h4>
+            <p>A quantity held by $k$ identical cells is counted as $1/k$ for each:</p>
+            <p>• Corner point (touches 8 cubes): $\mathbf{1/8}$<br>
+               • Face point (touches 2 cubes): $\mathbf{1/2}$<br>
+               • Interior point (1 cube alone): $\mathbf{1}$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_4</span> Page 7</span>
+            <h4>Dot Product & Direction Angle</h4>
+            <p>From $\mathbf{u}\cdot\mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\theta = \sum u_i v_i$, two cubic directions $[hkl]$ and $[h'k'l']$ satisfy:</p>
+            <p>$$\cos\theta = \frac{hh' + kk' + ll'}{\sqrt{h^2+k^2+l^2}\sqrt{h'^2+k'^2+l'^2}}$$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_5</span> Page 8</span>
+            <h4>Normal & Distance of a Plane</h4>
+            <p>For plane $px+qy+rz=s$, normal is $(p,q,r)$ and distance from origin is $|s|/\sqrt{p^2+q^2+r^2}$. For intercept plane $hx/a + ky/b + lz/c = 1$:</p>
+            <p>$$d = \frac{1}{\sqrt{(h/a)^2 + (k/b)^2 + (l/c)^2}}$$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">looks_6</span> Page 9</span>
+            <h4>Volume of a Sphere & Packing</h4>
+            <p>Sphere volume is $\frac{4}{3}\pi r^3$. With $N$ atoms per cell of volume $V_{\text{cell}}$:</p>
+            <p>$$f = \frac{N\cdot\frac{4}{3}\pi r^3}{V_{\text{cell}}}$$</p>
+            <p>For SC ($N=1, a=2r$): $f = \pi/6 \approx 0.52$.</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">filter_7</span> Page 11</span>
+            <h4>Interference Condition</h4>
+            <p>Constructive interference occurs when path difference $= n\lambda$. Rays reflecting from adjacent planes of spacing $d$ at glancing angle $\theta$ have:</p>
+            <p>$$2d\sin\theta = n\lambda$$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">filter_8</span> Page 12</span>
+            <h4>Dot Product & Perpendicularity</h4>
+            <p>Since $\mathbf{b}\times\mathbf{c} \perp \mathbf{b}, \mathbf{c}$, defining $\mathbf{a}^* = \mathbf{b}\times\mathbf{c}/V$ gives:</p>
+            <p>$$\mathbf{a}^*\cdot\mathbf{b} = \mathbf{a}^*\cdot\mathbf{c} = 0$$</p>
+            <p>$$\mathbf{a}^*\cdot\mathbf{a} = \frac{\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})}{V} = 1$$</p>
+          </div>
+
+          <div class="recall-card">
+            <span class="recall-tag"><span class="material-symbols-outlined">filter_9</span> Page 15</span>
+            <h4>Perpendicular Bisector</h4>
+            <p>Points $\mathbf{k}$ equidistant from $\mathbf{0}$ and $\mathbf{G}$ obey $|\mathbf{k}|^2 = |\mathbf{k}-\mathbf{G}|^2$, which simplifies to the normal bisector of $\mathbf{G}$:</p>
+            <p>$$2\mathbf{k}\cdot\mathbf{G} = G^2$$</p>
+          </div>
+        </div>
+
+        <div id="omr-recall-1"></div>
+        <div id="omr-recall-2"></div>
+        <div id="omr-recall-3"></div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         SECTION 1: CRYSTAL LATTICE, UNIT CELL AND BASIS (1.1–1.4)
+         ===================================================================== -->
+    <section class="section-block" id="sec-1">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">grid_4x4</span> Section 1: Crystal Lattice, Unit Cell and Basis (1.1–1.4)</h2>
+        <p>Puri and Babbar pp. 1–5 • Point lattice, translation vectors (Eqs. 1.1–1.2), primitive vs. non-primitive cells, Wigner–Seitz cell & basis.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">grain</span> 1.1 Definition of a Lattice & 1.2 Translation Vectors</h3>
+        <p>A <strong>point lattice (space lattice)</strong> is an infinite array of imaginary points in 3D space in which every point has identical surroundings. This holds only if the points form a repeating pattern moved by a <strong>translation operation</strong>:</p>
+        <div class="eq-stack">
+          $$\mathbf{T} = n_1\mathbf{a} + n_2\mathbf{b} + n_3\mathbf{c} \quad \text{(1.1)}$$
+          $$\mathbf{r}' = \mathbf{r} + \mathbf{T} = \mathbf{r} + n_1\mathbf{a} + n_2\mathbf{b} + n_3\mathbf{c} \quad \text{(1.2)}$$
+        </div>
+        <p>where $n_1, n_2, n_3$ are arbitrary integers and $\mathbf{a}, \mathbf{b}, \mathbf{c}$ are the fundamental translation vectors. A <strong>perfect lattice</strong> satisfies Eq. (1.2) for every integer choice; an <strong>imperfect lattice</strong> does not admit such vectors.</p>
+
+        <div class="result-box">
+          <strong>Result 1 — Primitive vs. Non-Primitive Vectors (Fig. 1.1):</strong><br>
+          Vectors whose translation operation has integral coefficients are <strong>primitive</strong> ($\mathbf{a}_1, \mathbf{b}_1$). Vectors that need non-integral coefficients, for example:
+          $$\mathbf{R}' = \mathbf{R} + \frac{1}{2}\mathbf{a}_2 + \frac{1}{2}\mathbf{b}_2$$
+          are <strong>non-primitive</strong> ($\mathbf{a}_2, \mathbf{b}_2$). The book prefers an orthogonal, shortest set.
+        </div>
+
+        <h3><span class="material-symbols-outlined">select_all</span> 1.3 Unit Cell, Wigner–Seitz Cell & 1.4 Basis</h3>
+        <ul>
+          <li><strong>Unit Cell:</strong> A parallelogram (2D) or parallelepiped (3D) built from the translation vectors. Repetition of its translation generates the full lattice.</li>
+          <li><strong>Primitive (P) vs. Non-Primitive (NP) Cell (Fig. 1.2):</strong> A cell is <strong>primitive</strong> when its lattice points lie at its corners only, so its effective count is <strong>1</strong>. A <strong>non-primitive</strong> cell has points inside or on its faces, so its effective count is greater than 1.</li>
+          <li><strong>Wigner–Seitz Cell (Fig. 1.3):</strong> Constructed by drawing the perpendicular bisectors of the lines from a lattice point to its neighbours; the smallest enclosed volume is always <strong>primitive</strong>.</li>
+          <li><strong>Conventional Unit Cell:</strong> Chosen for convenience; it is the primitive cell of least volume, unless a non-primitive cell shows higher symmetry.</li>
+          <li><strong>1.4 Basis and Crystal Structure (Fig. 1.4):</strong> A <strong>basis</strong> is an atom or group of atoms placed identically at every lattice point:
+            $$\text{Space Lattice} + \text{Basis} \longrightarrow \text{Crystal Structure}$$
+            A lattice is mathematical; a crystal structure is physical. Fourteen 3D lattices suffice because the bases vary.
+          </li>
+        </ul>
+
+        <!-- Interactive SVG with MathJax Overlay for Figs 1.1, 1.2, 1.3, 1.4 -->
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">touch_app</span> Interactive SVG with MathJax Labels: Book Figures 1.1, 1.2, 1.3 & 1.4</div>
+          <div class="diagram-stage">
+            <svg id="svg-sec1" class="interactive-svg" viewBox="0 0 520 260"></svg>
+            <div id="sec1MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="btn-s1-fig11" onclick="drawSec1SVG('fig11')">Fig 1.1: Vectors</button>
+            <button class="ctrl-btn" id="btn-s1-fig12" onclick="drawSec1SVG('fig12')">Fig 1.2: P vs NP Cells</button>
+            <button class="ctrl-btn" id="btn-s1-fig13" onclick="drawSec1SVG('fig13')">Fig 1.3: Wigner–Seitz</button>
+            <button class="ctrl-btn" id="btn-s1-fig14" onclick="drawSec1SVG('fig14')">Fig 1.4: Lattice + Basis</button>
+          </div>
+          <div class="visual-caption" id="sec1SvgCaption">Fig. 1.1: Primitive $(\mathbf{a}_1,\mathbf{b}_1)$ vs. non-primitive $(\mathbf{a}_2,\mathbf{b}_2)$ translation vectors.</div>
+        </div>
+
+        <div id="omr-sec1-1"></div>
+        <div id="omr-sec1-2"></div>
+      </div>
+    </section>
+
+
+    <!-- =====================================================================
+         SECTION 2: SYMMETRY OPERATIONS, POINT GROUPS & SPACE GROUPS (1.5–1.6)
+         ===================================================================== -->
+    <section class="section-block" id="sec-2">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">rotate_right</span> Section 2: Symmetry Operations, Point Groups & Space Groups (1.5–1.6)</h2>
+        <p>Puri and Babbar pp. 6–9 • Four basic operations, proof excluding 5-fold rotation (Eqs. 1.3–1.4), reflections, inversion, point & space groups.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">sync</span> 1.5 Symmetry Operations & 1.6 Point and Space Groups</h3>
+        <p>The <strong>four basic symmetry operations</strong> are:</p>
+        <ol>
+          <li><strong>Translation $\mathbf{r} \to \mathbf{r} + \mathbf{T}$:</strong> Defined by Eq. (1.1); applies to lattices only.</li>
+          <li><strong>Rotation by $\theta$ about a point (2D) or axis (3D):</strong> Since the lattice repeats after a full turn ($2\pi$), the multiplicity $n$ satisfies:
+            $$n\theta = 2\pi \quad \text{or} \quad \theta = \frac{2\pi}{n} \quad \text{(1.3)}$$
+            Compatibility with translations restricts $n$ to <strong>$1, 2, 3, 4,$ and $6$</strong> (Fig. 1.5). Five-fold rotation ($n=5$) is excluded (Figs. 1.6, 1.7).
+          </li>
+          <li><strong>Reflection in a plane $m$ (or line in 2D):</strong> Divides the lattice into mirror-image halves (Fig. 1.8).</li>
+          <li><strong>Inversion $\mathbf{r} \to -\mathbf{r}$ about a centre $\bar{1}$:</strong> Exists in 3D only.</li>
+        </ol>
+
+        <p><strong>Point Groups & Space Groups (1.5.2–1.6):</strong></p>
+        <ul>
+          <li>Combining each of the 5 allowed rotations ($1, 2, 3, 4, 6$) with or without a mirror gives the <strong>10 two-dimensional point groups</strong> (Fig. 1.9):
+            $$1,\ 1m,\ 2,\ 2mm,\ 3,\ 3m,\ 4,\ 4mm,\ 6,\ 6mm$$
+          </li>
+          <li>The 3D case adds inversion $\bar{1}$ and its combinations, giving <strong>32 three-dimensional point groups</strong>.</li>
+          <li>A <strong>point group</strong> is the set of point operations that leave one point of the crystal fixed (symmetry of lattice + basis). The full set of symmetry elements, including translations, is the <strong>space group</strong>.</li>
+        </ul>
+
+        <div class="result-box">
+          <strong>Result 2 — Counts (Page 4):</strong><br>
+          • <strong>Two dimensions:</strong> $10$ point groups, $5$ Bravais lattices, $17$ space groups.<br>
+          • <strong>Three dimensions:</strong> $32$ point groups, $14$ Bravais lattices, $230$ space groups.
+        </div>
+
+        <!-- Interactive SVG with MathJax Overlay for Figs 1.5, 1.7, 1.8 -->
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">settings</span> Interactive SVG with MathJax Labels: Figures 1.5, 1.7 & 1.8</div>
+          <div class="diagram-stage">
+            <svg id="svg-sec2" class="interactive-svg" viewBox="0 0 520 245"></svg>
+            <div id="sec2MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="btn-s2-fig15" onclick="drawSec2SVG('fig15')">Fig 1.5: $n=6$ & $n=4$</button>
+            <button class="ctrl-btn" id="btn-s2-fig17" onclick="drawSec2SVG('fig17')">Fig 1.7: 5-Fold Gap</button>
+            <button class="ctrl-btn" id="btn-s2-fig18" onclick="drawSec2SVG('fig18')">Fig 1.8: Notched Wheel & Mirror $m$</button>
+          </div>
+          <div class="visual-caption" id="sec2SvgCaption">Fig. 1.5: Allowed rotations $\theta = 2\pi/n$ for $n=6$ ($60^\circ$) and $n=4$ ($90^\circ$).</div>
+        </div>
+
+        <div id="omr-sec2-1"></div>
+        <div id="omr-sec2-2"></div>
+      </div>
+
+      <!-- GUIDED DERIVATION 1: 5-FOLD ROTATION EXCLUSION (FIG 1.6) -->
+      <div class="derivation-card" id="deriv-box-0"></div>
+    </section>
+
+
+    <!-- =====================================================================
+         SECTION 3: BRAVAIS LATTICES, DIRECTIONS, PLANES & SPACING (1.7–1.9)
+         ===================================================================== -->
+    <section class="section-block" id="sec-3">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">layers</span> Section 3: Bravais Lattices, Directions, Planes & Spacing (1.7–1.9)</h2>
+        <p>Puri and Babbar pp. 10–20 • 2D & 3D Bravais lattices (Tables 1.1–1.2), 3D Explorer for all 14 Bravais lattices, Miller indices $(hkl)$ & spacing $d_{hkl}$.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">grid_view</span> 1.7.1 Two-Dimensional Bravais Lattices (Table 1.1 & Fig. 1.10)</h3>
+        <p>Ten point groups give <strong>5 Bravais lattices in 4 crystal systems</strong> in two dimensions:</p>
+
+        <div class="table-toolbar">
+          <span class="table-hint"><span class="material-symbols-outlined">table_rows</span> Table 1.1: 2D Crystal Systems & Bravais Lattices</span>
+          <button class="table-toggle-btn" onclick="toggleTableMode('tbl-2d')"><span class="material-symbols-outlined">swap_horiz</span> Switch Table View</button>
+        </div>
+        <div class="table-scroll mobile-cards" id="tbl-2d">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>S. No.</th>
+                <th>Crystal System</th>
+                <th>Point Group Symmetry</th>
+                <th>Bravais Lattice</th>
+                <th>Conventional Unit Cell</th>
+                <th>Unit Cell Characteristics</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="S. No.">1</td>
+                <td data-label="Crystal System"><strong>Oblique</strong></td>
+                <td data-label="Point Groups">$1, 2$</td>
+                <td data-label="Bravais Lattice">Oblique</td>
+                <td data-label="Conventional Cell">Parallelogram</td>
+                <td data-label="Characteristics">$a \neq b,\ \gamma \neq 90^\circ$</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">2</td>
+                <td data-label="Crystal System"><strong>Rectangular</strong></td>
+                <td data-label="Point Groups">$1m, 2mm$</td>
+                <td data-label="Bravais Lattice">1. Rectangular primitive<br>2. Rectangular centred</td>
+                <td data-label="Conventional Cell">Rectangle</td>
+                <td data-label="Characteristics">$a \neq b,\ \gamma = 90^\circ$</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">3</td>
+                <td data-label="Crystal System"><strong>Square</strong></td>
+                <td data-label="Point Groups">$4, 4mm$</td>
+                <td data-label="Bravais Lattice">Square</td>
+                <td data-label="Conventional Cell">Square</td>
+                <td data-label="Characteristics">$a = b,\ \gamma = 90^\circ$</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">4</td>
+                <td data-label="Crystal System"><strong>Hexagonal</strong></td>
+                <td data-label="Point Groups">$3, 3m, 6, 6mm$</td>
+                <td data-label="Bravais Lattice">Hexagonal</td>
+                <td data-label="Conventional Cell">$60^\circ$ Rhombus</td>
+                <td data-label="Characteristics">$a = b,\ \gamma = 120^\circ$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><span class="material-symbols-outlined">dataset</span> 1.7.2–1.7.4 Three-Dimensional Bravais Lattices (Table 1.2)</h3>
+        <p>Thirty-two point groups give <strong>14 Bravais lattices in 7 crystal systems</strong>. The symbols are <strong>P</strong> (simple), <strong>I</strong> (body-centred), <strong>F</strong> (face-centred), <strong>C</strong> (end-centred) and <strong>R</strong> (rhombohedral).</p>
+
+        <div class="table-toolbar">
+          <span class="table-hint"><span class="material-symbols-outlined">table_rows</span> Table 1.2: 3D Crystal Systems & 14 Bravais Lattices</span>
+          <button class="table-toggle-btn" onclick="toggleTableMode('tbl-3d')"><span class="material-symbols-outlined">swap_horiz</span> Switch Table View</button>
+        </div>
+        <div class="table-scroll mobile-cards" id="tbl-3d">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>S. No.</th>
+                <th>Crystal System</th>
+                <th>Lattice Parameters</th>
+                <th>Bravais Lattices</th>
+                <th>Common Abbr.</th>
+                <th>Symbol</th>
+                <th>Examples</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="S. No.">1</td>
+                <td data-label="System"><strong>Cubic</strong></td>
+                <td data-label="Parameters">$a=b=c$<br>$\alpha=\beta=\gamma=90^\circ$</td>
+                <td data-label="Bravais Lattice">Simple<br>Body-centred<br>Face-centred</td>
+                <td data-label="Abbr.">sc<br>bcc<br>fcc</td>
+                <td data-label="Symbol">P<br>I<br>F</td>
+                <td data-label="Examples">Cu, Ag, Fe, Na, NaCl, CsCl</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">2</td>
+                <td data-label="System"><strong>Tetragonal</strong></td>
+                <td data-label="Parameters">$a=b\neq c$<br>$\alpha=\beta=\gamma=90^\circ$</td>
+                <td data-label="Bravais Lattice">Simple<br>Body-centred</td>
+                <td data-label="Abbr.">st<br>bct</td>
+                <td data-label="Symbol">P<br>I</td>
+                <td data-label="Examples">$\beta\text{-Sn}, \text{TiO}_2$</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">3</td>
+                <td data-label="System"><strong>Orthorhombic</strong></td>
+                <td data-label="Parameters">$a\neq b\neq c$<br>$\alpha=\beta=\gamma=90^\circ$</td>
+                <td data-label="Bravais Lattice">Simple<br>Body-centred<br>End-centred<br>Face-centred</td>
+                <td data-label="Abbr.">so<br>bco<br>eco<br>fco</td>
+                <td data-label="Symbol">P<br>I<br>C<br>F</td>
+                <td data-label="Examples">Ga, $\text{Fe}_3\text{C}$ (cementite)</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">4</td>
+                <td data-label="System"><strong>Rhombohedral (Trigonal)</strong></td>
+                <td data-label="Parameters">$a=b=c$<br>$\alpha=\beta=\gamma\neq 90^\circ$</td>
+                <td data-label="Bravais Lattice">Simple</td>
+                <td data-label="Abbr.">—</td>
+                <td data-label="Symbol">P (or R)</td>
+                <td data-label="Examples">As, Sb, Bi</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">5</td>
+                <td data-label="System"><strong>Hexagonal</strong></td>
+                <td data-label="Parameters">$a=b\neq c$<br>$\alpha=\beta=90^\circ,\ \gamma=120^\circ$</td>
+                <td data-label="Bravais Lattice">Simple</td>
+                <td data-label="Abbr.">—</td>
+                <td data-label="Symbol">P</td>
+                <td data-label="Examples">Mg, Zn, Cd, NiAs</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">6</td>
+                <td data-label="System"><strong>Monoclinic</strong></td>
+                <td data-label="Parameters">$a\neq b\neq c$<br>$\alpha=\gamma=90^\circ\neq\beta$</td>
+                <td data-label="Bravais Lattice">Simple<br>End-centred</td>
+                <td data-label="Abbr.">—<br>—</td>
+                <td data-label="Symbol">P<br>C</td>
+                <td data-label="Examples">$\text{CaSO}_4\cdot 2\text{H}_2\text{O}$ (gypsum)</td>
+              </tr>
+              <tr>
+                <td data-label="S. No.">7</td>
+                <td data-label="System"><strong>Triclinic</strong></td>
+                <td data-label="Parameters">$a\neq b\neq c$<br>$\alpha\neq\beta\neq\gamma\neq 90^\circ$</td>
+                <td data-label="Bravais Lattice">Simple</td>
+                <td data-label="Abbr.">—</td>
+                <td data-label="Symbol">P</td>
+                <td data-label="Examples">$\text{K}_2\text{Cr}_2\text{O}_7$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="simple-note">
+          <strong>1.7.3 Effective Number of Lattice Points (Eq. 1.5) & 1.7.4 Why Only Fourteen (Fig. 1.12):</strong>
+          $$N = N_i + \frac{N_f}{2} + \frac{N_c}{8} \quad \text{(1.5)}$$
+          Results: sc $N = 1$; bcc $N = 2$; fcc $N = 4$ (with $N_c = 8$ for each, $N_i = 1$ for bcc, $N_f = 6$ for fcc).<br>
+          <strong>Why only 14?</strong> Two face-centred tetragonal (FCT) cells placed side-by-side give a body-centred tetragonal (BCT) lattice (Fig. 1.12), which is already listed! Inspect this in 3D below.
+        </div>
+
+        <!-- 3D TOOL 2: ALL 14 BRAVAIS LATTICES, FCT=BCT 3D PROOF, MILLER PLANES & DIRECTIONS -->
+        <h3><span class="material-symbols-outlined">3d_rotation</span> 3D Tool 2: All 14 Bravais Lattices, FCT=BCT Proof, Miller Planes $(hkl)$ & Directions $[uvw]$</h3>
+        <p>Use the buttons below to explore all 7 crystal systems, centering types (P, I, F, C, R), the 3D proof that two FCT cells equal one BCT cell (Fig. 1.12), and 3D Miller planes & directions (Figs. 1.13–1.17) with live 3D MathJax labels!</p>
+
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">touch_app</span> 3D Interactive Tool: 7 Crystal Systems, 14 Bravais Lattices & Miller Indices</div>
+          <div class="diagram-stage">
+            <canvas id="tool2Canvas" class="interactive-canvas" width="480" height="320"></canvas>
+            <div id="tool2MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="t2-cubP" onclick="setTool2Lattice('cubP')">Cubic P (sc)</button>
+            <button class="ctrl-btn" id="t2-cubI" onclick="setTool2Lattice('cubI')">Cubic I (bcc)</button>
+            <button class="ctrl-btn" id="t2-cubF" onclick="setTool2Lattice('cubF')">Cubic F (fcc)</button>
+            <button class="ctrl-btn" id="t2-tetI" onclick="setTool2Lattice('tetI')">Tetragonal I (bct)</button>
+            <button class="ctrl-btn" id="t2-fct" onclick="setTool2Lattice('fct')">Fig 1.12: 2 FCT = 1 BCT (3D)</button>
+            <button class="ctrl-btn" id="t2-ortC" onclick="setTool2Lattice('ortC')">Orthorhombic C (eco)</button>
+            <button class="ctrl-btn" id="t2-rho" onclick="setTool2Lattice('rho')">Rhombohedral R</button>
+            <button class="ctrl-btn" id="t2-hex" onclick="setTool2Lattice('hex')">Hexagonal P</button>
+            <button class="ctrl-btn" id="t2-monC" onclick="setTool2Lattice('monC')">Monoclinic C</button>
+            <button class="ctrl-btn" id="t2-tri" onclick="setTool2Lattice('tri')">Triclinic P</button>
+          </div>
+          <div class="visual-controls" style="margin-top:6px;">
+            <button class="ctrl-btn" id="t2m-none" onclick="setTool2Miller('none')">No Plane</button>
+            <button class="ctrl-btn active" id="t2m-100" onclick="setTool2Miller('100')">Family $\{100\}$ + $[100]$</button>
+            <button class="ctrl-btn" id="t2m-110" onclick="setTool2Miller('110')">Plane $(110)$ + $[\bar{1}10]$</button>
+            <button class="ctrl-btn" id="t2m-111" onclick="setTool2Miller('111')">Plane $(111)$ + $[111]$</button>
+            <button class="ctrl-btn" id="t2m-212" onclick="setTool2Miller('212')">Fig 1.15: Plane $(212)$</button>
+            <button class="ctrl-btn" id="t2m-312" onclick="setTool2Miller('312')">Example: Plane $(312)$</button>
+          </div>
+          <div class="visual-caption" id="tool2Caption">Showing Cubic P (Simple Cubic) with Plane $(100)$ and direction $[100]$.</div>
+        </div>
+
+        <h3><span class="material-symbols-outlined">explore</span> 1.8 Lattice Directions, Planes & 1.9 Interplanar Spacing Formulas</h3>
+        <ul>
+          <li><strong>1.8.1 Lattice Directions $[uvw]$ (Figs. 1.13, 1.14):</strong> Read coordinates of a point on a ray through the origin in units of the axes and reduce to smallest integers $[uvw]$. Negative components carry a bar. Families: $\langle 100 \rangle$ (6 cube edges), $\langle 110 \rangle$ (12 face diagonals), $\langle 111 \rangle$ (8 body diagonals). Book Example: $AB$ with projections $-1, 1, 0$ is $[\bar{1}10]$; $OQ$ is $[111]$.</li>
+          <li><strong>1.8.2 Angle Between Directions (Eq. 1.6):</strong>
+            <div class="eq-stack">
+              $$\cos\theta = \frac{hh' + kk' + ll'}{(h^2+k^2+l^2)^{1/2}(h'^2+k'^2+l'^2)^{1/2}} \quad \text{(1.6)}$$
+            </div>
+          </li>
+          <li><strong>1.8.3 Miller Indices of Planes $(hkl)$ (Fig. 1.15):</strong> (i) Find intercepts in units of $a, b, c$; (ii) take reciprocals; (iii) clear fractions to get $(hkl)$. Families use braces: $\{100\}$ (6 cube faces), $\{110\}$ (6), $\{111\}$ (8). Worked case (Fig. 1.15): intercepts $1, 2, 1 \to$ reciprocals $1, \frac{1}{2}, 1 \to$ cleared $\mathbf{(212)}$.</li>
+          <li><strong>1.9 Interplanar Spacing $d_{hkl}$ (Fig. 1.17):</strong>
+            <div class="eq-stack">
+              $$d = OP = \frac{a}{h}\cos\alpha = \frac{b}{k}\cos\beta = \frac{c}{l}\cos\gamma \quad \text{(1.7)}$$
+              $$d = \frac{\hat{\mathbf{n}}\cdot\mathbf{a}}{h} = \frac{\hat{\mathbf{n}}\cdot\mathbf{b}}{k} = \frac{\hat{\mathbf{n}}\cdot\mathbf{c}}{l} \quad \text{(1.8)}$$
+              $$d = \frac{1}{\left(\frac{h^2}{a^2} + \frac{k^2}{b^2} + \frac{l^2}{c^2}\right)^{1/2}} \quad \text{(1.9, Orthogonal)} \qquad d_{hkl} = \frac{a}{\sqrt{h^2 + k^2 + l^2}} \quad \text{(1.10, Cubic)}$$
+            </div>
+          </li>
+        </ul>
+
+        <div id="omr-sec3-1"></div>
+        <div id="omr-sec3-2"></div>
+      </div>
+
+      <!-- GUIDED DERIVATION 2: INTERPLANAR SPACING (FIGS 1.15 & 1.17) -->
+      <div class="derivation-card" id="deriv-box-1"></div>
+    </section>
+
+
+    <!-- =====================================================================
+         SECTION 4: SIMPLE CRYSTAL STRUCTURES (1.10–1.13)
+         ===================================================================== -->
+    <section class="section-block" id="sec-4">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">view_in_ar</span> Section 4: Simple Crystal Structures (1.10–1.13)</h2>
+        <p>Puri and Babbar pp. 20–28 • Close-packed HCP & FCC, loose-packed BCC & SC, Diamond cubic, Zinc blende (ZnS), NaCl & Worked Examples 1.1, 1.5.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">3d_rotation</span> 3D Tool 3: Complete Simple Crystal Structures & 3D Layer Stacking Explorer</h3>
+        <p>Every crystal structure from Sections 1.10 to 1.13 is interactive in 3D below—including <strong>HCP (conventional + primitive cell)</strong>, <strong>3D Close-Packed Layer Stacking ($\text{ABABAB}$ vs. $\text{ABCABC}$)</strong>, <strong>FCC</strong>, <strong>BCC</strong>, <strong>SC</strong>, <strong>Diamond Cubic</strong>, <strong>Zinc Blende ($\text{ZnS}$)</strong>, <strong>Sodium Chloride ($\text{NaCl}$)</strong>, and <strong>Cesium Chloride ($\text{CsCl}$)</strong>.</p>
+
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">touch_app</span> 3D Interactive Tool: Simple Crystal Structures with Live 3D MathJax Labels</div>
+          <div class="diagram-stage">
+            <canvas id="tool3Canvas" class="interactive-canvas" width="480" height="320"></canvas>
+            <div id="tool3MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="t3-hcp" onclick="setTool3Struct('hcp')">HCP (Fig 1.19)</button>
+            <button class="ctrl-btn" id="t3-stack" onclick="setTool3Struct('stack')">3D Stacking ABAB / ABC (Fig 1.18)</button>
+            <button class="ctrl-btn" id="t3-fcc" onclick="setTool3Struct('fcc')">FCC (Fig 1.20)</button>
+            <button class="ctrl-btn" id="t3-bcc" onclick="setTool3Struct('bcc')">BCC (Fig 1.21)</button>
+            <button class="ctrl-btn" id="t3-sc" onclick="setTool3Struct('sc')">SC (Fig 1.22)</button>
+            <button class="ctrl-btn" id="t3-dia" onclick="setTool3Struct('dia')">Diamond (Fig 1.24)</button>
+            <button class="ctrl-btn" id="t3-zns" onclick="setTool3Struct('zns')">Zinc Blende ZnS (Fig 1.23)</button>
+            <button class="ctrl-btn" id="t3-nacl" onclick="setTool3Struct('nacl')">NaCl (Fig 1.25)</button>
+            <button class="ctrl-btn" id="t3-cscl" onclick="setTool3Struct('cscl')">CsCl</button>
+          </div>
+          <div class="visual-caption" id="tool3Caption">Hexagonal Close-Packed (HCP, Fig. 1.19): Conventional cell ($N=6$), primitive basis at $(0,0,0)$ and $(\frac{2}{3},\frac{1}{3},\frac{1}{2})$, $c = 1.633a$, $f = 0.74$.</div>
+        </div>
+
+        <h3><span class="material-symbols-outlined">menu_book</span> Complete Reference of Simple Crystal Structures (1.10–1.13)</h3>
+        <ul>
+          <li><strong>1.10.1 Close-Packed Structures (Coordination Number 12 — 6 in plane, 3 above, 3 below, Fig. 1.18):</strong>
+            <ul>
+              <li><strong>hcp ($\cdots ABABAB\cdots$, Fig. 1.19):</strong> Conventional hexagonal cell has effective atoms $12\times\frac{1}{6} + 2\times\frac{1}{2} + 3 = \mathbf{6}$. Ideal $c = 1.633a$. Primitive lattice is simple hexagonal with a two-atom basis at $(0,0,0)$ and $(\frac{2}{3},\frac{1}{3},\frac{1}{2})$; primitive volume is $\frac{1}{3}$ of the hexagonal cell. Packing fraction:
+                $$f = \frac{2\cdot\frac{4}{3}\pi r^3}{a^2 c \sin 60^\circ} = \mathbf{0.74}$$
+              </li>
+              <li><strong>fcc ($\cdots ABCABC\cdots$, Fig. 1.20):</strong> Conventional cubic cell has effective atoms $8\times\frac{1}{8} + 6\times\frac{1}{2} = \mathbf{4}$. Touching along face diagonal ($4r = \sqrt{2}a$):
+                $$f = \frac{4\cdot\frac{4}{3}\pi r^3}{a^3} = \frac{\pi}{3\sqrt{2}} \approx \mathbf{0.74}$$
+              </li>
+            </ul>
+          </li>
+          <li><strong>1.10.2 Loose-Packed Structures:</strong>
+            <ul>
+              <li><strong>bcc (Fig. 1.21):</strong> Effective atoms $8\times\frac{1}{8} + 1 = \mathbf{2}$; coordination $\mathbf{8}$; touching along body diagonal ($4r = \sqrt{3}a$); $f = \frac{2\cdot\frac{4}{3}\pi r^3}{a^3} = \frac{\pi\sqrt{3}}{8} \approx \mathbf{0.68}$. Examples: Na, K, Mo, W.</li>
+              <li><strong>sc (Fig. 1.22):</strong> Atoms at corners ($N=\mathbf{1}$); $a = 2r$; coordination $\mathbf{6}$; $f = \frac{\pi}{6} \approx \mathbf{0.52}$. Example: Polonium at room temperature.</li>
+            </ul>
+          </li>
+          <li><strong>1.11 Diamond Cubic Structure (Figs. 1.23, 1.24):</strong> Space lattice fcc; basis of two carbon atoms at $(0,0,0)$ and $(\frac{1}{4},\frac{1}{4},\frac{1}{4})$ (one-quarter of body diagonal, alternate tetrahedral void). Equivalent to two interpenetrating fcc sublattices. Effective atoms $N=\mathbf{8}$; coordination $\mathbf{4}$; nearest-neighbour distance $\frac{\sqrt{3}}{4}a$; packing efficiency $\mathbf{34\%}$ ($0.34$). Examples: Si, Ge, SiC, GaAs, grey tin.</li>
+          <li><strong>1.12 Zinc Blende ($\text{ZnS}$, Fig. 1.23):</strong> Same as diamond cubic, but the two fcc sublattices hold different elements ($\text{Zn}$ and $\text{S}$).</li>
+          <li><strong>1.13 Sodium Chloride ($\text{NaCl}$, Fig. 1.25):</strong> Each $\text{Na}^+$ has 6 $\text{Cl}^-$ octahedral neighbours. fcc lattice with basis $\text{Na}^+$ at $(0,0,0)$ and $\text{Cl}^-$ at $(a/2,0,0)$. Four molecules per cell; $a = 2(r_+ + r_-)$:
+            <div class="eq-stack">
+              $$\text{Na}^+:\ (0,0,0);\ (\tfrac{1}{2},\tfrac{1}{2},0);\ (\tfrac{1}{2},0,\tfrac{1}{2});\ (0,\tfrac{1}{2},\tfrac{1}{2})$$
+              $$\text{Cl}^-:\ (\tfrac{1}{2},\tfrac{1}{2},\tfrac{1}{2});\ (0,0,\tfrac{1}{2});\ (0,\tfrac{1}{2},0);\ (\tfrac{1}{2},0,0)$$
+            </div>
+          </li>
+        </ul>
+
+        <div class="simple-note">
+          <strong>Example 1.1 & Example 1.5 (Book Page 10):</strong><br>
+          • <strong>Example 1.1:</strong> $a = 2r$ (sc), $a = 4r/\sqrt{3}$ (bcc), $a = 2\sqrt{2}r$ (fcc).<br>
+          • <strong>Example 1.5:</strong> $\text{NaCl}$ with $r_{\text{Na}} = 0.98\text{ \AA}$ and $r_{\text{Cl}} = 1.81\text{ \AA}$ gives $a = 2(0.98+1.81) = \mathbf{5.58\text{ \AA}}$, density $\mathbf{2234\text{ kg m}^{-3}}$, and packing fraction:
+          $$f = \frac{16\pi}{3}\cdot\frac{0.98^3 + 1.81^3}{5.58^3} = \mathbf{0.663}$$
+        </div>
+
+        <div id="omr-sec4-1"></div>
+        <div id="omr-sec4-2"></div>
+      </div>
+
+      <!-- GUIDED DERIVATION 3: PACKING FRACTIONS -->
+      <div class="derivation-card" id="deriv-box-2"></div>
+    </section>
+
+
+    <!-- =====================================================================
+         SECTION 5: X-RAY DIFFRACTION, RECIPROCAL LATTICE & BRILLOUIN ZONES
+         ===================================================================== -->
+    <section class="section-block" id="sec-5">
+      <div class="section-banner">
+        <h2><span class="material-symbols-outlined">blur_on</span> Section 5: X-Ray Diffraction, Reciprocal Lattice & Brillouin Zones (2.1–2.2, 2.4–2.7)</h2>
+        <p>Puri and Babbar pp. 34–39, 46–58 • Bragg's law, Laue equations, reciprocal lattice vectors, 3D Ewald sphere & 3D Brillouin zones.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">waves</span> 2.1–2.2 X-Ray Diffraction: Bragg's Law & Laue's Equations</h3>
+        <p>X-rays have wavelengths too short for ordinary optical gratings. <strong>Von Laue (1912)</strong> proposed a single crystal as a 3D grating, confirmed by <strong>Friedrich and Knipping</strong> with zinc blende ($\text{ZnS}$). Crystal electrons oscillate at the incident beam frequency and scatter secondary waves that interfere (Fig. 2.1).</p>
+        <ul>
+          <li><strong>2.2.1 Bragg's Treatment (Fig. 2.2):</strong> Parallel atomic planes with spacing $d$ and glancing angle $\theta$ have path difference $2d\sin\theta$, giving reinforcement when:
+            <div class="eq-stack">
+              $$2d\sin\theta = n\lambda \quad \text{(2.1)} \qquad (\sin\theta \le 1 \implies \lambda \le 2d)$$
+            </div>
+          </li>
+          <li><strong>2.2.2 Laue's Treatment (Figs. 2.3, 2.4):</strong> Two scatterers A and B separated by $\mathbf{r}$ with incident unit vector $\hat{\mathbf{n}}_1$ and scattered $\hat{\mathbf{n}}_2$ (angle $2\theta$ between them) have scattering normal $\mathbf{N} = \hat{\mathbf{n}}_1 - \hat{\mathbf{n}}_2$ with $|\mathbf{N}| = 2\sin\theta$ and phase:
+            <div class="eq-stack">
+              $$\phi = \frac{2\pi}{\lambda}(\mathbf{r}\cdot\mathbf{N}) \quad \text{(2.2)}$$
+              $$\frac{2\pi}{\lambda}(\mathbf{a}\cdot\mathbf{N}) = 2\pi nh', \quad \frac{2\pi}{\lambda}(\mathbf{b}\cdot\mathbf{N}) = 2\pi nk', \quad \frac{2\pi}{\lambda}(\mathbf{c}\cdot\mathbf{N}) = 2\pi nl' \quad \text{(2.3)}$$
+              $$2a\sin\theta\cos\alpha = h'\lambda = nh\lambda$$
+              $$2b\sin\theta\cos\beta = k'\lambda = nk\lambda \quad \text{(2.4)}$$
+              $$2c\sin\theta\cos\gamma = l'\lambda = nl\lambda$$
+              $$\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1 \quad \text{(2.5)}$$
+            </div>
+            The direction cosines of $\mathbf{N}$ are proportional to $h/a, k/b, l/c$, so $\mathbf{N}$ is normal to $(hkl)$. Using Eq. (1.7) in Eq. (2.4) gives $2d_{hkl}\sin\theta = n\lambda$ (Bragg's law). Convention: $n$ is absorbed into $(nh\ nk\ nl)$ as a first-order ($n=1$) reflection.
+          </li>
+        </ul>
+
+        <div id="omr-sec5-1"></div>
+      </div>
+
+      <!-- GUIDED DERIVATION 4: BRAGG & LAUE EQUIVALENCE -->
+      <div class="derivation-card" id="deriv-box-3"></div>
+
+      <div class="card">
+        <h3><span class="material-symbols-outlined">hub</span> 2.4–2.7 Reciprocal Lattice, Ewald Sphere & Brillouin Zones</h3>
+        <p>Each set of parallel planes $(hkl)$ is represented by a normal vector of length $1/d_{hkl}$ (Eq. 2.10), giving the reciprocal basis in the crystallographic ($1/d$, Eq. 2.13) and solid-state ($2\pi/d$, Eq. 2.18) conventions:</p>
+        <div class="eq-stack">
+          $$\mathbf{a}_{hkl} = \frac{1}{d_{hkl}}\hat{\mathbf{n}} \quad \text{(2.10)}$$
+          $$\mathbf{a}^* = \frac{\mathbf{b}\times\mathbf{c}}{V}, \quad \mathbf{b}^* = \frac{\mathbf{c}\times\mathbf{a}}{V}, \quad \mathbf{c}^* = \frac{\mathbf{a}\times\mathbf{b}}{V} \quad \text{(2.13)}$$
+          $$\mathbf{a}^* = 2\pi\frac{\mathbf{b}\times\mathbf{c}}{\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})}, \quad \mathbf{b}^* = 2\pi\frac{\mathbf{c}\times\mathbf{a}}{\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})}, \quad \mathbf{c}^* = 2\pi\frac{\mathbf{a}\times\mathbf{b}}{\mathbf{a}\cdot(\mathbf{b}\times\mathbf{c})} \quad \text{(2.18)}$$
+        </div>
+        <p>In a monoclinic crystal ($\beta \neq 90^\circ$, Figs. 2.8, 2.9), $\mathbf{a}^*$ and $\mathbf{a}$ are not parallel: $|\mathbf{a}^*| = 1/(a\cos\theta)$ where $\theta = \beta - 90^\circ$.</p>
+
+        <div class="table-toolbar">
+          <span class="table-hint"><span class="material-symbols-outlined">table_rows</span> Reciprocal Lattices of SC, BCC & FCC (Eqs. 2.21–2.25)</span>
+          <button class="table-toggle-btn" onclick="toggleTableMode('tbl-recip')"><span class="material-symbols-outlined">swap_horiz</span> Switch Table View</button>
+        </div>
+        <div class="table-scroll mobile-cards" id="tbl-recip">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>Direct Lattice</th>
+                <th>Direct Primitive Vectors</th>
+                <th>Cell Volume</th>
+                <th>Reciprocal Primitive Vectors</th>
+                <th>Reciprocal Lattice & 1st Zone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Direct Lattice"><strong>Simple Cubic (sc)</strong></td>
+                <td data-label="Direct Vectors">$a\hat{\mathbf{i}},\ a\hat{\mathbf{j}},\ a\hat{\mathbf{k}}$</td>
+                <td data-label="Volume">$V = a^3$</td>
+                <td data-label="Reciprocal Vectors">$\mathbf{a}^* = \frac{2\pi}{a}\hat{\mathbf{i}}$ etc. (Eq. 2.21)</td>
+                <td data-label="Reciprocal & Zone"><strong>sc</strong> (edge $2\pi/a$)<br>Zone: <strong>Cube</strong></td>
+              </tr>
+              <tr>
+                <td data-label="Direct Lattice"><strong>Body-Centred (bcc)</strong></td>
+                <td data-label="Direct Vectors">$\mathbf{a}=\frac{a}{2}(\hat{\mathbf{i}}+\hat{\mathbf{j}}-\hat{\mathbf{k}})$<br>and cyclic (Eq. 2.22)</td>
+                <td data-label="Volume">$V = \frac{a^3}{2}$</td>
+                <td data-label="Reciprocal Vectors">$\mathbf{a}^* = \frac{2\pi}{a}(\hat{\mathbf{j}}+\hat{\mathbf{k}})$<br>and cyclic (Eq. 2.23)</td>
+                <td data-label="Reciprocal & Zone"><strong>fcc</strong> (edge $4\pi/a$)<br>Zone: <strong>Rhombic Dodecahedron</strong></td>
+              </tr>
+              <tr>
+                <td data-label="Direct Lattice"><strong>Face-Centred (fcc)</strong></td>
+                <td data-label="Direct Vectors">$\mathbf{a}'=\frac{a}{2}(\hat{\mathbf{i}}+\hat{\mathbf{j}})$<br>and cyclic (Eq. 2.24)</td>
+                <td data-label="Volume">$V = \frac{a^3}{4}$</td>
+                <td data-label="Reciprocal Vectors">$\mathbf{a}^* = \frac{2\pi}{a}(\hat{\mathbf{i}}+\hat{\mathbf{j}}-\hat{\mathbf{k}})$<br>and cyclic (Eq. 2.25)</td>
+                <td data-label="Reciprocal & Zone"><strong>bcc</strong> (edge $4\pi/a$)<br>Zone: <strong>Truncated Octahedron</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>2.4.3 & 2.6–2.7 Key Equations for Reciprocal Space & Brillouin Zones:</strong></p>
+        <div class="eq-stack">
+          $$\mathbf{T} = m\mathbf{a} + n\mathbf{b} + p\mathbf{c} \quad \text{(2.19)}, \qquad \mathbf{G} = h\mathbf{a}^* + k\mathbf{b}^* + l\mathbf{c}^* \quad \text{(2.20)}, \qquad \exp(i\mathbf{G}\cdot\mathbf{T}) = 1$$
+          $$|OB| = \frac{n}{d_{hkl}} \quad \text{(2.26)}, \qquad OB = \frac{2\sin\theta}{\lambda} \quad \text{(2.27)}$$
+          $$2\mathbf{k}\cdot\mathbf{G} + G^2 = 0 \quad \text{(2.28)}, \qquad \mathbf{k}' = \mathbf{k} + \mathbf{G},\ k'^2 = k^2,\ \Delta\mathbf{k} = \mathbf{G} \quad \text{(2.29, 2.30)}$$
+          $$\text{Square Zone: }\ hk_x + kk_y = -\frac{\pi}{a}(h^2 + k^2) \quad \text{(2.31)}$$
+          $$\text{Cubic Zone: }\ hk_x + kk_y + lk_z = -\frac{\pi}{a}(h^2 + k^2 + l^2) \quad \text{(2.32)}$$
+          $$\text{BCC }\mathbf{G}\text{: }\ \mathbf{G} = \frac{2\pi}{a}\big[(h+l)\hat{\mathbf{i}} + (h+k)\hat{\mathbf{j}} + (k+l)\hat{\mathbf{k}}\big] \quad \text{(2.33)}$$
+          $$\text{FCC }\mathbf{G}\text{: }\ \mathbf{G} = \frac{2\pi}{a}\big[(h-k+l)\hat{\mathbf{i}} + (h+k-l)\hat{\mathbf{j}} + (-h+k+l)\hat{\mathbf{k}}\big] \quad \text{(2.34)}$$
+        </div>
+
+        <!-- 3D TOOL 4: 3D EWALD SPHERE, RECIPROCAL VECTORS & 3D BRILLOUIN ZONES -->
+        <h3><span class="material-symbols-outlined">3d_rotation</span> 3D Tool 4: 3D Ewald Sphere, Reciprocal Basis Vectors & Brillouin Zones</h3>
+        <p>Rotate the 3D canvas below to inspect the <strong>3D Ewald Sphere</strong> (Fig. 2.12), the <strong>Monoclinic non-parallel $\mathbf{a}^*$ vs. $\mathbf{a}$</strong> (Figs. 2.8–2.9), <strong>BCC $\leftrightarrow$ FCC reciprocal primitive vectors</strong> (Figs. 2.10–2.11), and the <strong>First Brillouin Zones of SC, BCC, FCC, and 2D Square lattices</strong> (Figs. 2.14–2.16) with live 3D MathJax labels!</p>
+
+        <div class="visual-box">
+          <div class="visual-title"><span class="material-symbols-outlined">touch_app</span> 3D Interactive Tool: Ewald Sphere, Reciprocal Vectors & Brillouin Zones</div>
+          <div class="diagram-stage">
+            <canvas id="tool4Canvas" class="interactive-canvas" width="480" height="320"></canvas>
+            <div id="tool4MathLayer" class="math-layer"></div>
+          </div>
+          <div class="visual-controls">
+            <button class="ctrl-btn active" id="t4-bcc" onclick="setTool4Mode('bcc')">BCC Zone: Rhombic Dodecahedron (Fig 2.15)</button>
+            <button class="ctrl-btn" id="t4-fcc" onclick="setTool4Mode('fcc')">FCC Zone: Truncated Octahedron (Fig 2.16)</button>
+            <button class="ctrl-btn" id="t4-sc" onclick="setTool4Mode('sc')">SC Zone: Cube ($2\pi/a$)</button>
+            <button class="ctrl-btn" id="t4-sq" onclick="setTool4Mode('sq')">2D Square Zones (Fig 2.14)</button>
+            <button class="ctrl-btn" id="t4-ewald" onclick="setTool4Mode('ewald')">3D Ewald Sphere (Fig 2.12)</button>
+            <button class="ctrl-btn" id="t4-mono" onclick="setTool4Mode('mono')">Monoclinic $\mathbf{a}^*$ vs $\mathbf{a}$ (Fig 2.8–2.9)</button>
+            <button class="ctrl-btn" id="t4-vecs" onclick="setTool4Mode('vecs')">BCC $\leftrightarrow$ FCC Vectors (Fig 2.10–2.11)</button>
+          </div>
+          <div class="visual-caption" id="tool4Caption">First Brillouin Zone of BCC (Fig. 2.15): 12-faced Rhombic Dodecahedron bounded by $\mathbf{G} = \frac{2\pi}{a}(\pm\hat{\mathbf{i}}\pm\hat{\mathbf{j}})$.</div>
+        </div>
+
+        <div id="omr-sec5-2"></div>
+        <div id="omr-sec5-3"></div>
+        <div id="omr-sec5-4"></div>
+      </div>
+
+      <!-- GUIDED DERIVATION 5: RECIPROCAL LATTICE OF BCC -->
+      <div class="derivation-card" id="deriv-box-4"></div>
+
+      <!-- GUIDED DERIVATION 6: EWALD SPHERE & BRILLOUIN ZONES -->
+      <div class="derivation-card" id="deriv-box-5"></div>
+    </section>
+
+  </main>
+
+  <script>
+    /* =========================================================================
+       1. PROGRESS TRACKING & TABLE VIEW SWITCHER
+       ========================================================================= */
+    const completedTasks = new Set();
+    const TOTAL_TASKS = 37; // 15 OMR checks + 22 derivation steps
+
+    function markTaskDone(id) {
+      if (!completedTasks.has(id)) {
+        completedTasks.add(id);
+        updateProgressUI();
+      }
+    }
+
+    function updateProgressUI() {
+      const done = completedTasks.size;
+      const pct = Math.round((done / TOTAL_TASKS) * 100);
+      document.getElementById('session-prog-text').textContent = `${done} / ${TOTAL_TASKS} (${pct}%)`;
+      document.getElementById('session-prog-bar').style.width = `${pct}%`;
+
+      const coursePct = (23 + (done / TOTAL_TASKS) * 12).toFixed(1);
+      document.getElementById('course-prog-text').textContent = `${coursePct}% covered`;
+      document.getElementById('course-prog-bar').style.width = `${coursePct}%`;
+    }
+
+    window.toggleTableMode = function(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('mobile-cards');
+    };
+
+    function typesetMath(el) {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise(el ? [el] : undefined).catch(() => {});
+      }
+    }
+
+    /* =========================================================================
+       2. HELPER FOR MATHJAX OVERLAY PINS IN 2D SVGS & 3D CANVASES
+       ========================================================================= */
+    function set2DMathPins(layerId, pins) {
+      const layer = document.getElementById(layerId);
+      if (!layer) return;
+      layer.innerHTML = pins.map(p =>
+        `<div class="math-pin ${p.cls || ''}" style="left:${p.x}%; top:${p.y}%;">${p.tex}</div>`
+      ).join('');
+      typesetMath(layer);
+    }
+
+    // For 3D tools: create DOM pins once per mode, typeset with MathJax, then update (left,top) at 60fps
+    function create3DMathPins(layerId, pins3d) {
+      const layer = document.getElementById(layerId);
+      if (!layer) return [];
+      layer.innerHTML = pins3d.map((p, i) =>
+        `<div class="math-pin ${p.cls || ''}" id="${layerId}-pin-${i}">${p.tex}</div>`
+      ).join('');
+      typesetMath(layer);
+      return pins3d.map((p, i) => ({
+        ...p,
+        el: document.getElementById(`${layerId}-pin-${i}`)
+      }));
+    }
+
+    function update3DMathPins(pinObjs, projFn, canvas) {
+      if (!canvas) return;
+      const w = canvas.width, h = canvas.height;
+      const cx = w / 2, cy = h / 2;
+      pinObjs.forEach(p => {
+        if (!p.el) return;
+        const pr = projFn(p.pos[0], p.pos[1], p.pos[2], cx, cy, p.scale || 88);
+        const leftPct = (pr.px / w) * 100;
+        const topPct = (pr.py / h) * 100;
+        p.el.style.left = `${leftPct}%`;
+        p.el.style.top = `${topPct}%`;
+      });
+    }
+
+    /* =========================================================================
+       3. 3D TOOL 1: PARALLELEPIPED VOLUME, 3D WIGNER-SEITZ & 3D SYMMETRY
+       ========================================================================= */
+    let t1Mode = 'vol';
+    let t1RotX = -0.38, t1RotY = 0.55;
+    let t1Pins = [];
+
+    function projT1(x, y, z, cx, cy, scale) {
+      const cy1 = Math.cos(t1RotY), sy1 = Math.sin(t1RotY);
+      const x1 = x * cy1 - z * sy1, z1 = x * sy1 + z * cy1;
+      const cx1 = Math.cos(t1RotX), sx1 = Math.sin(t1RotX);
+      const y2 = y * cx1 - z1 * sx1, z2 = y * sx1 + z1 * cx1;
+      const fov = 4.8 / (4.8 + z2 * 0.3);
+      return { px: cx + x1 * scale * fov, py: cy - y2 * scale * fov, z: z2 };
+    }
+
+    window.setTool1Mode = function(mode) {
+      t1Mode = mode;
+      ['vol', 'ws', 'inv', 'mir', 'rot'].forEach(m => {
+        const b = document.getElementById(`t1-${m}`);
+        if (b) b.classList.toggle('active', m === mode);
+      });
+      const cap = document.getElementById('tool1Caption');
+      if (mode === 'vol') {
+        cap.innerHTML = 'Parallelepiped built from $\\mathbf{a}, \\mathbf{b}, \\mathbf{c}$: Volume $V = |\\mathbf{a}\\times\\mathbf{b}||\\mathbf{c}\\cdot\\hat{\\mathbf{n}}| = |\\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})|$.';
+        t1Pins = create3DMathPins('tool1MathLayer', [
+          { pos: [1.3, -0.7, 0.7], tex: '$\\mathbf{a}$', cls: 'cyan' },
+          { pos: [-0.8, -0.7, -1.1], tex: '$\\mathbf{b}$', cls: 'cyan' },
+          { pos: [-0.45, 1.05, 0.7], tex: '$\\mathbf{c}$', cls: 'amber' },
+          { pos: [-0.9, 1.25, 0.9], tex: '$\\hat{\\mathbf{n}} = \\frac{\\mathbf{a}\\times\\mathbf{b}}{|\\mathbf{a}\\times\\mathbf{b}|}$', cls: 'green' }
+        ]);
+      } else if (mode === 'ws') {
+        cap.innerHTML = '3D Wigner–Seitz Primitive Cell: Enclosed by perpendicular bisector planes of lines joining the central lattice point to its neighbours.';
+        t1Pins = create3DMathPins('tool1MathLayer', [
+          { pos: [0, 0, 0], tex: '$\\mathbf{0}$', cls: 'amber' },
+          { pos: [1.2, 0.9, 0], tex: '$\\text{Bisector Plane}$', cls: 'cyan' }
+        ]);
+      } else if (mode === 'inv') {
+        cap.innerHTML = '3D Inversion Operation ($\\bar{1}$): Sends every point $\\mathbf{r} = (x,y,z)$ through the inversion centre to $-\\mathbf{r} = (-x,-y,-z)$.';
+        t1Pins = create3DMathPins('tool1MathLayer', [
+          { pos: [0, 0.18, 0], tex: '$\\bar{1}\\ (0,0,0)$', cls: 'amber' },
+          { pos: [1.15, 0.95, 0.8], tex: '$\\mathbf{r}$', cls: 'cyan' },
+          { pos: [-1.15, -0.95, -0.8], tex: '$-\\mathbf{r}$', cls: 'green' }
+        ]);
+      } else if (mode === 'mir') {
+        cap.innerHTML = '3D Reflection Plane ($m$): Divides the crystal into mirror-image halves ($(x,y,z) \\leftrightarrow (-x,y,z)$).';
+        t1Pins = create3DMathPins('tool1MathLayer', [
+          { pos: [0, 1.2, 0], tex: '$\\text{Mirror } m$', cls: 'green' },
+          { pos: [1.1, 0.4, 0.5], tex: '$P(x,y,z)$', cls: 'cyan' },
+          { pos: [-1.1, 0.4, 0.5], tex: '$P\'(-x,y,z)$', cls: 'amber' }
+        ]);
+      } else if (mode === 'rot') {
+        cap.innerHTML = '3D Rotation Axis ($n=6, \\theta = 2\\pi/6 = 60^\\circ$): Rotating 6 times by $\\theta$ gives a full turn $n\\theta = 2\\pi$.';
+        t1Pins = create3DMathPins('tool1MathLayer', [
+          { pos: [0, 1.35, 0], tex: '$\\text{Axis } n=6$', cls: 'amber' },
+          { pos: [1.2, 0, 0], tex: '$\\theta = \\frac{2\\pi}{6}$', cls: 'cyan' }
+        ]);
+      }
+      typesetMath(cap);
+      drawTool1();
+    };
+
+    function drawTool1() {
+      const canvas = document.getElementById('tool1Canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2, cy = canvas.height / 2, scale = 82;
+
+      if (t1Mode === 'vol') {
+        const O = [-0.9, -0.7, 0.7];
+        const A = [0.9, -0.7, 0.7];
+        const B = [-0.9, -0.7, -0.9];
+        const C = [-0.4, 0.85, 0.5];
+        const add = (u, v) => [u[0]+v[0]-O[0], u[1]+v[1]-O[1], u[2]+v[2]-O[2]];
+        const AB = add(A, B), AC = add(A, C), BC = add(B, C);
+        const ABC = [AB[0]+C[0]-O[0], AB[1]+C[1]-O[1], AB[2]+C[2]-O[2]];
+
+        const edges = [[O,A],[O,B],[B,AB],[A,AB],[O,C],[A,AC],[B,BC],[AB,ABC],[C,AC],[C,BC],[AC,ABC],[BC,ABC]];
+        ctx.strokeStyle = 'rgba(148,163,184,0.45)';
+        ctx.lineWidth = 1.6;
+        edges.forEach(([u,v]) => {
+          const p1 = projT1(...u, cx, cy, scale), p2 = projT1(...v, cx, cy, scale);
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        });
+
+        // Highlight vectors a, b, c and normal n
+        const drawVec = (u, v, col) => {
+          const p1 = projT1(...u, cx, cy, scale), p2 = projT1(...v, cx, cy, scale);
+          ctx.strokeStyle = col; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+          ctx.beginPath(); ctx.arc(p2.px, p2.py, 4.5, 0, Math.PI*2); ctx.fillStyle = col; ctx.fill();
+        };
+        drawVec(O, A, '#38bdf8');
+        drawVec(O, B, '#38bdf8');
+        drawVec(O, C, '#f5b027');
+        drawVec(O, [-0.9, 1.0, 0.7], '#4ade80');
+      } else if (t1Mode === 'ws') {
+        // 3D Wigner-Seitz cell (cube + neighbour vectors)
+        const nbrs = [[1.5,0,0],[-1.5,0,0],[0,1.5,0],[0,-1.5,0],[0,0,1.5],[0,0,-1.5]];
+        nbrs.forEach(n => {
+          const p0 = projT1(0,0,0, cx, cy, scale), pn = projT1(...n, cx, cy, scale);
+          ctx.setLineDash([4,4]); ctx.strokeStyle = '#64748b'; ctx.lineWidth = 1.4;
+          ctx.beginPath(); ctx.moveTo(p0.px, p0.py); ctx.lineTo(pn.px, pn.py); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.beginPath(); ctx.arc(pn.px, pn.py, 4.5, 0, Math.PI*2); ctx.fillStyle = '#94a3b8'; ctx.fill();
+        });
+        const c = [];
+        for (let i=0; i<8; i++) c.push([(i&1)?0.75:-0.75, (i&2)?0.75:-0.75, (i&4)?0.75:-0.75]);
+        [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+          const p1 = projT1(...c[a], cx, cy, scale), p2 = projT1(...c[b], cx, cy, scale);
+          ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.2;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        });
+        const pc = projT1(0,0,0, cx, cy, scale);
+        ctx.beginPath(); ctx.arc(pc.px, pc.py, 7, 0, Math.PI*2); ctx.fillStyle = '#f5b027'; ctx.fill();
+      } else if (t1Mode === 'inv') {
+        const pairs = [[[1,0.8,0.6],[-1,-0.8,-0.6]], [[-0.9,0.7,-0.5],[0.9,-0.7,0.5]]];
+        pairs.forEach(([r1, r2]) => {
+          const p1 = projT1(...r1, cx, cy, scale), p2 = projT1(...r2, cx, cy, scale);
+          ctx.setLineDash([4,3]); ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.beginPath(); ctx.arc(p1.px, p1.py, 9, 0, Math.PI*2); ctx.fillStyle = '#38bdf8'; ctx.fill();
+          ctx.beginPath(); ctx.arc(p2.px, p2.py, 9, 0, Math.PI*2); ctx.fillStyle = '#4ade80'; ctx.fill();
+        });
+        const po = projT1(0,0,0, cx, cy, scale);
+        ctx.beginPath(); ctx.arc(po.px, po.py, 6, 0, Math.PI*2); ctx.fillStyle = '#f5b027'; ctx.fill();
+      } else if (t1Mode === 'mir') {
+        const mPoly = [[0,-1,-1],[0,1,-1],[0,1,1],[0,-1,1]].map(p => projT1(...p, cx, cy, scale));
+        ctx.beginPath();
+        mPoly.forEach((p,i) => i===0 ? ctx.moveTo(p.px,p.py) : ctx.lineTo(p.px,p.py));
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(74,222,128,0.25)'; ctx.fill();
+        ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2; ctx.stroke();
+
+        const pL = projT1(0.95, 0.3, 0.4, cx, cy, scale);
+        const pR = projT1(-0.95, 0.3, 0.4, cx, cy, scale);
+        ctx.setLineDash([4,3]); ctx.strokeStyle = '#e2e8f0';
+        ctx.beginPath(); ctx.moveTo(pL.px, pL.py); ctx.lineTo(pR.px, pR.py); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.beginPath(); ctx.arc(pL.px, pL.py, 9, 0, Math.PI*2); ctx.fillStyle = '#38bdf8'; ctx.fill();
+        ctx.beginPath(); ctx.arc(pR.px, pR.py, 9, 0, Math.PI*2); ctx.fillStyle = '#f5b027'; ctx.fill();
+      } else if (t1Mode === 'rot') {
+        const pTop = projT1(0, 1.2, 0, cx, cy, scale), pBot = projT1(0, -1.2, 0, cx, cy, scale);
+        ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(pTop.px, pTop.py); ctx.lineTo(pBot.px, pBot.py); ctx.stroke();
+        const hex = [];
+        for (let i=0; i<6; i++) {
+          const a = (i * 60 * Math.PI) / 180;
+          hex.push(projT1(Math.cos(a), 0, Math.sin(a), cx, cy, scale));
+        }
+        ctx.beginPath();
+        hex.forEach((p,i) => i===0 ? ctx.moveTo(p.px,p.py) : ctx.lineTo(p.px,p.py));
+        ctx.closePath();
+        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2; ctx.stroke();
+        hex.forEach(p => {
+          ctx.beginPath(); ctx.arc(p.px, p.py, 7, 0, Math.PI*2); ctx.fillStyle = '#38bdf8'; ctx.fill();
+        });
+      }
+
+      update3DMathPins(t1Pins, projT1, canvas);
+    }
+
+    /* =========================================================================
+       4. 2D INTERACTIVE SVGs WITH MATHJAX OVERLAYS (SECTIONS 1 & 2)
+       ========================================================================= */
+    window.drawSec1SVG = function(mode) {
+      ['fig11', 'fig12', 'fig13', 'fig14'].forEach(m => {
+        const b = document.getElementById(`btn-s1-${m}`);
+        if (b) b.classList.toggle('active', m === mode);
+      });
+      const svg = document.getElementById('svg-sec1');
+      const cap = document.getElementById('sec1SvgCaption');
+      if (!svg) return;
+
+      let html = '';
+      let pins = [];
+
+      if (mode === 'fig11') {
+        cap.innerHTML = 'Fig. 1.1 (Book): Primitive $(\\mathbf{a}_1, \\mathbf{b}_1)$ vs. non-primitive $(\\mathbf{a}_2, \\mathbf{b}_2)$ where $\\mathbf{R}\' = \\mathbf{R} + \\frac{1}{2}\\mathbf{a}_2 + \\frac{1}{2}\\mathbf{b}_2$.';
+        const dx = 90, dy = 60, ox = 85, oy = 45;
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 5; c++) {
+            const x = ox + c * dx + (r % 2 === 1 ? dx / 2 : 0);
+            const y = oy + r * dy;
+            html += `<circle cx="${x}" cy="${y}" r="4.5" fill="#e2e8f0"/>`;
+          }
+        }
+        const Cx = ox + 2 * dx, Cy = oy + 2 * dy;
+        html += `<line x1="${Cx}" y1="${Cy}" x2="${Cx+dx}" y2="${Cy}" stroke="#4ade80" stroke-width="3"/>`;
+        html += `<line x1="${Cx}" y1="${Cy}" x2="${Cx+dx/2}" y2="${Cy-dy}" stroke="#4ade80" stroke-width="3"/>`;
+        html += `<line x1="${Cx}" y1="${Cy}" x2="${Cx-dx}" y2="${Cy}" stroke="#f5b027" stroke-width="3"/>`;
+        html += `<line x1="${Cx}" y1="${Cy}" x2="${Cx}" y2="${Cy-2*dy}" stroke="#f5b027" stroke-width="3"/>`;
+        pins = [
+          { x: 62, y: 74, tex: '$\\mathbf{a}_1\\ (\\text{Primitive})$', cls: 'green' },
+          { x: 61, y: 48, tex: '$\\mathbf{b}_1$', cls: 'green' },
+          { x: 35, y: 74, tex: '$\\mathbf{a}_2\\ (\\text{Non-Primitive})$', cls: 'amber' },
+          { x: 45, y: 38, tex: '$\\mathbf{b}_2$', cls: 'amber' }
+        ];
+      } else if (mode === 'fig12') {
+        cap.innerHTML = 'Fig. 1.2 (Book): Primitive cell ($P$, effective points $N=1$) vs. Non-primitive cell ($NP$, $N>1$).';
+        const dx = 85, dy = 60, ox = 65, oy = 45;
+        html += `<polygon points="${ox},${oy+2*dy} ${ox+dx},${oy+2*dy} ${ox+dx+25},${oy+dy} ${ox+25},${oy+dy}" fill="rgba(74,222,128,0.25)" stroke="#4ade80" stroke-width="2.5"/>`;
+        const nx = ox + 2 * dx;
+        html += `<polygon points="${nx},${oy+2*dy} ${nx+dx},${oy+2*dy} ${nx+dx+50},${oy} ${nx+50},${oy}" fill="rgba(245,176,39,0.22)" stroke="#f5b027" stroke-width="2.5"/>`;
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 5; c++) {
+            const x = ox + c * dx + (3 - r) * 25;
+            const y = oy + r * dy;
+            html += `<circle cx="${x}" cy="${y}" r="4.5" fill="#ffffff"/>`;
+          }
+        }
+        pins = [
+          { x: 23, y: 52, tex: '$P\\ (N=1)$', cls: 'green' },
+          { x: 58, y: 42, tex: '$NP\\ (N=2)$', cls: 'amber' }
+        ];
+      } else if (mode === 'fig13') {
+        cap.innerHTML = 'Fig. 1.3 (Book): Wigner–Seitz primitive cell enclosed by perpendicular bisectors of lines to neighbours.';
+        const cx = 260, cy = 130, R = 92;
+        const angles = [0, 60, 120, 180, 240, 300].map(a => (a * Math.PI) / 180);
+        const rWs = R / Math.sqrt(3);
+        const pts = angles.map(a => `${cx + rWs * Math.cos(a + Math.PI/6)},${cy + rWs * Math.sin(a + Math.PI/6)}`).join(' ');
+        html += `<polygon points="${pts}" fill="rgba(56,189,248,0.28)" stroke="#38bdf8" stroke-width="2.5"/>`;
+        angles.forEach(a => {
+          const nx = cx + R * Math.cos(a), ny = cy + R * Math.sin(a);
+          html += `<line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4"/>`;
+          html += `<circle cx="${nx}" cy="${ny}" r="5" fill="#e2e8f0"/>`;
+        });
+        html += `<circle cx="${cx}" cy="${cy}" r="6.5" fill="#f5b027"/>`;
+        pins = [
+          { x: 50, y: 90, tex: '$\\text{Wigner–Seitz Primitive Cell }(N=1)$', cls: 'cyan' }
+        ];
+      } else if (mode === 'fig14') {
+        cap.innerHTML = 'Fig. 1.4 (Book): $\\text{Space Lattice} + \\text{Basis} \\to \\text{Crystal Structure}$.';
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 3; c++) {
+            html += `<circle cx="${55 + c*45}" cy="${65 + r*52}" r="4" fill="#e2e8f0"/>`;
+          }
+        }
+        html += `<circle cx="230" cy="118" r="10" fill="#38bdf8"/>`;
+        html += `<circle cx="246" cy="104" r="7" fill="#f97316"/>`;
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 3; c++) {
+            const x = 345 + c * 50, y = 65 + r * 52;
+            html += `<circle cx="${x}" cy="${y}" r="8.5" fill="#38bdf8"/>`;
+            html += `<circle cx="${x+12}" cy="${y-10}" r="5.5" fill="#f97316"/>`;
+          }
+        }
+        pins = [
+          { x: 19, y: 86, tex: '$\\text{Lattice}$', cls: 'cyan' },
+          { x: 35, y: 46, tex: '$+$', cls: 'amber' },
+          { x: 45, y: 86, tex: '$\\text{Basis}$', cls: 'amber' },
+          { x: 56, y: 46, tex: '$\\longrightarrow$', cls: 'amber' },
+          { x: 76, y: 86, tex: '$\\text{Crystal Structure}$', cls: 'green' }
+        ];
+      }
+
+      svg.innerHTML = html;
+      set2DMathPins('sec1MathLayer', pins);
+      typesetMath(cap);
+    };
+
+    window.drawSec2SVG = function(mode) {
+     ['fig15', 'fig17', 'fig18'].forEach(m => {
+        const b = document.getElementById(`btn-s2-${m}`);
+        if (b) b.classList.toggle('active', m === mode);
+      });
+      const svg = document.getElementById('svg-sec2');
+      const cap = document.getElementById('sec2SvgCaption');
+      if (!svg) return;
+
+      let html = '';
+      let pins = [];
+
+      if (mode === 'fig15') {
+        cap.innerHTML = 'Fig. 1.5 (Book): Six-fold ($n=6, \\theta=60^\\circ$) and four-fold ($n=4, \\theta=90^\\circ$) rotations.';
+        const cx1 = 155, cy1 = 115, R1 = 72;
+        let pts = '';
+        for (let i = 0; i < 6; i++) {
+          const a = (i * 60 * Math.PI) / 180;
+          const x = cx1 + R1 * Math.cos(a), y = cy1 + R1 * Math.sin(a);
+          pts += `${x},${y} `;
+          html += `<line x1="${cx1}" y1="${cy1}" x2="${x}" y2="${y}" stroke="#475569" stroke-width="1.5"/>`;
+          html += `<circle cx="${x}" cy="${y}" r="5" fill="#38bdf8"/>`;
+        }
+        html += `<polygon points="${pts}" fill="rgba(56,189,248,0.15)" stroke="#38bdf8" stroke-width="2"/>`;
+        html += `<circle cx="${cx1}" cy="${cy1}" r="5" fill="#f5b027"/>`;
+
+        const cx2 = 375, cy2 = 115, s = 55;
+        html += `<rect x="${cx2-s}" y="${cy2-s}" width="${2*s}" height="${2*s}" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="2"/>`;
+        [[-s,-s],[s,-s],[s,s],[-s,s]].forEach(([dx,dy]) => {
+          html += `<circle cx="${cx2+dx}" cy="${cy2+dy}" r="5" fill="#4ade80"/>`;
+        });
+        html += `<circle cx="${cx2}" cy="${cy2}" r="5" fill="#f5b027"/>`;
+        pins = [
+          { x: 30, y: 89, tex: '$n=6,\\ \\theta = \\frac{2\\pi}{6} = 60^\\circ$', cls: 'cyan' },
+          { x: 72, y: 89, tex: '$n=4,\\ \\theta = \\frac{2\\pi}{4} = 90^\\circ$', cls: 'green' }
+        ];
+      } else if (mode === 'fig17') {
+        cap.innerHTML = 'Fig. 1.7 (Book): Five-fold rotation ($n=5, \\theta=72^\\circ$) leaves an unfilled $36^\\circ$ gap.';
+        const vx = 260, vy = 122, side = 56;
+        const makePent = (startDeg) => {
+          let x = vx, y = vy, d = (startDeg * Math.PI) / 180;
+          let p = `${x},${y} `;
+          for (let i = 0; i < 5; i++) {
+            x += side * Math.cos(d); y += side * Math.sin(d);
+            p += `${x},${y} `; d += (72 * Math.PI) / 180;
+          }
+          return `<polygon points="${p}" fill="rgba(245,176,39,0.28)" stroke="#f5b027" stroke-width="2"/>`;
+        };
+        html += makePent(0) + makePent(108) + makePent(216);
+        pins = [
+          { x: 50, y: 90, tex: '$n=5\\ (\\theta=72^\\circ):\\ 36^\\circ\\text{ Gap!}$', cls: 'rose' }
+        ];
+      } else if (mode === 'fig18') {
+        cap.innerHTML = 'Fig. 1.8 & 1.9 (Book): Left: Notched wheel ($n=4$, no mirror). Right: Reflection symmetry across mirror line $m$.';
+        const cx1 = 155, cy1 = 115;
+        html += `<circle cx="${cx1}" cy="${cy1}" r="54" fill="rgba(248,113,113,0.15)" stroke="#f87171" stroke-width="2.5"/>`;
+        for (let i = 0; i < 4; i++) {
+          const a = (i * 90 * Math.PI) / 180;
+          const x1 = cx1 + 54 * Math.cos(a), y1 = cy1 + 54 * Math.sin(a);
+          const x2 = cx1 + 70 * Math.cos(a + 0.25), y2 = cy1 + 70 * Math.sin(a + 0.25);
+          html += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#f87171" stroke-width="3"/>`;
+        }
+        const cx2 = 370, cy2 = 115;
+        html += `<circle cx="${cx2}" cy="${cy2}" r="54" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="2.5"/>`;
+        html += `<line x1="${cx2}" y1="30" x2="${cx2}" y2="195" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="5,4"/>`;
+        pins = [
+          { x: 30, y: 89, tex: '$\\text{Point Group } 4\\ (\\text{No } m)$', cls: 'rose' },
+          { x: 78, y: 20, tex: '$m$', cls: 'green' },
+          { x: 71, y: 89, tex: '$\\text{Reflection across } m$', cls: 'cyan' }
+        ];
+      }
+
+      svg.innerHTML = html;
+      set2DMathPins('sec2MathLayer', pins);
+      typesetMath(cap);
+    };
+
+    /* =========================================================================
+       5. 3D TOOL 2: ALL 14 BRAVAIS LATTICES, FCT=BCT, MILLER PLANES & DIRECTIONS
+       ========================================================================= */
+    let t2Lat = 'cubP';
+    let t2Miller = '100';
+    let t2RotX = -0.4, t2RotY = 0.6;
+    let t2Pins = [];
+
+    function projT2(x, y, z, cx, cy, scale) {
+      const cy1 = Math.cos(t2RotY), sy1 = Math.sin(t2RotY);
+      const x1 = x * cy1 - z * sy1, z1 = x * sy1 + z * cy1;
+      const cx1 = Math.cos(t2RotX), sx1 = Math.sin(t2RotX);
+      const y2 = y * cx1 - z1 * sx1, z2 = y * sx1 + z1 * cx1;
+      const fov = 4.8 / (4.8 + z2 * 0.3);
+      return { px: cx + x1 * scale * fov, py: cy - y2 * scale * fov, z: z2 };
+    }
+
+    function refreshTool2Pins() {
+      const pins = [
+        { pos: [1.22, -1, -1], tex: '$\\mathbf{a}$', cls: 'cyan' },
+        { pos: [-1, -1, 1.22], tex: '$\\mathbf{b}$', cls: 'cyan' },
+        { pos: [-1, 1.22, -1], tex: '$\\mathbf{c}$', cls: 'cyan' }
+      ];
+      if (t2Lat === 'fct') {
+        pins.push({ pos: [0, 0, 0], tex: '$\\text{BCT Cell } (a\' = a/\\sqrt{2})$', cls: 'amber' });
+      }
+      if (t2Miller === '100') {
+        pins.push({ pos: [1.05, 0, 0], tex: '$(100)$', cls: 'amber' });
+        pins.push({ pos: [1.3, 0.25, 0], tex: '$[100]$', cls: 'rose' });
+      } else if (t2Miller === '110') {
+        pins.push({ pos: [0.3, 0.3, 0.3], tex: '$(110)$', cls: 'amber' });
+        pins.push({ pos: [-1.05, 1.05, -1], tex: '$AB = [\\bar{1}10]$', cls: 'rose' });
+      } else if (t2Miller === '111') {
+        pins.push({ pos: [-0.2, 0.2, 0.2], tex: '$(111)$', cls: 'amber' });
+        pins.push({ pos: [1.1, 1.1, 1.1], tex: '$OQ = [111]$', cls: 'rose' });
+      } else if (t2Miller === '212') {
+        pins.push({ pos: [0, 0.2, 0], tex: '$(212)\\text{ [Fig 1.15]}$', cls: 'amber' });
+      } else if (t2Miller === '312') {
+        pins.push({ pos: [0, 0.2, 0], tex: '$(312)\\text{ [Page 8]}$', cls: 'amber' });
+      }
+      t2Pins = create3DMathPins('tool2MathLayer', pins);
+    }
+
+    window.setTool2Lattice = function(lat) {
+      t2Lat = lat;
+      ['cubP','cubI','cubF','tetI','fct','ortC','rho','hex','monC','tri'].forEach(k => {
+        const b = document.getElementById(`t2-${k}`);
+        if (b) b.classList.toggle('active', k === lat);
+      });
+      const cap = document.getElementById('tool2Caption');
+      const map = {
+        cubP: 'Cubic P (sc): $a=b=c,\\ \\alpha=\\beta=\\gamma=90^\\circ,\\ N=1$.',
+        cubI: 'Cubic I (bcc): $a=b=c,\\ \\alpha=\\beta=\\gamma=90^\\circ,\\ N=2$ (corners + body centre).',
+        cubF: 'Cubic F (fcc): $a=b=c,\\ \\alpha=\\beta=\\gamma=90^\\circ,\\ N=4$ (corners + 6 face centres).',
+        tetI: 'Tetragonal I (bct): $a=b\\neq c,\\ \\alpha=\\beta=\\gamma=90^\\circ$ ($\\beta\\text{-Sn}, \\text{TiO}_2$).',
+        fct: 'Book Fig. 1.12 in 3D: Two Face-Centred Tetragonal (FCT) cells placed side-by-side contain a Body-Centred Tetragonal (BCT) cell (amber)!',
+        ortC: 'Orthorhombic C (End-Centred, eco): $a\\neq b\\neq c,\\ \\alpha=\\beta=\\gamma=90^\\circ$, points at corners + two opposite faces.',
+        rho: 'Rhombohedral / Trigonal (P or R): $a=b=c,\\ \\alpha=\\beta=\\gamma\\neq 90^\\circ$ (As, Sb, Bi).',
+        hex: 'Hexagonal (P): $a=b\\neq c,\\ \\alpha=\\beta=90^\\circ,\\ \\gamma=120^\\circ$ (Mg, Zn, Cd).',
+        monC: 'Monoclinic C (End-Centred): $a\\neq b\\neq c,\\ \\alpha=\\gamma=90^\\circ\\neq\\beta$ (Gypsum).',
+        tri: 'Triclinic (P): $a\\neq b\\neq c,\\ \\alpha\\neq\\beta\\neq\\gamma\\neq 90^\\circ$ ($\\text{K}_2\\text{Cr}_2\\text{O}_7$).'
+      };
+      cap.innerHTML = map[lat];
+      typesetMath(cap);
+      refreshTool2Pins();
+      drawTool2();
+    };
+
+    window.setTool2Miller = function(mp) {
+      t2Miller = mp;
+      ['none','100','110','111','212','312'].forEach(k => {
+        const b = document.getElementById(`t2m-${k}`);
+        if (b) b.classList.toggle('active', k === mp);
+      });
+      refreshTool2Pins();
+      drawTool2();
+    };
+
+    function drawTool2() {
+      const canvas = document.getElementById('tool2Canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2, cy = canvas.height / 2, scale = 82;
+
+      if (t2Lat === 'fct') {
+        // Draw two 3D FCT cells side by side and highlight the inner 3D BCT cell!
+        const drawBox = (xOff, col) => {
+          const c = [];
+          for (let i=0; i<8; i++) c.push([xOff + ((i&1)?0.6:-0.6), (i&2)?0.9:-0.9, (i&4)?0.6:-0.6]);
+          [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+            const p1 = projT2(...c[a], cx, cy, scale), p2 = projT2(...c[b], cx, cy, scale);
+            ctx.strokeStyle = col; ctx.lineWidth = 1.4;
+            ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+          });
+        };
+        drawBox(-0.6, 'rgba(148,163,184,0.45)');
+        drawBox(0.6, 'rgba(148,163,184,0.45)');
+
+        // Inner BCT cell rotated by 45 deg
+        const bct = [
+          [0,-0.9,-0.6],[0.6,-0.9,0],[0,-0.9,0.6],[-0.6,-0.9,0],
+          [0,0.9,-0.6],[0.6,0.9,0],[0,0.9,0.6],[-0.6,0.9,0]
+        ];
+        [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+          const p1 = projT2(...bct[a], cx, cy, scale), p2 = projT2(...bct[b], cx, cy, scale);
+          ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        });
+        bct.concat([[0,0,0]]).forEach((pt, idx) => {
+          const p = projT2(...pt, cx, cy, scale);
+          ctx.beginPath(); ctx.arc(p.px, p.py, idx===8?8:5.5, 0, Math.PI*2);
+          ctx.fillStyle = idx===8 ? '#f5b027' : '#38bdf8'; ctx.fill();
+        });
+        update3DMathPins(t2Pins, projT2, canvas);
+        return;
+      }
+
+      // General unit cell deformation parameters (sx, sy, sz, shearX, shearZ)
+      let sx = 1, sy = 1, sz = 1, shX = 0, shZ = 0;
+      if (t2Lat === 'tetI') { sy = 1.3; }
+      if (t2Lat === 'ortC') { sx = 0.8; sy = 1.3; sz = 1.05; }
+      if (t2Lat === 'rho')  { shX = 0.32; shZ = 0.25; }
+      if (t2Lat === 'hex')  { shX = 0.5; sy = 1.25; }
+      if (t2Lat === 'monC') { sx = 0.85; sy = 1.2; shX = 0.38; }
+      if (t2Lat === 'tri')  { sx = 0.85; sy = 1.2; shX = 0.35; shZ = -0.28; }
+
+      const xform = ([x, y, z]) => [x * sx + y * shX, y * sy, z * sz + y * shZ];
+
+      const corners = [];
+      for (let i = 0; i < 8; i++) {
+        corners.push(xform([(i & 1) ? 1 : -1, (i & 2) ? 1 : -1, (i & 4) ? 1 : -1]));
+      }
+      [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+        const p1 = projT2(...corners[a], cx, cy, scale), p2 = projT2(...corners[b], cx, cy, scale);
+        ctx.strokeStyle = 'rgba(148,163,184,0.5)'; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+      });
+
+      // Draw Miller Plane if active
+      if (t2Miller !== 'none') {
+        let poly = [];
+        if (t2Miller === '100') poly = [[1,-1,-1],[1,1,-1],[1,1,1],[1,-1,1]];
+        if (t2Miller === '110') poly = [[1,-1,-1],[1,1,-1],[-1,1,1],[-1,-1,1]];
+        if (t2Miller === '111') poly = [[1,-1,-1],[-1,1,-1],[-1,-1,1]];
+        if (t2Miller === '212') poly = [[0,-1,-1],[1,1,-1],[-1,1,1],[-1,-1,0]];
+        if (t2Miller === '312') poly = [[-0.33,-1,-1],[1,1,-1],[-1,1,0]];
+
+        if (poly.length) {
+          ctx.beginPath();
+          poly.map(xform).forEach((pt, idx) => {
+            const p = projT2(...pt, cx, cy, scale);
+            if (idx === 0) ctx.moveTo(p.px, p.py); else ctx.lineTo(p.px, p.py);
+          });
+          ctx.closePath();
+          ctx.fillStyle = 'rgba(245,176,39,0.32)'; ctx.fill();
+          ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2.4; ctx.stroke();
+        }
+
+        if (t2Miller === '111') {
+          const o = projT2(...xform([-1,-1,-1]), cx, cy, scale);
+          const q = projT2(...xform([1,1,1]), cx, cy, scale);
+          ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(o.px, o.py); ctx.lineTo(q.px, q.py); ctx.stroke();
+        } else if (t2Miller === '110') {
+          const aPt = projT2(...xform([1,-1,-1]), cx, cy, scale);
+          const bPt = projT2(...xform([-1,1,-1]), cx, cy, scale);
+          ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(aPt.px, aPt.py); ctx.lineTo(bPt.px, bPt.py); ctx.stroke();
+        } else if (t2Miller === '100') {
+          const o = projT2(...xform([-1,-1,-1]), cx, cy, scale);
+          const aPt = projT2(...xform([1,-1,-1]), cx, cy, scale);
+          ctx.strokeStyle = '#fb7185'; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(o.px, o.py); ctx.lineTo(aPt.px, aPt.py); ctx.stroke();
+        }
+      }
+
+      const pts = corners.map(c => ({ pos: c, col: '#38bdf8', r: 7.5 }));
+      if (t2Lat === 'cubI' || t2Lat === 'tetI') {
+        pts.push({ pos: [0,0,0], col: '#f5b027', r: 10 });
+      } else if (t2Lat === 'cubF') {
+        [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].forEach(f => {
+          pts.push({ pos: xform(f), col: '#4ade80', r: 8.5 });
+        });
+      } else if (t2Lat === 'ortC' || t2Lat === 'monC') {
+        [[0,1,0],[0,-1,0]].forEach(c => {
+          pts.push({ pos: xform(c), col: '#4ade80', r: 9 });
+        });
+      }
+
+      pts.map(a => ({ ...a, ...projT2(...a.pos, cx, cy, scale) }))
+         .sort((a,b) => b.z - a.z)
+         .forEach(a => {
+           ctx.beginPath(); ctx.arc(a.px, a.py, a.r, 0, Math.PI*2);
+           ctx.fillStyle = a.col; ctx.fill();
+           ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.4; ctx.stroke();
+         });
+
+      update3DMathPins(t2Pins, projT2, canvas);
+    }
+
+    /* =========================================================================
+       6. 3D TOOL 3: SIMPLE CRYSTAL STRUCTURES & 3D CLOSE-PACKED STACKING
+       ========================================================================= */
+    let t3Struct = 'hcp';
+    let t3RotX = -0.38, t3RotY = 0.58;
+    let t3Pins = [];
+
+    function projT3(x, y, z, cx, cy, scale) {
+      const cy1 = Math.cos(t3RotY), sy1 = Math.sin(t3RotY);
+      const x1 = x * cy1 - z * sy1, z1 = x * sy1 + z * cy1;
+      const cx1 = Math.cos(t3RotX), sx1 = Math.sin(t3RotX);
+      const y2 = y * cx1 - z1 * sx1, z2 = y * sx1 + z1 * cx1;
+      const fov = 4.8 / (4.8 + z2 * 0.3);
+      return { px: cx + x1 * scale * fov, py: cy - y2 * scale * fov, z: z2 };
+    }
+
+    window.setTool3Struct = function(st) {
+      t3Struct = st;
+      ['hcp','stack','fcc','bcc','sc','dia','zns','nacl','cscl'].forEach(k => {
+        const b = document.getElementById(`t3-${k}`);
+        if (b) b.classList.toggle('active', k === st);
+      });
+      const cap = document.getElementById('tool3Caption');
+      if (st === 'hcp') {
+        cap.innerHTML = 'Hexagonal Close-Packed (HCP, Fig. 1.19): Conventional cell ($N=6$), primitive basis at $(0,0,0)$ and $(\\frac{2}{3},\\frac{1}{3},\\frac{1}{2})$, $c=1.633a,\\ f=0.74$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [1.15, -1.05, 0], tex: '$a$', cls: 'cyan' },
+          { pos: [1.15, 0, 0], tex: '$c = 1.633a$', cls: 'amber' },
+          { pos: [0.3, 0, 0.2], tex: '$(\\frac{2}{3},\\frac{1}{3},\\frac{1}{2})$', cls: 'green' }
+        ]);
+      } else if (st === 'stack') {
+        cap.innerHTML = '3D Close-Packed Layer Stacking (Fig. 1.18): Bottom Layer $A$ (red), Middle Layer $B$ (blue), Top Layer $C$ (green, $\\text{ABCABC} = \\text{fcc}$).';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [1.25, -0.8, 0], tex: '$\\text{Layer } A$', cls: 'rose' },
+          { pos: [1.25, 0, 0], tex: '$\\text{Layer } B$', cls: 'cyan' },
+          { pos: [1.25, 0.8, 0], tex: '$\\text{Layer } C\\ (\\text{FCC})$', cls: 'green' }
+        ]);
+      } else if (st === 'fcc') {
+        cap.innerHTML = 'Face-Centred Cubic (FCC, Fig. 1.20): $N=4$, Coord $=12$, touching along face diagonal $4r = \\sqrt{2}a$, $f = \\frac{\\pi}{3\\sqrt{2}} \\approx 0.74$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [0, 0, 1.05], tex: '$4r = \\sqrt{2}a$', cls: 'green' },
+          { pos: [0, -1.15, 1], tex: '$a$', cls: 'cyan' }
+        ]);
+      } else if (st === 'bcc') {
+        cap.innerHTML = 'Body-Centred Cubic (BCC, Fig. 1.21): $N=2$, Coord $=8$, touching along body diagonal $4r = \\sqrt{3}a$, $f = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [0.2, 0.2, 0.2], tex: '$4r = \\sqrt{3}a$', cls: 'amber' },
+          { pos: [0, -1.15, 1], tex: '$a$', cls: 'cyan' }
+        ]);
+      } else if (st === 'sc') {
+        cap.innerHTML = 'Simple Cubic (SC, Fig. 1.22): $N=1$, Coord $=6$, touching along edge $a = 2r$, $f = \\frac{\\pi}{6} \\approx 0.52$ (Polonium).';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [0, -1.15, 1], tex: '$a = 2r$', cls: 'cyan' }
+        ]);
+      } else if (st === 'dia') {
+        cap.innerHTML = 'Diamond Cubic (Fig. 1.24): FCC + 2 carbon atoms at $(0,0,0)$ and $(\\frac{1}{4},\\frac{1}{4},\\frac{1}{4})$. Coord $=4$, bond $\\frac{\\sqrt{3}}{4}a$, $f = 0.34$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [-0.5, -0.5, -0.5], tex: '$(\\frac{1}{4},\\frac{1}{4},\\frac{1}{4})$', cls: 'amber' },
+          { pos: [0.5, 0.5, -0.5], tex: '$d = \\frac{\\sqrt{3}}{4}a$', cls: 'green' }
+        ]);
+      } else if (st === 'zns') {
+        cap.innerHTML = 'Zinc Blende ($\\text{ZnS}$, Fig. 1.23): Diamond cubic network with $\\text{Zn}$ (green) and $\\text{S}$ (amber) on the two interpenetrating FCC sublattices.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [1, 1, 1], tex: '$\\text{Zn}$', cls: 'green' },
+          { pos: [-0.5, -0.5, -0.5], tex: '$\\text{S}$', cls: 'amber' }
+        ]);
+      } else if (st === 'nacl') {
+        cap.innerHTML = 'Sodium Chloride ($\\text{NaCl}$, Fig. 1.25): FCC lattice with basis $\\text{Na}^+$ at $(0,0,0)$ and $\\text{Cl}^-$ at $(a/2,0,0)$. 4 molecules/cell, $a = 2(r_+ + r_-)$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [1, 1, 1], tex: '$\\text{Cl}^-$', cls: 'green' },
+          { pos: [0, 0, 0], tex: '$\\text{Na}^+$', cls: 'amber' },
+          { pos: [0, -1.18, 1], tex: '$a = 2(r_+ + r_-)$', cls: 'cyan' }
+        ]);
+      } else if (st === 'cscl') {
+        cap.innerHTML = 'Cesium Chloride ($\\text{CsCl}$, Table 1.2): Simple Cubic lattice ($P$) with two-ion basis $\\text{Cs}^+$ at $(0,0,0)$ and $\\text{Cl}^-$ at $(\\frac{1}{2},\\frac{1}{2},\\frac{1}{2})$. Coord $=8$.';
+        t3Pins = create3DMathPins('tool3MathLayer', [
+          { pos: [0, 0, 0], tex: '$\\text{Cs}^+\\ (\\frac{1}{2},\\frac{1}{2},\\frac{1}{2})$', cls: 'amber' },
+          { pos: [1, 1, 1], tex: '$\\text{Cl}^-\\ (0,0,0)$', cls: 'cyan' }
+        ]);
+      }
+      typesetMath(cap);
+      drawTool3();
+    };
+
+    function drawTool3() {
+      const canvas = document.getElementById('tool3Canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2, cy = canvas.height / 2, scale = 84;
+
+      if (t3Struct === 'hcp') {
+        const topH = [], botH = [];
+        for (let i=0; i<6; i++) {
+          const a = (i * 60 * Math.PI) / 180;
+          topH.push([Math.cos(a), 1.0, Math.sin(a)]);
+          botH.push([Math.cos(a), -1.0, Math.sin(a)]);
+        }
+        ctx.strokeStyle = 'rgba(148,163,184,0.45)'; ctx.lineWidth = 1.6;
+        for (let i=0; i<6; i++) {
+          const pT1 = projT3(...topH[i], cx, cy, scale), pT2 = projT3(...topH[(i+1)%6], cx, cy, scale);
+          const pB1 = projT3(...botH[i], cx, cy, scale), pB2 = projT3(...botH[(i+1)%6], cx, cy, scale);
+          ctx.beginPath();
+          ctx.moveTo(pT1.px, pT1.py); ctx.lineTo(pT2.px, pT2.py);
+          ctx.moveTo(pB1.px, pB1.py); ctx.lineTo(pB2.px, pB2.py);
+          ctx.moveTo(pT1.px, pT1.py); ctx.lineTo(pB1.px, pB1.py);
+          ctx.stroke();
+        }
+        // Highlight primitive rhombic prism inside HCP (Fig. 1.19)
+        const primIdx = [0, 1, 2];
+        ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2.4;
+        const p0B = projT3(0,-1,0, cx, cy, scale), p0T = projT3(0,1,0, cx, cy, scale);
+        ctx.beginPath(); ctx.moveTo(p0B.px, p0B.py); ctx.lineTo(p0T.px, p0T.py); ctx.stroke();
+
+        const atoms = [];
+        topH.forEach(p => atoms.push({ pos: p, col: '#38bdf8', r: 8.5 }));
+        botH.forEach(p => atoms.push({ pos: p, col: '#38bdf8', r: 8.5 }));
+        atoms.push({ pos: [0, 1.0, 0], col: '#4ade80', r: 9 });
+        atoms.push({ pos: [0, -1.0, 0], col: '#4ade80', r: 9 });
+        [30, 150, 270].forEach(deg => {
+          const a = (deg * Math.PI) / 180;
+          atoms.push({ pos: [0.55*Math.cos(a), 0, 0.55*Math.sin(a)], col: '#f5b027', r: 10.5 });
+        });
+        atoms.map(a => ({ ...a, ...projT3(...a.pos, cx, cy, scale) }))
+             .sort((a,b) => b.z - a.z)
+             .forEach(a => {
+               ctx.beginPath(); ctx.arc(a.px, a.py, a.r, 0, Math.PI*2);
+               ctx.fillStyle = a.col; ctx.fill();
+               ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.4; ctx.stroke();
+             });
+        update3DMathPins(t3Pins, projT3, canvas);
+        return;
+      }
+
+      if (t3Struct === 'stack') {
+        const atoms = [];
+        // Layer A at y = -0.8
+        atoms.push({ pos: [0, -0.8, 0], col: '#fb7185', r: 14 });
+        for (let i=0; i<6; i++) {
+          const a = (i * 60 * Math.PI) / 180;
+          atoms.push({ pos: [0.75*Math.cos(a), -0.8, 0.75*Math.sin(a)], col: '#fb7185', r: 14 });
+        }
+        // Layer B at y = 0
+        [30, 150, 270].forEach(deg => {
+          const a = (deg * Math.PI) / 180;
+          atoms.push({ pos: [0.45*Math.cos(a), 0, 0.45*Math.sin(a)], col: '#38bdf8', r: 14 });
+        });
+        // Layer C at y = +0.8
+        [90, 210, 330].forEach(deg => {
+          const a = (deg * Math.PI) / 180;
+          atoms.push({ pos: [0.45*Math.cos(a), 0.8, 0.45*Math.sin(a)], col: '#4ade80', r: 14 });
+        });
+        atoms.map(a => ({ ...a, ...projT3(...a.pos, cx, cy, scale) }))
+             .sort((a,b) => b.z - a.z)
+             .forEach(a => {
+               ctx.beginPath(); ctx.arc(a.px, a.py, a.r, 0, Math.PI*2);
+               ctx.fillStyle = a.col; ctx.fill();
+               ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.5; ctx.stroke();
+             });
+        update3DMathPins(t3Pins, projT3, canvas);
+        return;
+      }
+
+      // Cube structures
+      const corners = [];
+      for (let i=0; i<8; i++) corners.push([(i&1)?1:-1, (i&2)?1:-1, (i&4)?1:-1]);
+      [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+        const p1 = projT3(...corners[a], cx, cy, scale), p2 = projT3(...corners[b], cx, cy, scale);
+        ctx.strokeStyle = 'rgba(148,163,184,0.45)'; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+      });
+
+      if (t3Struct === 'bcc' || t3Struct === 'cscl') {
+        const p1 = projT3(-1,-1,-1, cx, cy, scale), p2 = projT3(1,1,1, cx, cy, scale);
+        ctx.setLineDash([4,3]); ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        ctx.setLineDash([]);
+      } else if (t3Struct === 'fcc') {
+        const p1 = projT3(-1,-1,1, cx, cy, scale), p2 = projT3(1,1,1, cx, cy, scale);
+        ctx.setLineDash([4,3]); ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      const atoms = [];
+      corners.forEach(c => atoms.push({ pos: c, col: (t3Struct==='zns'||t3Struct==='nacl') ? '#4ade80' : '#38bdf8', r: 9 }));
+
+      if (t3Struct === 'bcc' || t3Struct === 'cscl') {
+        atoms.push({ pos: [0,0,0], col: '#f5b027', r: 12.5 });
+      }
+      if (['fcc','dia','zns','nacl'].includes(t3Struct)) {
+        [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].forEach(f => {
+          atoms.push({ pos: f, col: '#4ade80', r: 9.5 });
+        });
+      }
+      if (t3Struct === 'dia' || t3Struct === 'zns') {
+        const tetra = [[-0.5,-0.5,-0.5],[0.5,0.5,-0.5],[0.5,-0.5,0.5],[-0.5,0.5,0.5]];
+        tetra.forEach(t => atoms.push({ pos: t, col: '#f5b027', r: 11 }));
+      }
+      if (t3Struct === 'nacl') {
+        [[0,0,0],[0,-1,-1],[0,1,-1],[0,-1,1],[0,1,1],[-1,0,-1],[1,0,-1],[-1,0,1],[1,0,1],[-1,-1,0],[1,-1,0],[-1,1,0],[1,1,0]].forEach(o => {
+          atoms.push({ pos: o, col: '#f97316', r: 7 });
+        });
+      }
+
+      atoms.map(a => ({ ...a, ...projT3(...a.pos, cx, cy, scale) }))
+           .sort((a,b) => b.z - a.z)
+           .forEach(a => {
+             ctx.beginPath(); ctx.arc(a.px, a.py, a.r, 0, Math.PI*2);
+             ctx.fillStyle = a.col; ctx.fill();
+             ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.4; ctx.stroke();
+           });
+
+      update3DMathPins(t3Pins, projT3, canvas);
+    }
+
+    /* =========================================================================
+       7. 3D TOOL 4: EWALD SPHERE, RECIPROCAL VECTORS & 3D BRILLOUIN ZONES
+       ========================================================================= */
+    let t4Mode = 'bcc';
+    let t4RotX = -0.38, t4RotY = 0.58;
+    let t4Pins = [];
+
+    function projT4(x, y, z, cx, cy, scale) {
+      const cy1 = Math.cos(t4RotY), sy1 = Math.sin(t4RotY);
+      const x1 = x * cy1 - z * sy1, z1 = x * sy1 + z * cy1;
+      const cx1 = Math.cos(t4RotX), sx1 = Math.sin(t4RotX);
+      const y2 = y * cx1 - z1 * sx1, z2 = y * sx1 + z1 * cx1;
+      const fov = 5 / (5 + z2 * 0.3);
+      return { px: cx + x1 * scale * fov, py: cy - y2 * scale * fov, z: z2 };
+    }
+
+    window.setTool4Mode = function(mode) {
+      t4Mode = mode;
+      ['bcc','fcc','sc','sq','ewald','mono','vecs'].forEach(k => {
+        const b = document.getElementById(`t4-${k}`);
+        if (b) b.classList.toggle('active', k === mode);
+      });
+      const cap = document.getElementById('tool4Caption');
+      if (mode === 'bcc') {
+        cap.innerHTML = 'First Brillouin Zone of BCC (Fig. 2.15): 12-faced Rhombic Dodecahedron bounded by $\\mathbf{G} = \\frac{2\\pi}{a}(\\pm\\hat{\\mathbf{i}}\\pm\\hat{\\mathbf{j}})$ and cyclic.';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [0, 0, 0], tex: '$\\mathbf{0}$', cls: 'amber' },
+          { pos: [1.35, 0, 0], tex: '$\\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}})$', cls: 'cyan' }
+        ]);
+      } else if (mode === 'fcc') {
+        cap.innerHTML = 'First Brillouin Zone of FCC (Fig. 2.16): 14-faced Truncated Octahedron (8 hexagons from $\\frac{2\\pi}{a}(\\pm\\hat{\\mathbf{i}}\\pm\\hat{\\mathbf{j}}\\pm\\hat{\\mathbf{k}})$ + 6 squares from $\\frac{2\\pi}{a}(\\pm 2\\hat{\\mathbf{i}})$).';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [0, 1.15, 0], tex: '$\\text{Square Face }\\frac{2\\pi}{a}(2\\hat{\\mathbf{j}})$', cls: 'amber' },
+          { pos: [0.7, 0.7, 0.7], tex: '$\\text{Hexagon }\\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$', cls: 'cyan' }
+        ]);
+      } else if (mode === 'sc') {
+        cap.innerHTML = 'First Brillouin Zone of Simple Cubic (SC, §2.7.2): Cube of side $2\\pi/a$ bounded by $k_x, k_y, k_z = \\pm\\pi/a$.';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [1.1, 0, 0], tex: '$k_x = +\\frac{\\pi}{a}$', cls: 'cyan' },
+          { pos: [-1.1, 0, 0], tex: '$k_x = -\\frac{\\pi}{a}$', cls: 'cyan' },
+          { pos: [0, 1.1, 0], tex: '$k_y = +\\frac{\\pi}{a}$', cls: 'amber' }
+        ]);
+      } else if (mode === 'sq') {
+        cap.innerHTML = '2D Square Lattice Brillouin Zones (Fig. 2.14): 1st zone bounded by $k_x, k_y = \\pm\\pi/a$; 2nd zone by $\\pm k_x \\pm k_y = 2\\pi/a$.';
+        set2DMathPins('tool4MathLayer', [
+          { x: 50, y: 50, tex: '$\\text{1st Zone}$', cls: 'cyan' },
+          { x: 66, y: 50, tex: '$+\\frac{\\pi}{a}$', cls: 'cyan' },
+          { x: 50, y: 20, tex: '$\\text{2nd Zone: }\\pm k_x\\pm k_y = \\frac{2\\pi}{a}$', cls: 'amber' }
+        ]);
+      } else if (mode === 'ewald') {
+        cap.innerHTML = '3D Ewald Sphere in Reciprocal Space (Fig. 2.12): $\\mathbf{k}\' = \\mathbf{k} + \\mathbf{G}$ with $k\'^2 = k^2 \\implies 2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0$.';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [-0.95, -0.2, 0], tex: '$A$', cls: 'amber' },
+          { pos: [0.95, 0, 0], tex: '$O\\ (\\mathbf{0})$', cls: 'cyan' },
+          { pos: [0.45, 0.85, 0], tex: '$B\\ (\\mathbf{G})$', cls: 'green' },
+          { pos: [0, -0.2, 0], tex: '$\\mathbf{k}$', cls: 'cyan' },
+          { pos: [-0.2, 0.55, 0], tex: '$\\mathbf{k}\'$', cls: 'cyan' }
+        ]);
+      } else if (mode === 'mono') {
+        cap.innerHTML = '3D Monoclinic Unit Cell & Reciprocal Vectors (Figs. 2.8–2.9): Because $\\beta \\neq 90^\\circ$, $\\mathbf{a}^* \\perp \\mathbf{c}$ is NOT parallel to $\\mathbf{a}$ ($|\\mathbf{a}^*| = \\frac{1}{a\\cos\\theta}$).';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [1.2, -0.6, 0], tex: '$\\mathbf{a}$', cls: 'cyan' },
+          { pos: [-0.5, 0.9, 0], tex: '$\\mathbf{c}$', cls: 'cyan' },
+          { pos: [0.95, 0.55, 0], tex: '$\\mathbf{a}^* \\perp \\mathbf{c}$', cls: 'amber' },
+          { pos: [0, 1.05, 0], tex: '$\\mathbf{c}^* \\perp \\mathbf{a}$', cls: 'green' }
+        ]);
+      } else if (mode === 'vecs') {
+        cap.innerHTML = '3D Direct BCC Primitive Vectors $\\mathbf{a} = \\frac{a}{2}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}-\\hat{\\mathbf{k}})$ vs. Reciprocal FCC Vectors $\\mathbf{a}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$ (Figs. 2.10–2.11).';
+        t4Pins = create3DMathPins('tool4MathLayer', [
+          { pos: [0, 0, 0], tex: '$\\mathbf{a}_{\\text{bcc}} = \\frac{a}{2}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}-\\hat{\\mathbf{k}})$', cls: 'amber' },
+          { pos: [0, 1.05, 1.05], tex: '$\\mathbf{a}^*_{\\text{fcc}} = \\frac{2\\pi}{a}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$', cls: 'green' }
+        ]);
+      }
+      typesetMath(cap);
+      drawTool4();
+    };
+
+    function drawTool4() {
+      const canvas = document.getElementById('tool4Canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2, cy = canvas.height / 2, scale = 88;
+
+      if (t4Mode === 'sq') {
+        const s = 64;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - 2*s); ctx.lineTo(cx + 2*s, cy);
+        ctx.lineTo(cx, cy + 2*s); ctx.lineTo(cx - 2*s, cy);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(245,176,39,0.26)'; ctx.fill();
+        ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 2; ctx.stroke();
+
+        ctx.fillStyle = 'rgba(56,189,248,0.42)';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.fillRect(cx - s, cy - s, 2*s, 2*s);
+        ctx.strokeRect(cx - s, cy - s, 2*s, 2*s);
+        return;
+      }
+
+      if (t4Mode === 'ewald') {
+        // Draw 3D wireframe Ewald sphere + vectors k, k', G
+        for (let lat = -60; lat <= 60; lat += 30) {
+          const rLat = Math.cos((lat*Math.PI)/180), yLat = Math.sin((lat*Math.PI)/180);
+          ctx.beginPath();
+          for (let lon = 0; lon <= 360; lon += 15) {
+            const rad = (lon*Math.PI)/180;
+            const p = projT4(rLat*Math.cos(rad), yLat, rLat*Math.sin(rad), cx, cy, scale);
+            lon===0 ? ctx.moveTo(p.px,p.py) : ctx.lineTo(p.px,p.py);
+          }
+          ctx.strokeStyle = 'rgba(56,189,248,0.28)'; ctx.lineWidth = 1.2; ctx.stroke();
+        }
+        const pA = projT4(-0.9, 0, 0, cx, cy, scale);
+        const pO = projT4(0.9, 0, 0, cx, cy, scale);
+        const pB = projT4(0.45, 0.78, 0, cx, cy, scale);
+        ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2.8;
+        ctx.beginPath(); ctx.moveTo(pA.px, pA.py); ctx.lineTo(pO.px, pO.py); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(pA.px, pA.py); ctx.lineTo(pB.px, pB.py); ctx.stroke();
+        ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(pO.px, pO.py); ctx.lineTo(pB.px, pB.py); ctx.stroke();
+
+        [[pA,'#f5b027'],[pO,'#fff'],[pB,'#4ade80']].forEach(([p,col]) => {
+          ctx.beginPath(); ctx.arc(p.px, p.py, 5.5, 0, Math.PI*2); ctx.fillStyle = col; ctx.fill();
+        });
+        update3DMathPins(t4Pins, projT4, canvas);
+        return;
+      }
+
+      if (t4Mode === 'mono') {
+        const O = [-0.4, -0.6, 0], A = [1.0, -0.6, 0], C = [-0.8, 0.7, 0];
+        const As = [0.85, 0.35, 0], Cs = [-0.4, 0.85, 0];
+        const drawV = (u, v, col) => {
+          const p1 = projT4(...u, cx, cy, scale), p2 = projT4(...v, cx, cy, scale);
+          ctx.strokeStyle = col; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        };
+        drawV(O, A, '#38bdf8'); drawV(O, C, '#38bdf8');
+        drawV(O, As, '#f5b027'); drawV(O, Cs, '#4ade80');
+        update3DMathPins(t4Pins, projT4, canvas);
+        return;
+      }
+
+      if (t4Mode === 'vecs') {
+        const c = [];
+        for (let i=0; i<8; i++) c.push([(i&1)?1:-1, (i&2)?1:-1, (i&4)?1:-1]);
+        [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]].forEach(([a,b]) => {
+          const p1 = projT4(...c[a], cx, cy, scale), p2 = projT4(...c[b], cx, cy, scale);
+          ctx.strokeStyle = 'rgba(148,163,184,0.4)'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+        });
+        const pCorner = projT4(-1,-1,-1, cx, cy, scale);
+        const pBody = projT4(0,0,0, cx, cy, scale);
+        const pFace = projT4(-1,0,0, cx, cy, scale);
+        ctx.strokeStyle = '#f5b027'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(pCorner.px, pCorner.py); ctx.lineTo(pBody.px, pBody.py); ctx.stroke();
+        ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(pCorner.px, pCorner.py); ctx.lineTo(pFace.px, pFace.py); ctx.stroke();
+        update3DMathPins(t4Pins, projT4, canvas);
+        return;
+      }
+
+      // 3D Brillouin Zone Polyhedra (SC, BCC, FCC)
+      let vertices = [], edges = [];
+      if (t4Mode === 'sc') {
+        for (let i = 0; i < 8; i++) vertices.push([(i & 1) ? 1 : -1, (i & 2) ? 1 : -1, (i & 4) ? 1 : -1]);
+        edges = [[0,1],[2,3],[4,5],[6,7],[0,2],[1,3],[4,6],[5,7],[0,4],[1,5],[2,6],[3,7]];
+      } else if (t4Mode === 'bcc') {
+        for (let i = 0; i < 8; i++) vertices.push([(i & 1) ? 0.65 : -0.65, (i & 2) ? 0.65 : -0.65, (i & 4) ? 0.65 : -0.65]);
+        [[1.3,0,0],[-1.3,0,0],[0,1.3,0],[0,-1.3,0],[0,0,1.3],[0,0,-1.3]].forEach(t => vertices.push(t));
+        for (let c = 0; c < 8; c++) {
+          for (let t = 8; t < 14; t++) {
+            const d2 = Math.pow(vertices[c][0]-vertices[t][0],2) + Math.pow(vertices[c][1]-vertices[t][1],2) + Math.pow(vertices[c][2]-vertices[t][2],2);
+            if (d2 < 1.35) edges.push([c, t]);
+          }
+        }
+      } else if (t4Mode === 'fcc') {
+        const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+        perms.forEach(p => {
+          [-1,1].forEach(s1 => {
+            [-1,1].forEach(s2 => {
+              const pt = [0,0,0];
+              pt[p[0]] = 0; pt[p[1]] = s1 * 0.55; pt[p[2]] = s2 * 1.1;
+              vertices.push(pt);
+            });
+          });
+        });
+        for (let i = 0; i < vertices.length; i++) {
+          for (let j = i + 1; j < vertices.length; j++) {
+            const d2 = Math.pow(vertices[i][0]-vertices[j][0],2) + Math.pow(vertices[i][1]-vertices[j][1],2) + Math.pow(vertices[i][2]-vertices[j][2],2);
+            if (Math.abs(d2 - 0.605) < 0.05) edges.push([i, j]);
+          }
+        }
+      }
+
+      ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+      edges.forEach(([a,b]) => {
+        const p1 = projT4(...vertices[a], cx, cy, scale);
+        const p2 = projT4(...vertices[b], cx, cy, scale);
+        ctx.beginPath(); ctx.moveTo(p1.px, p1.py); ctx.lineTo(p2.px, p2.py); ctx.stroke();
+      });
+      vertices.forEach(v => {
+        const p = projT4(...v, cx, cy, scale);
+        ctx.beginPath(); ctx.arc(p.px, p.py, 3.5, 0, Math.PI*2);
+        ctx.fillStyle = '#f5b027'; ctx.fill();
+      });
+
+      update3DMathPins(t4Pins, projT4, canvas);
+    }
+
+    /* =========================================================================
+       8. STANDALONE OMR CONCEPT CHECK QUESTIONS (15 QUESTIONS)
+       ========================================================================= */
+    const omrQuestions = [
+      {
+        id: 'omr-recall-1',
+        q: 'Q1 (Recall — Sharing Weights): What are the cell-sharing weights of a corner lattice point, a face-centre point, and an interior point?',
+        options: [
+          'Corner $= 1/8$, Face $= 1/2$, Inside $= 1$',
+          'Corner $= 1/4$, Face $= 1/2$, Inside $= 1$',
+          'Corner $= 1/8$, Face $= 1/6$, Inside $= 1/2$',
+          'Corner $= 1/6$, Face $= 1/2$, Inside $= 1$'
+        ],
+        ans: 0,
+        exp: 'A corner touches 8 cubes ($1/8$), a face touches 2 cubes ($1/2$), and an inside point belongs wholly to 1 cube ($1$).'
+      },
+      {
+        id: 'omr-recall-2',
+        q: 'Q2 (Recall — Plane Distance): What is the perpendicular distance $d$ from the origin to the intercept plane $\\frac{h}{a}x + \\frac{k}{b}y + \\frac{l}{c}z = 1$ in an orthogonal lattice?',
+        options: [
+          '$d = \\sqrt{(h/a)^2 + (k/b)^2 + (l/c)^2}$',
+          '$d = \\frac{1}{\\sqrt{(h/a)^2 + (k/b)^2 + (l/c)^2}}$',
+          '$d = \\frac{abc}{h+k+l}$',
+          '$d = \\frac{a+b+c}{\\sqrt{h^2+k^2+l^2}}$'
+        ],
+        ans: 1,
+        exp: 'For $px+qy+rz=1$, the distance from the origin is $1/\\sqrt{p^2+q^2+r^2}$ with $p=h/a,\\ q=k/b,\\ r=l/c$ (Eq. 1.9).'
+      },
+      {
+        id: 'omr-recall-3',
+        q: 'Q3 (Recall — Perpendicular Bisector): Points $\\mathbf{k}$ equidistant from $\\mathbf{0}$ and $\\mathbf{G}$ obey $|\\mathbf{k}|^2 = |\\mathbf{k}-\\mathbf{G}|^2$, which simplifies to:',
+        options: [
+          '$2\\mathbf{k}\\cdot\\mathbf{G} = G^2$',
+          '$\\mathbf{k}\\cdot\\mathbf{G} = 0$',
+          '$\\mathbf{k}\\times\\mathbf{G} = G^2$',
+          '$2k^2 = G^2$'
+        ],
+        ans: 0,
+        exp: 'Expanding $|\\mathbf{k}-\\mathbf{G}|^2 = k^2 - 2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = k^2$ gives $2\\mathbf{k}\\cdot\\mathbf{G} = G^2$.'
+      },
+      {
+        id: 'omr-sec1-1',
+        q: 'Q4 (Section 1.2–1.3): Which statement correctly distinguishes a Primitive Cell from a Non-Primitive Cell?',
+        options: [
+          'A primitive cell has effective lattice point count $= 1$ (and the Wigner–Seitz cell is always primitive).',
+          'A primitive cell has effective count $= 2$, while the Wigner–Seitz cell is non-primitive.',
+          'Vectors needing $\\frac{1}{2}\\mathbf{a}_2 + \\frac{1}{2}\\mathbf{b}_2$ are primitive vectors.',
+          'A space lattice is physical, whereas a crystal structure is purely mathematical.'
+        ],
+        ans: 0,
+        exp: 'Primitive cells have 1 effective lattice point; Wigner–Seitz cells are always primitive; lattices are mathematical while crystal structures are physical.'
+      },
+      {
+        id: 'omr-sec1-2',
+        q: 'Q5 (Section 1.4): Why do just 14 three-dimensional Bravais lattices suffice to describe all physical crystals?',
+        options: [
+          'Because all crystals have the same chemical formula.',
+          'Because $\\text{Crystal Structure} = \\text{Space Lattice} + \\text{Basis}$, and the atomic Basis varies.',
+          'Because non-cubic crystals do not exist.',
+          'Because all crystals have 1 atom per unit cell.'
+        ],
+        ans: 1,
+        exp: 'Fourteen 3D space lattices suffice mathematically because different atomic bases can be placed at each lattice point.'
+      },
+      {
+        id: 'omr-sec2-1',
+        q: 'Q6 (Section 1.5): Which rotation multiplicities $n$ (where $\\theta = 2\\pi/n$) are compatible with lattice translations?',
+        options: [
+          '$n = 1, 2, 3, 4, 5, 6$',
+          '$n = 1, 2, 3, 4, 6$ only (5-fold rotation is excluded)',
+          '$n = 2, 4, 8$ only',
+          'Any integer $n$ is allowed'
+        ],
+        ans: 1,
+        exp: 'From $\\cos\\theta = (m-1)/2$ with $m \\in \\{3,2,1,0,-1\\}$, only $n = 1, 2, 3, 4, 6$ are allowed.'
+      },
+      {
+        id: 'omr-sec2-2',
+        q: 'Q7 (Section 1.6 — Counts): What are the exact counts of (Point Groups, Bravais Lattices, Space Groups) in 2D and in 3D?',
+        options: [
+          '2D: $(10, 5, 17)$ and 3D: $(32, 14, 230)$',
+          '2D: $(5, 10, 17)$ and 3D: $(14, 32, 230)$',
+          '2D: $(10, 4, 14)$ and 3D: $(32, 7, 230)$',
+          '2D: $(12, 5, 20)$ and 3D: $(32, 14, 100)$'
+        ],
+        ans: 0,
+        exp: 'Result 2 (Page 4): 2D has 10 point groups, 5 Bravais lattices, 17 space groups; 3D has 32 point groups, 14 Bravais lattices, 230 space groups.'
+      },
+      {
+        id: 'omr-sec3-1',
+        q: 'Q8 (Section 1.7.4): Why is Face-Centred Tetragonal (FCT) not listed as a 15th Bravais lattice?',
+        options: [
+          'Because tetragonal crystals cannot contain atoms on faces.',
+          'Because two FCT cells placed side-by-side form a Body-Centred Tetragonal (BCT) lattice (Fig. 1.12), which is already listed.',
+          'Because FCT has $\\gamma = 120^\\circ$.',
+          'Because FCT is identical to Triclinic.'
+        ],
+        ans: 1,
+        exp: 'Two face-centred tetragonal cells side-by-side reduce to a body-centred tetragonal cell rotated by $45^\\circ$ (Fig. 1.12).'
+      },
+      {
+        id: 'omr-sec3-2',
+        q: 'Q9 (Section 1.8): A plane cuts the crystal axes at intercepts $1, 2, 1$ (Fig. 1.15). What are its Miller indices $(hkl)$?',
+        options: [
+          '$(212)$',
+          '$(121)$',
+          '$(112)$',
+          '$(221)$'
+        ],
+        ans: 0,
+        exp: 'Reciprocals of $1, 2, 1$ are $1, \\frac{1}{2}, 1$; clearing the fraction by multiplying by 2 gives $(212)$.'
+      },
+      {
+        id: 'omr-sec4-1',
+        q: 'Q10 (Section 1.10–1.12): Match each structure to its (Coordination Number, Packing Fraction $f$):',
+        options: [
+          'HCP/FCC: $(12, 0.74)$; BCC: $(8, 0.68)$; SC: $(6, 0.52)$; Diamond: $(4, 0.34)$',
+          'HCP/FCC: $(8, 0.74)$; BCC: $(12, 0.68)$; SC: $(6, 0.52)$; Diamond: $(4, 0.34)$',
+          'HCP/FCC: $(12, 0.68)$; BCC: $(8, 0.74)$; SC: $(4, 0.34)$; Diamond: $(6, 0.52)$',
+          'All cubic structures have $f = 0.74$'
+        ],
+        ans: 0,
+        exp: 'Result (Page 10): HCP and FCC have 0.74 (coord 12); BCC has 0.68 (coord 8); SC has 0.52 (coord 6); Diamond has 0.34 (coord 4).'
+      },
+      {
+        id: 'omr-sec4-2',
+        q: 'Q11 (Section 1.13 & Example 1.5): For $\\text{NaCl}$ with $r_{\\text{Na}} = 0.98\\text{ \\AA}$ and $r_{\\text{Cl}} = 1.81\\text{ \\AA}$, how many molecules are in the FCC cell and what is $a = 2(r_+ + r_-)$?',
+        options: [
+          '4 molecules per cell; $a = 5.58\\text{ \\AA}$ and $f = 0.663$',
+          '1 molecule per cell; $a = 2.79\\text{ \\AA}$',
+          '2 molecules per cell; $a = 5.58\\text{ \\AA}$',
+          '8 molecules per cell; $a = 11.16\\text{ \\AA}$'
+        ],
+        ans: 0,
+        exp: 'Example 1.5 (Page 10): NaCl has 4 molecules per cell, $a = 2(0.98+1.81) = 5.58\\text{ \\AA}$, $f = 0.663$, and density $2234\\text{ kg m}^{-3}$.'
+      },
+      {
+        id: 'omr-sec5-1',
+        q: 'Q12 (Section 2.2): Why do Laue\'s equations $2a\\sin\\theta\\cos\\alpha = nh\\lambda$ etc. (Eq. 2.4) imply Bragg\'s law $2d_{hkl}\\sin\\theta = n\\lambda$?',
+        options: [
+          'Because the direction cosines of $\\mathbf{N}$ are proportional to $h/a,\\ k/b,\\ l/c$, making $\\mathbf{N} \\perp (hkl)$ with $\\frac{a}{h}\\cos\\alpha = d_{hkl}$.',
+          'Because $\\cos\\alpha = \\cos\\beta = \\cos\\gamma = 1$ simultaneously.',
+          'Because $\\mathbf{N}$ is parallel to the $(hkl)$ plane.',
+          'They only agree when $\\theta = 90^\\circ$.'
+        ],
+        ans: 0,
+        exp: 'Using $d_{hkl} = \\frac{a}{h}\\cos\\alpha$ (Eq. 1.7) directly in $2a\\sin\\theta\\cos\\alpha = nh\\lambda$ gives $2d_{hkl}\\sin\\theta = n\\lambda$.'
+      },
+      {
+        id: 'omr-sec5-2',
+        q: 'Q13 (Section 2.4): What are the primitive cell volumes of Direct BCC and Direct FCC (cube edge $a$), and what are their reciprocal lattices?',
+        options: [
+          'BCC has $V = a^3/2$ (reciprocal is FCC); FCC has $V = a^3/4$ (reciprocal is BCC).',
+          'BCC has $V = a^3$ (reciprocal is BCC); FCC has $V = a^3$ (reciprocal is FCC).',
+          'BCC has $V = a^3/4$ (reciprocal is SC); FCC has $V = a^3/2$ (reciprocal is HCP).',
+          'Both have $V = a^3/8$.'
+        ],
+        ans: 0,
+        exp: 'BCC has $V = a^3/2$ and its reciprocal is FCC (Eq. 2.23); FCC has $V = a^3/4$ and its reciprocal is BCC (Eq. 2.25).'
+      },
+      {
+        id: 'omr-sec5-3',
+        q: 'Q14 (Section 2.6): Which equation is the Vector Form of Bragg\'s Law derived from the Ewald sphere ($\mathbf{k}\' = \\mathbf{k} + \\mathbf{G},\\ k\'^2 = k^2$)?',
+        options: [
+          '$2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0$ (Eq. 2.28)',
+          '$\\mathbf{k}\\cdot\\mathbf{G} = 2\\pi$',
+          '$\\mathbf{k}\\times\\mathbf{G} = 0$',
+          '$k^2 + G^2 = 0$'
+        ],
+        ans: 0,
+        exp: 'Squaring $\\mathbf{k}\' = \\mathbf{k} + \\mathbf{G}$ and cancelling $k\'^2 = k^2$ gives $2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0$ (Eq. 2.28).'
+      },
+      {
+        id: 'omr-sec5-4',
+        q: 'Q15 (Section 2.7): Give the 3D shapes of the First Brillouin Zones of SC, BCC, and FCC lattices:',
+        options: [
+          'SC: Cube ($2\\pi/a$); BCC: Rhombic Dodecahedron (12 faces); FCC: Truncated Octahedron (14 faces)',
+          'SC: Cube; BCC: Truncated Octahedron; FCC: Rhombic Dodecahedron',
+          'SC: Sphere; BCC: Cube; FCC: Octahedron',
+          'All three have cubic first Brillouin zones'
+        ],
+        ans: 0,
+        exp: 'Result (Page 16): SC: cube ($2\\pi/a$); BCC: rhombic dodecahedron (Fig. 2.15); FCC: truncated octahedron (Fig. 2.16).'
+      }
+    ];
+
+    function renderAllOMR() {
+      const letters = ['A', 'B', 'C', 'D'];
+      omrQuestions.forEach((item) => {
+        const container = document.getElementById(item.id);
+        if (!container) return;
+        container.innerHTML = `
+          <div class="omr-box">
+            <div class="omr-header">
+              <span class="omr-badge"><span class="material-symbols-outlined" style="font-size:0.95rem;">fact_check</span> OMR CONCEPT CHECK</span>
+              <span style="font-size:0.73rem; color:var(--muted);">Tap bubble</span>
+            </div>
+            <div class="omr-question">${item.q}</div>
+            <div class="omr-options">
+              ${item.options.map((opt, idx) => `
+                <div class="omr-option" id="${item.id}-opt-${idx}" onclick="checkOMR('${item.id}', ${idx})">
+                  <div class="omr-bubble">${letters[idx]}</div>
+                  <div class="omr-option-text">${opt}</div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="omr-feedback" id="${item.id}-fb"></div>
+          </div>
+        `;
+      });
+      typesetMath();
+    }
+
+    window.checkOMR = function(qId, chosenIdx) {
+      const item = omrQuestions.find(x => x.id === qId);
+      if (!item) return;
+
+      item.options.forEach((_, idx) => {
+        const el = document.getElementById(`${qId}-opt-${idx}`);
+        el.classList.remove('selected', 'correct', 'wrong');
+        if (idx === chosenIdx) {
+          el.classList.add('selected');
+          el.classList.add(chosenIdx === item.ans ? 'correct' : 'wrong');
+        }
+      });
+
+      const fb = document.getElementById(`${qId}-fb`);
+      fb.classList.add('show');
+      if (chosenIdx === item.ans) {
+        fb.className = 'omr-feedback show ok';
+        fb.innerHTML = `<span class="material-symbols-outlined">check_circle</span> <strong>Correct!</strong> ${item.exp}`;
+        markTaskDone(qId);
+      } else {
+        fb.className = 'omr-feedback show err';
+        fb.innerHTML = `<span class="material-symbols-outlined">error</span> <strong>Try again:</strong> Check the formula or 3D diagram above and tap another bubble.`;
+      }
+      typesetMath(fb);
+    };
+
+    /* =========================================================================
+       9. GUIDED STEP-BY-STEP DERIVATIONS WITH MATHJAX SVG OVERLAYS
+       ========================================================================= */
+    const derivationsData = [
+      // DERIVATION 0: 5-Fold Exclusion Proof (Fig. 1.6)
+      {
+        id: 0,
+        title: 'Derivation 1: Proof that a 5-Fold Rotation Axis is Excluded (§1.5.1, Eq. 1.4)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">straighten</span> Interactive Derivation Diagram (MathJax Overlay): Fig. 1.6</div>
+            <div class="diagram-stage">
+              <svg id="deriv0-svg" class="interactive-svg" viewBox="0 0 520 205"></svg>
+              <div id="deriv0MathLayer" class="math-layer"></div>
+            </div>
+            <div class="slider-row">
+              <span>Test Rotation Angle $\\theta$: <strong id="d0ThetaLabel">72° (n = 5)</strong></span>
+              <input type="range" id="d0ThetaSlider" min="0" max="180" step="6" value="72" oninput="updateDeriv0SVG()" />
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'Consider points $A, B, C, D$ on a lattice row with translation $T$ between neighbours (Fig. 1.6 above). Rotating $A$ clockwise by $\\theta$ about $B$ gives $B\'$, and rotating $D$ anticlockwise by $\\theta$ about $C$ gives $C\'$. Find the horizontal distance $B\'C\'$ in terms of $T$ and $\\cos\\theta$.',
+            options: [
+              '$B\'C\' = 2T\\cos\\theta + T$',
+              '$B\'C\' = 2T\\sin\\theta + T$',
+              '$B\'C\' = 2T\\cos\\theta - T$',
+              '$B\'C\' = T\\cos\\theta$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (Geometry of $B\'C\'$):</strong> Each rotated segment of length $T$ projects horizontally by $T\\cos\\theta$, so:<br>$$B\'C\' = 2T\\cos\\theta + T$$'
+          },
+          {
+            intent: 'Because $B\'$ and $C\'$ must also be lattice points on a row parallel to $ABCD$, what condition must $B\'C\'$ satisfy relative to $BC = T$?',
+            options: [
+              '$B\'C\' = m(BC) = mT$ where $m$ is an integer, so $2T\\cos\\theta + T = mT$',
+              '$B\'C\' = T / 2$',
+              '$B\'C\' = \\pi T$',
+              '$B\'C\' = 0$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (Lattice translation requirement):</strong> Requiring $B\'C\'$ to be an integral multiple $m$ of $BC = T$ gives:<br>$$2T\\cos\\theta + T = mT$$'
+          },
+          {
+            intent: 'Divide by $T$ to isolate $\\cos\\theta$ (Eq. 1.4), and apply $|\\cos\\theta| \\le 1$ to find all permissible integers $m$.',
+            options: [
+              '$\\cos\\theta = \\frac{m-1}{2}$ with $m \\in \\{3, 2, 1, 0, -1\\}$',
+              '$\\cos\\theta = \\frac{m+1}{4}$ with $m \\in \\{4, 3, 2, 1, 0\\}$',
+              '$\\cos\\theta = 2m - 1$',
+              '$\\cos\\theta = m/2$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (Eq. 1.4 and allowed integers $m$):</strong><br>$$\\cos\\theta = \\frac{m-1}{2} \\quad \\text{(1.4)}$$<br>The inequality $|\\cos\\theta| \\le 1$ restricts $m \\in \\{3, 2, 1, 0, -1\\}$.'
+          },
+          {
+            intent: 'Convert $m \\in \\{3, 2, 1, 0, -1\\}$ into angles $\\theta$ and rotation multiplicities $n = 2\\pi/\\theta$.',
+            options: [
+              '$\\theta \\in \\{0^\\circ, 60^\\circ, 90^\\circ, 120^\\circ, 180^\\circ\\} \\implies n \\in \\{1, 6, 4, 3, 2\\}$ (5-fold rotation is excluded!)',
+              '$\\theta \\in \\{30^\\circ, 45^\\circ, 72^\\circ, 90^\\circ, 180^\\circ\\} \\implies n \\in \\{12, 8, 5, 4, 2\\}$',
+              'Only $n=4$ is allowed',
+              '$n=5$ gives $m=2$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 4 (Exclusion of 5-fold rotation):</strong> The 5 integers give $\\theta \\in \\{0^\\circ, 60^\\circ, 90^\\circ, 120^\\circ, 180^\\circ\\}$ and therefore $n \\in \\{1, 6, 4, 3, 2\\}$. Thus a 5-fold rotation axis cannot exist in a lattice.'
+          }
+        ]
+      },
+
+      // DERIVATION 1: Interplanar Spacing d_hkl (Figs. 1.15 & 1.17)
+      {
+        id: 1,
+        title: 'Derivation 2: Interplanar Spacing $d_{hkl}$ in Orthogonal & Cubic Lattices (§1.9, Eqs. 1.7–1.10)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">change_history</span> Interactive Derivation Diagram (MathJax Overlay): Figs. 1.15 & 1.17</div>
+            <div class="diagram-stage">
+              <svg id="deriv1-svg" class="interactive-svg" viewBox="0 0 520 205"></svg>
+              <div id="deriv1MathLayer" class="math-layer"></div>
+            </div>
+            <div class="visual-controls">
+              <button class="ctrl-btn active" onclick="updateDeriv1SVG(1,1,1)">Plane $(111)$</button>
+              <button class="ctrl-btn" onclick="updateDeriv1SVG(2,1,2)">Worked Plane $(212)$</button>
+              <button class="ctrl-btn" onclick="updateDeriv1SVG(3,1,2)">Example Plane $(312)$</button>
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'An $(hkl)$ plane cuts the crystal axes at intercepts $a/h,\\ b/k,\\ c/l$ (Fig. 1.17 above). If $d = OP$ is the perpendicular distance along unit normal $\\hat{\\mathbf{n}}$ (direction cosines $\\cos\\alpha, \\cos\\beta, \\cos\\gamma$), relate $d$ to the intercepts.',
+            options: [
+              '$d = OP = \\frac{a}{h}\\cos\\alpha = \\frac{b}{k}\\cos\\beta = \\frac{c}{l}\\cos\\gamma$ (Eq. 1.7)',
+              '$d = \\frac{h}{a}\\cos\\alpha = \\frac{k}{b}\\cos\\beta = \\frac{l}{c}\\cos\\gamma$',
+              '$d = a\\sin\\alpha + b\\sin\\beta + c\\sin\\gamma$',
+              '$d = abc / (hkl)$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (Projection along normal, Eqs. 1.7 & 1.8):</strong><br>$$d = OP = \\frac{a}{h}\\cos\\alpha = \\frac{b}{k}\\cos\\beta = \\frac{c}{l}\\cos\\gamma = \\frac{\\hat{\\mathbf{n}}\\cdot\\mathbf{a}}{h} \\quad \\text{(1.7, 1.8)}$$'
+          },
+          {
+            intent: 'For orthogonal axes, substitute $\\cos\\alpha = dh/a,\\ \\cos\\beta = dk/b,\\ \\cos\\gamma = dl/c$ from Step 1 into the identity $\\cos^2\\alpha + \\cos^2\\beta + \\cos^2\\gamma = 1$.',
+            options: [
+              '$d^2\\left(\\frac{h^2}{a^2} + \\frac{k^2}{b^2} + \\frac{l^2}{c^2}\\right) = 1$',
+              '$d^2\\left(\\frac{a^2}{h^2} + \\frac{b^2}{k^2} + \\frac{c^2}{l^2}\\right) = 1$',
+              '$d(h/a + k/b + l/c) = 1$',
+              '$d^2(h^2 + k^2 + l^2) = 1$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (Direction-cosine identity):</strong><br>$$\\left(\\frac{dh}{a}\\right)^2 + \\left(\\frac{dk}{b}\\right)^2 + \\left(\\frac{dl}{c}\\right)^2 = 1$$'
+          },
+          {
+            intent: 'Solve Step 2 for $d$ in an orthogonal lattice (Eq. 1.9) and specialize to a cubic lattice where $a=b=c$ (Eq. 1.10).',
+            options: [
+              '$d = \\frac{1}{\\left(\\frac{h^2}{a^2} + \\frac{k^2}{b^2} + \\frac{l^2}{c^2}\\right)^{1/2}}$ (Eq. 1.9) and $d_{hkl} = \\frac{a}{\\sqrt{h^2+k^2+l^2}}$ (Eq. 1.10)',
+              '$d = \\left(\\frac{h^2}{a^2} + \\frac{k^2}{b^2} + \\frac{l^2}{c^2}\\right)^{1/2}$',
+              '$d_{hkl} = \\frac{a}{h+k+l}$',
+              '$d_{hkl} = \\frac{a^2}{h^2+k^2+l^2}$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (Orthogonal & Cubic Spacing, Eqs. 1.9 & 1.10):</strong><br>$$d = \\frac{1}{\\left(\\frac{h^2}{a^2} + \\frac{k^2}{b^2} + \\frac{l^2}{c^2}\\right)^{1/2}} \\quad \\text{(1.9)}, \\qquad d_{hkl} = \\frac{a}{\\sqrt{h^2+k^2+l^2}} \\quad \\text{(1.10)}$$'
+          }
+        ]
+      },
+
+      // DERIVATION 2: Packing Fractions (§1.10–1.11)
+      {
+        id: 2,
+        title: 'Derivation 3: Atomic Packing Fractions of SC, BCC, FCC & Diamond (§1.10–1.11)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">workspaces</span> Interactive Derivation Diagram (MathJax Overlay): Touching Spheres</div>
+            <div class="diagram-stage">
+              <svg id="deriv2-svg" class="interactive-svg" viewBox="0 0 520 205"></svg>
+              <div id="deriv2MathLayer" class="math-layer"></div>
+            </div>
+            <div class="visual-controls">
+              <button class="ctrl-btn active" id="d2-btn-sc" onclick="updateDeriv2SVG('sc')">SC ($a=2r$)</button>
+              <button class="ctrl-btn" id="d2-btn-bcc" onclick="updateDeriv2SVG('bcc')">BCC ($\\sqrt{3}a=4r$)</button>
+              <button class="ctrl-btn" id="d2-btn-fcc" onclick="updateDeriv2SVG('fcc')">FCC ($\\sqrt{2}a=4r$)</button>
+              <button class="ctrl-btn" id="d2-btn-dia" onclick="updateDeriv2SVG('dia')">Diamond ($\\frac{\\sqrt{3}}{4}a=2r$)</button>
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'For Simple Cubic (SC), $N = 1$ atom per cell of volume $a^3$, and corner atoms touch along the cube edge so $a = 2r$. Compute $f = \\frac{N\\cdot\\frac{4}{3}\\pi r^3}{a^3}$.',
+            options: [
+              '$f_{\\text{sc}} = \\frac{\\frac{4}{3}\\pi r^3}{(2r)^3} = \\frac{\\pi}{6} \\approx 0.52$',
+              '$f_{\\text{sc}} = \\frac{\\pi}{3\\sqrt{2}} \\approx 0.74$',
+              '$f_{\\text{sc}} = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$',
+              '$f_{\\text{sc}} = 0.34$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (SC Packing Fraction):</strong> With $N=1$ and $a=2r$, $f_{\\text{sc}} = \\frac{\\pi}{6} \\approx 0.52$.'
+          },
+          {
+            intent: 'For BCC ($N = 8\\times\\frac{1}{8} + 1 = 2$), atoms touch along the body diagonal of length $\\sqrt{3}a$. Express $4r$ in terms of $a$ and compute $f_{\\text{bcc}}$.',
+            options: [
+              '$4r = \\sqrt{3}a \\implies f_{\\text{bcc}} = \\frac{2\\cdot\\frac{4}{3}\\pi(\\sqrt{3}a/4)^3}{a^3} = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$',
+              '$4r = \\sqrt{2}a \\implies f_{\\text{bcc}} = 0.74$',
+              '$2r = \\sqrt{3}a \\implies f_{\\text{bcc}} = 0.85$',
+              '$f_{\\text{bcc}} = 0.52$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (BCC Packing Fraction):</strong> Touching along the body diagonal gives $4r = \\sqrt{3}a$ and $f_{\\text{bcc}} = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$.'
+          },
+          {
+            intent: 'For FCC ($N = 8\\times\\frac{1}{8} + 6\\times\\frac{1}{2} = 4$), atoms touch along the face diagonal of length $\\sqrt{2}a$. Relate $4r$ to $a$ and compute $f_{\\text{fcc}}$.',
+            options: [
+              '$4r = \\sqrt{2}a \\implies f_{\\text{fcc}} = \\frac{4\\cdot\\frac{4}{3}\\pi(\\sqrt{2}a/4)^3}{a^3} = \\frac{\\pi}{3\\sqrt{2}} \\approx 0.74$',
+              '$4r = \\sqrt{3}a \\implies f_{\\text{fcc}} = 0.68$',
+              '$f_{\\text{fcc}} = 0.52$',
+              '$f_{\\text{fcc}} = 0.34$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (FCC Packing Fraction):</strong> Touching along the face diagonal gives $4r = \\sqrt{2}a$ and $f_{\\text{fcc}} = \\frac{\\pi}{3\\sqrt{2}} \\approx 0.74$ (equal to HCP).'
+          },
+          {
+            intent: 'For Diamond Cubic ($N = 8$ carbon atoms per cell), nearest neighbours touch at one-quarter of the body diagonal ($2r = \\frac{\\sqrt{3}}{4}a$). Compute $f_{\\text{diamond}}$.',
+            options: [
+              '$r = \\frac{\\sqrt{3}}{8}a \\implies f_{\\text{diamond}} = \\frac{8\\cdot\\frac{4}{3}\\pi(\\sqrt{3}a/8)^3}{a^3} = \\frac{\\pi\\sqrt{3}}{16} \\approx 0.34$',
+              '$f_{\\text{diamond}} = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$',
+              '$f_{\\text{diamond}} = 0.52$',
+              '$f_{\\text{diamond}} = 0.74$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 4 (Diamond Cubic Packing Efficiency):</strong> With $N=8$ and $r = \\frac{\\sqrt{3}}{8}a$, $f_{\\text{diamond}} = \\frac{\\pi\\sqrt{3}}{16} \\approx 0.34$ ($34\\%$).'
+          }
+        ]
+      },
+
+      // DERIVATION 3: Bragg & Laue Equivalence (§2.2, Eqs. 2.1–2.5)
+      {
+        id: 3,
+        title: 'Derivation 4: Bragg\'s Law & Equivalence with Laue\'s Equations (§2.2, Eqs. 2.1–2.5)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">flare</span> Interactive Derivation Diagram (MathJax Overlay): Figs. 2.2, 2.3 & 2.4</div>
+            <div class="diagram-stage">
+              <svg id="deriv3-svg" class="interactive-svg" viewBox="0 0 520 205"></svg>
+              <div id="deriv3MathLayer" class="math-layer"></div>
+            </div>
+            <div class="slider-row">
+              <span>Glancing Angle $\\theta$: <strong id="d3ThetaLabel">30°</strong></span>
+              <input type="range" id="d3ThetaSlider" min="15" max="65" value="30" oninput="updateDeriv3SVG()" />
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'In Bragg\'s reflection from parallel planes of spacing $d$ at glancing angle $\\theta$ (left side of diagram), what is the path difference (down + up) and constructive interference condition?',
+            options: [
+              '$2d\\sin\\theta = n\\lambda$ (Eq. 2.1)',
+              '$2d\\cos\\theta = n\\lambda$',
+              '$d\\sin\\theta = n\\lambda$',
+              '$2d\\tan\\theta = n\\lambda$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (Bragg\'s Law, Eq. 2.1):</strong> Path difference $= d\\sin\\theta + d\\sin\\theta = 2d\\sin\\theta = n\\lambda$.'
+          },
+          {
+            intent: 'In Laue\'s treatment (right side of diagram), two scatterers separated by $\\mathbf{r}$ have incident $\\hat{\\mathbf{n}}_1$ and scattered $\\hat{\\mathbf{n}}_2$ (angle $2\\theta$). With $\\mathbf{N} = \\hat{\\mathbf{n}}_1 - \\hat{\\mathbf{n}}_2$, find $|\\mathbf{N}|$ and the phase difference $\\phi$ (Eq. 2.2).',
+            options: [
+              '$|\\mathbf{N}| = 2\\sin\\theta$ and $\\phi = \\frac{2\\pi}{\\lambda}(\\mathbf{r}\\cdot\\mathbf{N})$ (Eq. 2.2)',
+              '$|\\mathbf{N}| = 2\\cos\\theta$ and $\\phi = \\mathbf{r}\\cdot\\mathbf{N}$',
+              '$|\\mathbf{N}| = 1$',
+              '$|\\mathbf{N}| = \\sin(2\\theta)$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (Scattering normal $\\mathbf{N}$ and phase, Eq. 2.2):</strong> $|\\mathbf{N}| = 2\\sin\\theta$ and $\\phi = \\frac{2\\pi}{\\lambda}(\\mathbf{r}\\cdot\\mathbf{N})$.'
+          },
+          {
+            intent: 'Write the three simultaneous Laue equations (Eq. 2.4) for constructive interference along $\\mathbf{a},\\mathbf{b},\\mathbf{c}$ when $\\mathbf{N}$ has direction cosines $\\cos\\alpha, \\cos\\beta, \\cos\\gamma$.',
+            options: [
+              '$2a\\sin\\theta\\cos\\alpha = nh\\lambda,\\quad 2b\\sin\\theta\\cos\\beta = nk\\lambda,\\quad 2c\\sin\\theta\\cos\\gamma = nl\\lambda$ (Eq. 2.4)',
+              '$a\\cos\\alpha = nh\\lambda,\\quad b\\cos\\beta = nk\\lambda,\\quad c\\cos\\gamma = nl\\lambda$',
+              '$2a\\cos\\theta = nh\\lambda$',
+              '$a+b+c = n\\lambda$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (Laue Equations, Eq. 2.4):</strong><br>$$2a\\sin\\theta\\cos\\alpha = nh\\lambda,\\quad 2b\\sin\\theta\\cos\\beta = nk\\lambda,\\quad 2c\\sin\\theta\\cos\\gamma = nl\\lambda$$'
+          },
+          {
+            intent: 'Combine Eq. (2.4) with the interplanar spacing relation $d_{hkl} = \\frac{a}{h}\\cos\\alpha = \\frac{b}{k}\\cos\\beta = \\frac{c}{l}\\cos\\gamma$ (Eq. 1.7) to show that Laue\'s equations contain Bragg\'s law.',
+            options: [
+              'Dividing $2a\\sin\\theta\\cos\\alpha = nh\\lambda$ by $h$ and substituting $\\frac{a}{h}\\cos\\alpha = d_{hkl}$ yields $2d_{hkl}\\sin\\theta = n\\lambda$!',
+              'Laue\'s equations contradict Bragg\'s law.',
+              'They give $d_{hkl}\\cos\\theta = n\\lambda$.',
+              'Only valid for $n=0$.'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 4 (Equivalence of Laue & Bragg):</strong> Substituting $\\frac{a}{h}\\cos\\alpha = d_{hkl}$ into Eq. (2.4) gives $2d_{hkl}\\sin\\theta = n\\lambda$ (Eq. 2.1).'
+          }
+        ]
+      },
+
+      // DERIVATION 4: Reciprocal Basis & Reciprocal of BCC (§2.4, Eqs. 2.13–2.23)
+      {
+        id: 4,
+        title: 'Derivation 5: Reciprocal Lattice Basis & Reciprocal of BCC Lattice (§2.4, Eqs. 2.13–2.23)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">swap_horiz</span> Interactive Derivation Diagram (MathJax Overlay): Figs. 2.10 & 2.11</div>
+            <div class="diagram-stage">
+              <svg id="deriv4-svg" class="interactive-svg" viewBox="0 0 520 200"></svg>
+              <div id="deriv4MathLayer" class="math-layer"></div>
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'Using $\\mathbf{a}_{100} = \\frac{\\hat{\\mathbf{n}}}{d_{100}}$ (Eq. 2.10) where $\\hat{\\mathbf{n}} = \\frac{\\mathbf{b}\\times\\mathbf{c}}{|\\mathbf{b}\\times\\mathbf{c}|}$ and $V = \\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c}) = d_{100}|\\mathbf{b}\\times\\mathbf{c}|$, write the reciprocal basis vector $\\mathbf{a}^*$ in both conventions (Eqs. 2.13 & 2.18).',
+            options: [
+              '$\\mathbf{a}^* = \\frac{\\mathbf{b}\\times\\mathbf{c}}{V}$ (Eq. 2.13), and in the $2\\pi$ convention $\\mathbf{a}^* = 2\\pi\\frac{\\mathbf{b}\\times\\mathbf{c}}{\\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})}$ (Eq. 2.18)',
+              '$\\mathbf{a}^* = \\frac{\\mathbf{a}\\times\\mathbf{b}}{V}$',
+              '$\\mathbf{a}^* = 2\\pi V(\\mathbf{b}\\times\\mathbf{c})$',
+              '$\\mathbf{a}^* = \\mathbf{a}$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (Reciprocal Basis Vectors, Eqs. 2.13 & 2.18):</strong><br>$$\\mathbf{a}^* = 2\\pi\\frac{\\mathbf{b}\\times\\mathbf{c}}{\\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})},\\quad \\mathbf{b}^* = 2\\pi\\frac{\\mathbf{c}\\times\\mathbf{a}}{\\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})},\\quad \\mathbf{c}^* = 2\\pi\\frac{\\mathbf{a}\\times\\mathbf{b}}{\\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})}$$'
+          },
+          {
+            intent: 'For direct BCC primitive vectors $\\mathbf{a} = \\frac{a}{2}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}-\\hat{\\mathbf{k}})$, $\\mathbf{b} = \\frac{a}{2}(-\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$, $\\mathbf{c} = \\frac{a}{2}(\\hat{\\mathbf{i}}-\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$ (Eq. 2.22), find $\\mathbf{b}\\times\\mathbf{c}$ and volume $V = \\mathbf{a}\\cdot(\\mathbf{b}\\times\\mathbf{c})$.',
+            options: [
+              '$\\mathbf{b}\\times\\mathbf{c} = \\frac{a^2}{2}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$ and $V = \\frac{a^3}{2}$',
+              '$\\mathbf{b}\\times\\mathbf{c} = a^2\\hat{\\mathbf{i}}$ and $V = a^3$',
+              '$V = \\frac{a^3}{4}$',
+              '$V = 2a^3$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (Cross product & volume of BCC primitive cell):</strong> $\\mathbf{b}\\times\\mathbf{c} = \\frac{a^2}{2}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$ and $V = \\frac{a^3}{2}$.'
+          },
+          {
+            intent: 'Substitute $\\mathbf{b}\\times\\mathbf{c}$ and $V = a^3/2$ into Eq. (2.18) to obtain the reciprocal basis of BCC (Eq. 2.23).',
+            options: [
+              '$\\mathbf{a}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}}),\\ \\mathbf{b}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{k}}),\\ \\mathbf{c}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}})$ — which are the primitive vectors of an FCC lattice!',
+              '$\\mathbf{a}^* = \\frac{2\\pi}{a}\\hat{\\mathbf{i}}$ (SC)',
+              '$\\mathbf{a}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}-\\hat{\\mathbf{k}})$ (BCC)',
+              '$\\mathbf{a}^* = 0$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (Reciprocal of BCC is FCC, Eq. 2.23):</strong><br>$$\\mathbf{a}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}}),\\quad \\mathbf{b}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{k}}),\\quad \\mathbf{c}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{i}}+\\hat{\\mathbf{j}}) \\quad \\text{(2.23)}$$<br>Similarly, starting from FCC primitive vectors (Eq. 2.24, $V=a^3/4$) yields BCC reciprocal vectors (Eq. 2.25).'
+          }
+        ]
+      },
+
+      // DERIVATION 5: Ewald Sphere & Brillouin Zones (§2.6–2.7, Eqs. 2.26–2.34)
+      {
+        id: 5,
+        title: 'Derivation 6: Ewald Sphere, Vector Bragg Law & Brillouin Zone Equations (§2.6–2.7, Eqs. 2.26–2.34)',
+        svgRender: () => `
+          <div class="visual-box">
+            <div class="visual-title"><span class="material-symbols-outlined">radar</span> Interactive Derivation Diagram (MathJax Overlay): Figs. 2.12 & 2.14</div>
+            <div class="diagram-stage">
+              <svg id="deriv5-svg" class="interactive-svg" viewBox="0 0 520 205"></svg>
+              <div id="deriv5MathLayer" class="math-layer"></div>
+            </div>
+          </div>
+        `,
+        steps: [
+          {
+            intent: 'In the Ewald construction (left side of diagram, Fig. 2.12), $AO = AB = 1/\\lambda$ with angle $2\\theta$ between them. Equate the chord length $OB$ (Eq. 2.27) to the reciprocal lattice distance $|OB| = n/d_{hkl}$ (Eq. 2.26).',
+            options: [
+              '$|OB| = \\frac{2\\sin\\theta}{\\lambda} = \\frac{n}{d_{hkl}} \\implies 2d_{hkl}\\sin\\theta = n\\lambda$ (Eqs. 2.26, 2.27)',
+              '$|OB| = \\frac{\\cos\\theta}{\\lambda} = \\frac{n}{d_{hkl}}$',
+              '$|OB| = 2\\lambda\\sin\\theta$',
+              '$|OB| = 0$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 1 (Ewald Sphere Chord, Eqs. 2.26 & 2.27):</strong> $|OB| = \\frac{2\\sin\\theta}{\\lambda} = \\frac{n}{d_{hkl}} \\implies 2d_{hkl}\\sin\\theta = n\\lambda$.'
+          },
+          {
+            intent: 'Magnifying by $2\\pi$ gives $\\mathbf{k}\' = \\mathbf{k} + \\mathbf{G}$ and $k\'^2 = k^2$ (Eq. 2.29). Square $\\mathbf{k}\' = \\mathbf{k} + \\mathbf{G}$ to get the Vector Form of Bragg\'s Law (Eq. 2.28).',
+            options: [
+              '$2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0$ (Eq. 2.28)',
+              '$2\\mathbf{k}\\cdot\\mathbf{G} - G^2 = 0$',
+              '$\\mathbf{k}\\cdot\\mathbf{G} = 0$',
+              '$k^2 + G^2 = 0$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 2 (Vector Form of Bragg\'s Law, Eq. 2.28):</strong><br>$$2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0 \\quad \\text{(2.28)}$$'
+          },
+          {
+            intent: 'Substitute $\\mathbf{G} = \\frac{2\\pi}{a}(h\\hat{\\mathbf{i}} + k\\hat{\\mathbf{j}} + l\\hat{\\mathbf{k}})$ and $\\mathbf{k} = k_x\\hat{\\mathbf{i}} + k_y\\hat{\\mathbf{j}} + k_z\\hat{\\mathbf{k}}$ into Eq. (2.28) to obtain the Cubic Brillouin Zone boundary equation (Eq. 2.32).',
+            options: [
+              '$hk_x + kk_y + lk_z = -\\frac{\\pi}{a}(h^2 + k^2 + l^2)$ (Eq. 2.32)',
+              '$hk_x + kk_y + lk_z = \\frac{2\\pi}{a}$',
+              '$k_x^2 + k_y^2 + k_z^2 = \\frac{\\pi^2}{a^2}$',
+              '$hk_x + kk_y = 0$'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 3 (Square & Cubic Brillouin Zone Equations, Eqs. 2.31 & 2.32):</strong><br>$$hk_x + kk_y + lk_z = -\\frac{\\pi}{a}(h^2 + k^2 + l^2) \\quad \\text{(2.32)}$$'
+          },
+          {
+            intent: 'Write the general reciprocal vectors $\\mathbf{G}$ for BCC (Eq. 2.33) and FCC (Eq. 2.34) and identify the resulting 3D Brillouin zone polyhedra.',
+            options: [
+              'BCC (Eq. 2.33): $\\mathbf{G} = \\frac{2\\pi}{a}[(h+l)\\hat{\\mathbf{i}}+(h+k)\\hat{\\mathbf{j}}+(k+l)\\hat{\\mathbf{k}}] \\to$ Rhombic Dodecahedron; FCC (Eq. 2.34): $\\mathbf{G} = \\frac{2\\pi}{a}[(h-k+l)\\hat{\\mathbf{i}}+(h+k-l)\\hat{\\mathbf{j}}+(-h+k+l)\\hat{\\mathbf{k}}] \\to$ Truncated Octahedron',
+              'Both give cubes of side $2\\pi/a$',
+              'BCC gives a truncated octahedron and FCC gives a rhombic dodecahedron',
+              'Neither has a closed Brillouin zone'
+            ],
+            ans: 0,
+            stepSummary: '<strong>Step 4 (BCC & FCC Zone Polyhedra, Eqs. 2.33 & 2.34):</strong><br>• BCC: 12 shortest $\\mathbf{G} = \\frac{2\\pi}{a}(\\pm\\hat{\\mathbf{i}}\\pm\\hat{\\mathbf{j}})$ etc. enclose a <strong>Rhombic Dodecahedron</strong> (Fig. 2.15).<br>• FCC: 8 shortest $\\frac{2\\pi}{a}(\\pm\\hat{\\mathbf{i}}\\pm\\hat{\\mathbf{j}}\\pm\\hat{\\mathbf{k}})$ truncated by 6 vectors $\\frac{2\\pi}{a}(\\pm 2\\hat{\\mathbf{i}})$ enclose a <strong>Truncated Octahedron</strong> (Fig. 2.16).'
+          }
+        ]
+      }
+    ];
+
+    const derivProgress = [0, 0, 0, 0, 0, 0];
+
+    function renderDerivation(dIdx) {
+      const d = derivationsData[dIdx];
+      const curStep = derivProgress[dIdx];
+      const total = d.steps.length;
+      const box = document.getElementById(`deriv-box-${dIdx}`);
+      if (!box) return;
+
+      const letters = ['A', 'B', 'C', 'D'];
+
+      let unlockedHTML = '';
+      for (let i = 0; i < curStep; i++) {
+        unlockedHTML += `<div class="unlocked-step">${d.steps[i].stepSummary}</div>`;
+      }
+
+      let activeStepHTML = '';
+      if (curStep < total) {
+        const s = d.steps[curStep];
+        activeStepHTML = `
+          <div class="next-step-intent">
+            <strong><span class="material-symbols-outlined">lightbulb</span> What we will do in Step ${curStep + 1} of ${total}:</strong><br>
+            ${s.intent}
+          </div>
+          <div class="omr-box">
+            <div class="omr-header">
+              <span class="omr-badge"><span class="material-symbols-outlined" style="font-size:0.95rem;">quiz</span> PREDICT NEXT STEP (OMR)</span>
+              <span style="font-size:0.74rem; color:var(--muted);">Step ${curStep + 1} / ${total}</span>
+            </div>
+            <div class="omr-options">
+              ${s.options.map((opt, oIdx) => `
+                <div class="omr-option" id="d-${dIdx}-s-${curStep}-opt-${oIdx}" onclick="checkDerivStep(${dIdx}, ${curStep}, ${oIdx})">
+                  <div class="omr-bubble">${letters[oIdx]}</div>
+                  <div class="omr-option-text">${opt}</div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="omr-feedback" id="d-${dIdx}-s-${curStep}-fb"></div>
+          </div>
+        `;
+      }
+
+      let fullSummaryHTML = '';
+      if (curStep === total) {
+        fullSummaryHTML = `
+          <div class="full-derivation-summary show">
+            <h4 style="margin:0 0 10px; color:var(--success); display:flex; align-items:center; gap:6px;">
+              <span class="material-symbols-outlined">task_alt</span> Complete Derivation Unlocked — All Steps Together:
+            </h4>
+            ${d.steps.map(st => `<div style="margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed #a7f3d0;">${st.stepSummary}</div>`).join('')}
+          </div>
+        `;
+      }
+
+      box.innerHTML = `
+        <div class="deriv-title">
+          <h3 style="margin:0;"><span class="material-symbols-outlined">functions</span> ${d.title}</h3>
+          <span class="deriv-step-pill">${curStep} / ${total} Steps Solved</span>
+        </div>
+        ${d.svgRender(curStep)}
+        <div class="unlocked-steps-list">${unlockedHTML}</div>
+        ${activeStepHTML}
+        ${fullSummaryHTML}
+      `;
+
+      if (dIdx === 0) updateDeriv0SVG();
+      if (dIdx === 1) updateDeriv1SVG(2, 1, 2);
+      if (dIdx === 2) updateDeriv2SVG('bcc');
+      if (dIdx === 3) updateDeriv3SVG();
+      if (dIdx === 4) updateDeriv4SVG();
+      if (dIdx === 5) updateDeriv5SVG();
+
+      typesetMath(box);
+    }
+
+    window.checkDerivStep = function(dIdx, sIdx, chosenIdx) {
+      const d = derivationsData[dIdx];
+      const s = d.steps[sIdx];
+
+      s.options.forEach((_, idx) => {
+        const el = document.getElementById(`d-${dIdx}-s-${sIdx}-opt-${idx}`);
+        if (!el) return;
+        el.classList.remove('selected', 'correct', 'wrong');
+        if (idx === chosenIdx) {
+          el.classList.add('selected');
+          el.classList.add(chosenIdx === s.ans ? 'correct' : 'wrong');
+        }
+      });
+
+      const fb = document.getElementById(`d-${dIdx}-s-${sIdx}-fb`);
+      if (chosenIdx === s.ans) {
+        markTaskDone(`deriv-${dIdx}-step-${sIdx}`);
+        derivProgress[dIdx]++;
+        renderDerivation(dIdx);
+      } else {
+        fb.className = 'omr-feedback show err';
+        fb.innerHTML = `<span class="material-symbols-outlined">error</span> <strong>Not quite:</strong> Review the goal hint and diagram above, then select another bubble.`;
+        typesetMath(fb);
+      }
+    };
+
+    /* =========================================================================
+       10. DERIVATION SVG RENDERERS WITH MATHJAX OVERLAY PINS
+       ========================================================================= */
+    window.updateDeriv0SVG = function() {
+      const svg = document.getElementById('deriv0-svg');
+      if (!svg) return;
+      const slider = document.getElementById('d0ThetaSlider');
+      const deg = slider ? parseInt(slider.value, 10) : 72;
+      const rad = (deg * Math.PI) / 180;
+
+      const T = 95, yRow = 155;
+      const xB = 260 - T / 2, xC = 260 + T / 2;
+      const xA = xB - T, xD = xC + T;
+      const xBp = xB - T * Math.cos(rad), yBp = yRow - T * Math.sin(rad);
+      const xCp = xC + T * Math.cos(rad), yCp = yRow - T * Math.sin(rad);
+
+      const mVal = 1 + 2 * Math.cos(rad);
+      const isAllowed = [0, 60, 90, 120, 180].includes(deg);
+      const lbl = document.getElementById('d0ThetaLabel');
+      if (lbl) lbl.textContent = `${deg}° (m = ${mVal.toFixed(2)})`;
+
+      svg.innerHTML = `
+        <line x1="40" y1="${yRow}" x2="480" y2="${yRow}" stroke="#475569" stroke-width="2"/>
+        <line x1="${xB}" y1="${yRow}" x2="${xBp}" y2="${yBp}" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${xC}" y1="${yRow}" x2="${xCp}" y2="${yCp}" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${xBp}" y1="${yBp}" x2="${xBp}" y2="${yRow}" stroke="#64748b" stroke-dasharray="3,3"/>
+        <line x1="${xCp}" y1="${yCp}" x2="${xCp}" y2="${yRow}" stroke="#64748b" stroke-dasharray="3,3"/>
+        <line x1="${xBp}" y1="${yBp}" x2="${xCp}" y2="${yBp}" stroke="${isAllowed ? '#4ade80' : '#f87171'}" stroke-width="3" stroke-dasharray="5,3"/>
+        <circle cx="${xA}" cy="${yRow}" r="5.5" fill="#e2e8f0"/>
+        <circle cx="${xB}" cy="${yRow}" r="5.5" fill="#f5b027"/>
+        <circle cx="${xC}" cy="${yRow}" r="5.5" fill="#f5b027"/>
+        <circle cx="${xD}" cy="${yRow}" r="5.5" fill="#e2e8f0"/>
+        <circle cx="${xBp}" cy="${yBp}" r="6" fill="${isAllowed ? '#4ade80' : '#f87171'}"/>
+        <circle cx="${xCp}" cy="${yCp}" r="6" fill="${isAllowed ? '#4ade80' : '#f87171'}"/>
+      `;
+
+      set2DMathPins('deriv0MathLayer', [
+        { x: (xA/520)*100, y: 88, tex: '$A$', cls: 'cyan' },
+        { x: (xB/520)*100, y: 88, tex: '$B$', cls: 'amber' },
+        { x: 50, y: 88, tex: '$BC = T$', cls: 'amber' },
+        { x: (xC/520)*100, y: 88, tex: '$C$', cls: 'amber' },
+        { x: (xD/520)*100, y: 88, tex: '$D$', cls: 'cyan' },
+        { x: 50, y: Math.max(14, (yBp/205)*100 - 10), tex: `$B'C' = 2T\\cos(${deg}^\\circ)+T = ${mVal.toFixed(2)}T$`, cls: isAllowed ? 'green' : 'rose' }
+      ]);
+    };
+
+    window.updateDeriv1SVG = function(h, k, l) {
+      const svg = document.getElementById('deriv1-svg');
+      if (!svg) return;
+      const ox = 195, oy = 145;
+      const axX = ox - 95 * (1 / h), axY = oy + 48 * (1 / h);
+      const bxX = ox + 135 * (1 / k), bxY = oy + 18 * (1 / k);
+      const cxX = ox, cxY = oy - 110 * (1 / l);
+      const px = (axX + bxX + cxX) / 3, py = (axY + bxY + cxY) / 3;
+
+      svg.innerHTML = `
+        <line x1="${ox}" y1="${oy}" x2="${ox-115}" y2="${oy+58}" stroke="#64748b" stroke-width="2"/>
+        <line x1="${ox}" y1="${oy}" x2="${ox+165}" y2="${oy+22}" stroke="#64748b" stroke-width="2"/>
+        <line x1="${ox}" y1="${oy}" x2="${ox}" y2="20" stroke="#64748b" stroke-width="2"/>
+        <polygon points="${axX},${axY} ${bxX},${bxY} ${cxX},${cxY}" fill="rgba(56,189,248,0.32)" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${ox}" y1="${oy}" x2="${px}" y2="${py}" stroke="#f5b027" stroke-width="3"/>
+        <circle cx="${ox}" cy="${oy}" r="4.5" fill="#fff"/>
+        <circle cx="${px}" cy="${py}" r="5" fill="#f5b027"/>
+      `;
+
+      set2DMathPins('deriv1MathLayer', [
+        { x: (axX/520)*100 - 6, y: (axY/205)*100 + 6, tex: `$\\frac{a}{${h}}$`, cls: 'cyan' },
+        { x: (bxX/520)*100 + 6, y: (bxY/205)*100 + 6, tex: `$\\frac{b}{${k}}$`, cls: 'cyan' },
+        { x: (cxX/520)*100 + 7, y: (cxY/205)*100, tex: `$\\frac{c}{${l}}$`, cls: 'cyan' },
+        { x: (px/520)*100 + 9, y: (py/205)*100 - 4, tex: '$d = OP$', cls: 'amber' },
+        { x: 74, y: 28, tex: `$\\text{Plane }(${h}${k}${l}),\\ d = \\frac{a}{\\sqrt{${h*h+k*k+l*l}}}$`, cls: 'green' }
+      ]);
+    };
+
+    window.updateDeriv2SVG = function(mode) {
+      ['sc', 'bcc', 'fcc', 'dia'].forEach(m => {
+        const b = document.getElementById(`d2-btn-${m}`);
+        if (b) b.classList.toggle('active', m === mode);
+      });
+      const svg = document.getElementById('deriv2-svg');
+      if (!svg) return;
+
+      let html = '', pins = [];
+      if (mode === 'sc') {
+        const x0 = 195, y0 = 32, a = 125, r = a / 2;
+        html += `<rect x="${x0}" y="${y0}" width="${a}" height="${a}" fill="none" stroke="#94a3b8" stroke-width="2"/>`;
+        [[x0,y0],[x0+a,y0],[x0,y0+a],[x0+a,y0+a]].forEach(([x,y]) => {
+          html += `<circle cx="${x}" cy="${y}" r="${r}" fill="rgba(56,189,248,0.35)" stroke="#38bdf8" stroke-width="2"/>`;
+        });
+        pins = [{ x: 50, y: 90, tex: '$\\text{SC: } a = 2r,\\ f = \\frac{\\pi}{6} \\approx 0.52$', cls: 'cyan' }];
+      } else if (mode === 'bcc') {
+        const w = 165, h = 116, x0 = 178, y0 = 32;
+        const r = Math.hypot(w, h) / 4;
+        html += `<rect x="${x0}" y="${y0}" width="${w}" height="${h}" fill="none" stroke="#94a3b8" stroke-width="2"/>`;
+        html += `<line x1="${x0}" y1="${y0+h}" x2="${x0+w}" y2="${y0}" stroke="#f5b027" stroke-width="2.5" stroke-dasharray="4,3"/>`;
+        [[x0,y0+h],[x0+w/2,y0+h/2],[x0+w,y0]].forEach(([x,y], i) => {
+          html += `<circle cx="${x}" cy="${y}" r="${r}" fill="${i===1 ? 'rgba(245,176,39,0.4)' : 'rgba(56,189,248,0.35)'}" stroke="#38bdf8" stroke-width="2"/>`;
+        });
+        pins = [{ x: 50, y: 90, tex: '$\\text{BCC: } 4r = \\sqrt{3}a,\\ f = \\frac{\\pi\\sqrt{3}}{8} \\approx 0.68$', cls: 'amber' }];
+      } else if (mode === 'fcc') {
+        const a = 122, x0 = 198, y0 = 32;
+        const r = (Math.SQRT2 * a) / 4;
+        html += `<rect x="${x0}" y="${y0}" width="${a}" height="${a}" fill="none" stroke="#94a3b8" stroke-width="2"/>`;
+        html += `<line x1="${x0}" y1="${y0+a}" x2="${x0+a}" y2="${y0}" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="4,3"/>`;
+        [[x0,y0+a],[x0+a/2,y0+a/2],[x0+a,y0]].forEach(([x,y], i) => {
+          html += `<circle cx="${x}" cy="${y}" r="${r}" fill="${i===1 ? 'rgba(74,222,128,0.4)' : 'rgba(56,189,248,0.35)'}" stroke="#4ade80" stroke-width="2"/>`;
+        });
+        pins = [{ x: 50, y: 90, tex: '$\\text{FCC: } 4r = \\sqrt{2}a,\\ f = \\frac{\\pi}{3\\sqrt{2}} \\approx 0.74$', cls: 'green' }];
+      } else if (mode === 'dia') {
+        const w = 170, h = 118, x0 = 175, y0 = 32;
+        const r = Math.hypot(w, h) / 8;
+        html += `<rect x="${x0}" y="${y0}" width="${w}" height="${h}" fill="none" stroke="#94a3b8" stroke-width="2"/>`;
+        html += `<line x1="${x0}" y1="${y0+h}" x2="${x0+w}" y2="${y0}" stroke="#f5b027" stroke-width="2" stroke-dasharray="4,3"/>`;
+        [[x0,y0+h],[x0+w/4,y0+0.75*h],[x0+w,y0]].forEach(([x,y], i) => {
+          html += `<circle cx="${x}" cy="${y}" r="${r}" fill="${i===1 ? 'rgba(245,176,39,0.5)' : 'rgba(56,189,248,0.38)'}" stroke="#f5b027" stroke-width="2"/>`;
+        });
+        pins = [{ x: 50, y: 90, tex: '$\\text{Diamond: } 2r = \\frac{\\sqrt{3}}{4}a,\\ f = \\frac{\\pi\\sqrt{3}}{16} \\approx 0.34$', cls: 'amber' }];
+      }
+      svg.innerHTML = html;
+      set2DMathPins('deriv2MathLayer', pins);
+    };
+
+    window.updateDeriv3SVG = function() {
+      const svg = document.getElementById('deriv3-svg');
+      if (!svg) return;
+      const slider = document.getElementById('d3ThetaSlider');
+      const deg = slider ? parseInt(slider.value, 10) : 30;
+      const lbl = document.getElementById('d3ThetaLabel');
+      if (lbl) lbl.textContent = `${deg}°`;
+      const rad = (deg * Math.PI) / 180;
+
+      const y1 = 92, y2 = 150, hx = 135, L = 82;
+      const x1In = hx - L * Math.cos(rad), y1In = y1 - L * Math.sin(rad);
+      const x1Out = hx + L * Math.cos(rad), y1Out = y1 - L * Math.sin(rad);
+      const x2In = hx - L * Math.cos(rad), y2In = y2 - L * Math.sin(rad);
+      const x2Out = hx + L * Math.cos(rad), y2Out = y2 - L * Math.sin(rad);
+
+      const cx = 375, cy = 122, vecL = 82;
+      const n1x = cx + vecL * Math.cos(rad), n1y = cy - vecL * Math.sin(rad);
+      const n2x = cx + vecL * Math.cos(rad), n2y = cy + vecL * Math.sin(rad);
+
+      svg.innerHTML = `
+        <line x1="25" y1="${y1}" x2="245" y2="${y1}" stroke="#64748b" stroke-width="2"/>
+        <line x1="25" y1="${y2}" x2="245" y2="${y2}" stroke="#64748b" stroke-width="2"/>
+        <line x1="${x1In}" y1="${y1In}" x2="${hx}" y2="${y1}" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${hx}" y1="${y1}" x2="${x1Out}" y2="${y1Out}" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${x2In}" y1="${y2In}" x2="${hx}" y2="${y2}" stroke="#f5b027" stroke-width="2.5"/>
+        <line x1="${hx}" y1="${y2}" x2="${x2Out}" y2="${y2Out}" stroke="#f5b027" stroke-width="2.5"/>
+        <line x1="${hx}" y1="${y1}" x2="${hx}" y2="${y2}" stroke="#94a3b8" stroke-dasharray="3,3"/>
+        <line x1="265" y1="15" x2="265" y2="192" stroke="#334155" stroke-width="1.5"/>
+        <line x1="${cx}" y1="${cy}" x2="${n1x}" y2="${n1y}" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="${cx}" y1="${cy}" x2="${n2x}" y2="${n2y}" stroke="#4ade80" stroke-width="2.5"/>
+        <line x1="${n2x}" y1="${n2y}" x2="${n1x}" y2="${n1y}" stroke="#f5b027" stroke-width="3"/>
+      `;
+
+      set2DMathPins('deriv3MathLayer', [
+        { x: 26, y: 90, tex: '$2d\\sin\\theta = n\\lambda$', cls: 'cyan' },
+        { x: (n1x/520)*100 + 5, y: (n1y/205)*100, tex: '$\\hat{\\mathbf{n}}_1$', cls: 'cyan' },
+        { x: (n2x/520)*100 + 5, y: (n2y/205)*100, tex: '$\\hat{\\mathbf{n}}_2$', cls: 'green' },
+        { x: 75, y: 90, tex: '$\\mathbf{N} = \\hat{\\mathbf{n}}_1 - \\hat{\\mathbf{n}}_2,\\ |\\mathbf{N}|=2\\sin\\theta$', cls: 'amber' }
+      ]);
+    };
+
+    window.updateDeriv4SVG = function() {
+      const svg = document.getElementById('deriv4-svg');
+      if (!svg) return;
+      svg.innerHTML = `
+        <rect x="65" y="38" width="105" height="105" fill="none" stroke="#64748b" stroke-width="2"/>
+        <circle cx="65" cy="38" r="5" fill="#e2e8f0"/><circle cx="170" cy="38" r="5" fill="#e2e8f0"/>
+        <circle cx="65" cy="143" r="5" fill="#e2e8f0"/><circle cx="170" cy="143" r="5" fill="#e2e8f0"/>
+        <circle cx="117.5" cy="90.5" r="7.5" fill="#f5b027"/>
+        <line x1="65" y1="143" x2="117.5" y2="90.5" stroke="#f5b027" stroke-width="2.5"/>
+
+        <rect x="335" y="38" width="105" height="105" fill="none" stroke="#64748b" stroke-width="2"/>
+        <circle cx="335" cy="38" r="5" fill="#e2e8f0"/><circle cx="440" cy="38" r="5" fill="#e2e8f0"/>
+        <circle cx="335" cy="143" r="5" fill="#e2e8f0"/><circle cx="440" cy="143" r="5" fill="#e2e8f0"/>
+        <circle cx="387.5" cy="38" r="6" fill="#4ade80"/><circle cx="387.5" cy="143" r="6" fill="#4ade80"/>
+        <circle cx="335" cy="90.5" r="6" fill="#4ade80"/><circle cx="440" cy="90.5" r="6" fill="#4ade80"/>
+        <circle cx="387.5" cy="90.5" r="6" fill="#4ade80"/>
+        <line x1="335" y1="143" x2="387.5" y2="90.5" stroke="#4ade80" stroke-width="2.5"/>
+      `;
+      set2DMathPins('deriv4MathLayer', [
+        { x: 23, y: 88, tex: '$\\text{BCC: } V = \\frac{a^3}{2}$', cls: 'amber' },
+        { x: 50, y: 48, tex: '$\\Longleftrightarrow$', cls: 'cyan' },
+        { x: 75, y: 88, tex: '$\\text{FCC: } \\mathbf{a}^* = \\frac{2\\pi}{a}(\\hat{\\mathbf{j}}+\\hat{\\mathbf{k}})$', cls: 'green' }
+      ]);
+    };
+
+    window.updateDeriv5SVG = function() {
+      const svg = document.getElementById('deriv5-svg');
+      if (!svg) return;
+      svg.innerHTML = `
+        <circle cx="120" cy="100" r="68" fill="rgba(56,189,248,0.1)" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="120" cy="100" r="4.5" fill="#f5b027"/>
+        <circle cx="188" cy="100" r="5" fill="#ffffff"/>
+        <circle cx="165" cy="49" r="5.5" fill="#4ade80"/>
+        <line x1="120" y1="100" x2="188" y2="100" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="120" y1="100" x2="165" y2="49" stroke="#38bdf8" stroke-width="2.5"/>
+        <line x1="188" y1="100" x2="165" y2="49" stroke="#4ade80" stroke-width="3"/>
+        <line x1="255" y1="15" x2="255" y2="192" stroke="#334155" stroke-width="1.5"/>
+        <polygon points="390,22 468,100 390,178 312,100" fill="rgba(245,176,39,0.22)" stroke="#f5b027" stroke-width="2"/>
+        <rect x="351" y="61" width="78" height="78" fill="rgba(56,189,248,0.38)" stroke="#38bdf8" stroke-width="2.5"/>
+        <circle cx="390" cy="100" r="4" fill="#fff"/>
+      `;
+      set2DMathPins('deriv5MathLayer', [
+        { x: 29, y: 58, tex: '$\\mathbf{k}$', cls: 'cyan' },
+        { x: 25, y: 34, tex: '$\\mathbf{k}\'$', cls: 'cyan' },
+        { x: 37, y: 36, tex: '$\\mathbf{G}$', cls: 'green' },
+        { x: 24, y: 90, tex: '$2\\mathbf{k}\\cdot\\mathbf{G} + G^2 = 0$', cls: 'amber' },
+        { x: 75, y: 90, tex: '$k_x, k_y = \\pm\\frac{\\pi}{a}$', cls: 'cyan' }
+      ]);
+    };
+
+    /* =========================================================================
+       11. TOUCH & MOUSE DRAG ROTATION FOR ALL 4 3D TOOLS
+       ========================================================================= */
+    function attach3DRotation(canvasId, onRotate) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      let dragging = false, lx = 0, ly = 0;
+
+      const start = (x, y) => { dragging = true; lx = x; ly = y; };
+      const move = (x, y) => {
+        if (!dragging) return;
+        const dx = x - lx, dy = y - ly;
+        lx = x; ly = y;
+        onRotate(dy * 0.012, dx * 0.012);
+      };
+      const end = () => { dragging = false; };
+
+      canvas.addEventListener('mousedown', e => start(e.clientX, e.clientY));
+      window.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+      window.addEventListener('mouseup', end);
+
+      canvas.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) start(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      canvas.addEventListener('touchmove', e => {
+        if (e.touches.length === 1) {
+          e.preventDefault();
+          move(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      canvas.addEventListener('touchend', end);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAllOMR();
+      for (let i = 0; i < derivationsData.length; i++) {
+        renderDerivation(i);
+      }
+
+      drawSec1SVG('fig11');
+      drawSec2SVG('fig15');
+
+      setTool1Mode('vol');
+      setTool2Lattice('cubP');
+      setTool3Struct('hcp');
+      setTool4Mode('bcc');
+
+      attach3DRotation('tool1Canvas', (dRx, dRy) => { t1RotX += dRx; t1RotY += dRy; drawTool1(); });
+      attach3DRotation('tool2Canvas', (dRx, dRy) => { t2RotX += dRx; t2RotY += dRy; drawTool2(); });
+      attach3DRotation('tool3Canvas', (dRx, dRy) => { t3RotX += dRx; t3RotY += dRy; drawTool3(); });
+      attach3DRotation('tool4Canvas', (dRx, dRy) => { t4RotX += dRx; t4RotY += dRy; drawTool4(); });
+    });
+  </script>
+</body>
+</html>
