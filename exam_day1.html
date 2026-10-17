@@ -1,0 +1,2228 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrodynamics II - Interactive Exam Validator</title>
+    
+    <!-- Google Fonts & Material Symbols (No Emojis) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --primary: #1e40af;
+            --primary-light: #eff6ff;
+            --primary-border: #bfdbfe;
+            --secondary: #475569;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --success: #15803d;
+            --success-bg: #dcfce7;
+            --warning: #b45309;
+            --warning-bg: #fef3c7;
+            --danger: #b91c1c;
+            --danger-bg: #fee2e2;
+            --border: #e2e8f0;
+            --radius: 10px;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        .material-symbols-outlined {
+            vertical-align: middle;
+            font-size: 20px;
+            user-select: none;
+        }
+
+        /* Sticky Top Progress Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 12px 24px;
+        }
+
+        .header-container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .exam-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .exam-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .score-stats {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .score-pill {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: var(--danger-bg);
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            transition: width 0.4s ease;
+        }
+
+        .section-caps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 960px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        .paper-banner {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .paper-banner h1 {
+            font-size: 1.25rem;
+            margin-bottom: 4px;
+        }
+
+        .paper-banner p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Section Styling */
+        .section-block {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-meta {
+            font-size: 0.85rem;
+            background: rgba(255,255,255,0.15);
+            padding: 3px 10px;
+            border-radius: 99px;
+        }
+
+        .question-list {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 var(--radius) var(--radius);
+            divide-y: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .question-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.15s;
+            gap: 16px;
+        }
+
+        .question-row:last-child {
+            border-bottom: none;
+        }
+
+        .question-row:hover {
+            background: var(--primary-light);
+        }
+
+        .q-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .q-num {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            font-weight: 700;
+            min-width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .q-text {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .q-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 99px;
+        }
+
+        .badge-unattempted {
+            background: var(--bg-main);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .badge-complete {
+            background: var(--success-bg);
+            color: var(--success);
+        }
+
+        .badge-partial {
+            background: var(--warning-bg);
+            color: var(--warning);
+        }
+
+        /* Screen 2: Active Question View */
+        .hidden {
+            display: none !important;
+        }
+
+        .top-nav {
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-back {
+            background: var(--bg-card);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-back:hover {
+            background: var(--bg-main);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #166534;
+        }
+
+        .active-q-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .active-q-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .active-q-prompt {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .paper-prompt-box {
+            background: var(--primary-light);
+            border: 1px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .paper-prompt-box p {
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Diagram Container */
+        .svg-container {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .svg-caption {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Subquestions Step-by-Step */
+        .subq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .subq-title {
+            font-weight: 600;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .step-tag {
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .option-label:hover {
+            background: var(--bg-main);
+            border-color: #94a3b8;
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .option-label.correct-choice {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .option-label.wrong-choice {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Full Solution Box */
+        .solution-card {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .solution-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #bbf7d0;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .solution-body {
+            color: var(--text-dark);
+            font-size: 0.96rem;
+        }
+
+        .solution-body p {
+            margin-bottom: 12px;
+        }
+
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Score & Progress Bar -->
+    <header>
+        <div class="header-container">
+            <div class="exam-title-bar">
+                <div class="exam-title">
+                    <span class="material-symbols-outlined">school</span>
+                    <span>CUFYUGP Electrodynamics II - Module 1</span>
+                </div>
+                <div class="score-stats">
+                    <span class="score-pill" id="total-score-text">Score: 0.0 / 70 Marks</span>
+                    <button class="reset-btn" onclick="resetAllScores()" title="Clear all saved progress">
+                        <span class="material-symbols-outlined" style="font-size:16px;">restart_alt</span>
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="total-progress-bar"></div>
+            </div>
+            <div class="section-caps">
+                <span id="cap-sec-a">Section A: 0 / 24 (Ceiling 24)</span>
+                <span id="cap-sec-b">Section B: 0 / 36 (Ceiling 36)</span>
+                <span id="cap-sec-c">Section C: 0 / 10 (Best 1 of 2, Max 10)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SCREEN 1: QUESTION LIST BY SECTIONS -->
+    <main class="container" id="screen-1">
+        <div class="paper-banner">
+            <h1>FIFTH SEMESTER DEGREE EXAMINATION: MODEL PAPER 1</h1>
+            <p>PHYSICS / APPLIED PHYSICS — ELECTRODYNAMICS II (Module 1: Electric and Magnetic Fields in Matter)</p>
+        </div>
+
+        <!-- Section A -->
+        <div class="section-block">
+            <div class="section-header">
+                <h2><span class="material-symbols-outlined">list_alt</span> Section A</h2>
+                <span class="section-meta">3 Marks Each | Ceiling: 24 Marks</span>
+            </div>
+            <div class="question-list" id="list-sec-A"></div>
+        </div>
+
+        <!-- Section B -->
+        <div class="section-block">
+            <div class="section-header">
+                <h2><span class="material-symbols-outlined">functions</span> Section B</h2>
+                <span class="section-meta">6 Marks Each | Ceiling: 36 Marks</span>
+            </div>
+            <div class="question-list" id="list-sec-B"></div>
+        </div>
+
+        <!-- Section C -->
+        <div class="section-block">
+            <div class="section-header">
+                <h2><span class="material-symbols-outlined">history_edu</span> Section C</h2>
+                <span class="section-meta">Answer Any ONE | 1x10 = 10 Marks</span>
+            </div>
+            <div class="question-list" id="list-sec-C"></div>
+        </div>
+    </main>
+
+    <!-- SCREEN 2: QUESTION SOLVER & SELF-VALIDATION -->
+    <main class="container hidden" id="screen-2">
+        <div class="top-nav">
+            <button class="btn btn-back" onclick="showScreen1()">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back to Question Paper
+            </button>
+        </div>
+
+        <div class="active-q-card">
+            <div class="active-q-meta">
+                <span id="active-q-section">Section A - Question 1</span>
+                <span id="active-q-marks">Maximum Marks: 3</span>
+            </div>
+            <div class="active-q-prompt" id="active-q-text"></div>
+            <div id="active-q-diagram"></div>
+
+            <!-- Paper Prompt Box -->
+            <div class="paper-prompt-box" id="paper-prompt-area">
+                <p>
+                    <span class="material-symbols-outlined">edit_note</span>
+                    Write down your complete derivation or answer on paper first, then click below to validate each step.
+                </p>
+                <button class="btn btn-primary" onclick="revealSubquestions()">
+                    <span class="material-symbols-outlined">fact_check</span>
+                    I have answered on paper — Continue to Validate
+                </button>
+            </div>
+        </div>
+
+        <!-- Subquestions Validation Area -->
+        <div id="validation-area" class="hidden">
+            <div id="subquestions-container"></div>
+
+            <div class="action-bar" id="validate-btn-bar">
+                <button class="btn btn-primary" onclick="evaluateCurrentQuestion()">
+                    <span class="material-symbols-outlined">grading</span>
+                    Evaluate Steps & Show Full Solution
+                </button>
+            </div>
+
+            <!-- Full Solution Container -->
+            <div id="full-solution-box" class="solution-card hidden">
+                <div class="solution-header">
+                    <span><span class="material-symbols-outlined">verified</span> Complete Reference Solution</span>
+                    <span id="earned-score-badge">You Scored: 3 / 3</span>
+                </div>
+                <div class="solution-body" id="full-solution-content"></div>
+                <div class="action-bar">
+                    <button class="btn btn-success" onclick="showScreen1()">
+                        <span class="material-symbols-outlined">save</span>
+                        Save Score & Return to Questions
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        /* =========================================================================
+           CUSTOM SVG DIAGRAMS FOR QUESTIONS & DERIVATIONS
+           ========================================================================= */
+        const DIAGRAMS = {
+            q3: `
+            <div class="svg-container">
+                <svg width="520" height="110" viewBox="0 0 520 110">
+                    <!-- Dipole 1 -->
+                    <rect x="30" y="35" width="90" height="40" rx="20" fill="#eff6ff" stroke="#1e40af" stroke-width="2"/>
+                    <circle cx="50" cy="55" r="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+                    <text x="50" y="60" text-anchor="middle" fill="#b91c1c" font-weight="bold" font-size="16">−</text>
+                    <circle cx="100" cy="55" r="12" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="100" y="60" text-anchor="middle" fill="#15803d" font-weight="bold" font-size="14">+</text>
+                    
+                    <!-- Dipole 2 -->
+                    <rect x="130" y="35" width="90" height="40" rx="20" fill="#eff6ff" stroke="#1e40af" stroke-width="2"/>
+                    <circle cx="150" cy="55" r="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+                    <text x="150" y="60" text-anchor="middle" fill="#b91c1c" font-weight="bold" font-size="16">−</text>
+                    <circle cx="200" cy="55" r="12" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="200" y="60" text-anchor="middle" fill="#15803d" font-weight="bold" font-size="14">+</text>
+
+                    <!-- Dipole 3 -->
+                    <rect x="230" y="35" width="90" height="40" rx="20" fill="#eff6ff" stroke="#1e40af" stroke-width="2"/>
+                    <circle cx="250" cy="55" r="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+                    <text x="250" y="60" text-anchor="middle" fill="#b91c1c" font-weight="bold" font-size="16">−</text>
+                    <circle cx="300" cy="55" r="12" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="300" y="60" text-anchor="middle" fill="#15803d" font-weight="bold" font-size="14">+</text>
+
+                    <!-- Dipole 4 -->
+                    <rect x="330" y="35" width="90" height="40" rx="20" fill="#eff6ff" stroke="#1e40af" stroke-width="2"/>
+                    <circle cx="350" cy="55" r="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+                    <text x="350" y="60" text-anchor="middle" fill="#b91c1c" font-weight="bold" font-size="16">−</text>
+                    <circle cx="400" cy="55" r="12" fill="#dcfce7" stroke="#15803d" stroke-width="1.5"/>
+                    <text x="400" y="60" text-anchor="middle" fill="#15803d" font-weight="bold" font-size="14">+</text>
+
+                    <!-- Cancellation Boxes -->
+                    <rect x="82" y="25" width="85" height="60" fill="none" stroke="#64748b" stroke-dasharray="4"/>
+                    <rect x="182" y="25" width="85" height="60" fill="none" stroke="#64748b" stroke-dasharray="4"/>
+                    <rect x="282" y="25" width="85" height="60" fill="none" stroke="#64748b" stroke-dasharray="4"/>
+                    
+                    <text x="50" y="18" text-anchor="middle" font-size="11" fill="#b91c1c" font-weight="600">Net −q</text>
+                    <text x="225" y="18" text-anchor="middle" font-size="11" fill="#475569">Interior pairs cancel</text>
+                    <text x="400" y="18" text-anchor="middle" font-size="11" fill="#15803d" font-weight="600">Net +q</text>
+                </svg>
+                <div class="svg-caption">Figure: Head-to-tail alignment of electric dipoles showing internal charge cancellation.</div>
+            </div>`,
+
+            q5: `
+            <div class="svg-container">
+                <svg width="450" height="150" viewBox="0 0 450 150">
+                    <line x1="30" y1="75" x2="420" y2="75" stroke="#0f172a" stroke-width="2.5"/>
+                    <text x="50" y="55" font-size="13" font-weight="600" fill="#1e40af">Medium 1 (Above)</text>
+                    <text x="50" y="105" font-size="13" font-weight="600" fill="#475569">Medium 2 (Below)</text>
+                    
+                    <!-- Gaussian Pillbox -->
+                    <rect x="140" y="50" width="70" height="50" fill="rgba(37,99,235,0.1)" stroke="#2563eb" stroke-dasharray="4" stroke-width="2"/>
+                    <text x="175" y="42" text-anchor="middle" font-size="11" fill="#2563eb">Gaussian Pillbox (D⊥)</text>
+
+                    <!-- Amperian/Stokes Loop -->
+                    <rect x="270" y="55" width="90" height="40" fill="none" stroke="#15803d" stroke-width="2"/>
+                    <text x="315" y="42" text-anchor="middle" font-size="11" fill="#15803d">Rectangular Loop (D∥)</text>
+                    <text x="395" y="70" font-size="12" fill="#b91c1c" font-weight="600">σ_f</text>
+                </svg>
+                <div class="svg-caption">Figure: Interface between two dielectrics with free surface charge $\\sigma_f$.</div>
+            </div>`,
+
+            q8: `
+            <div class="svg-container">
+                <svg width="320" height="170" viewBox="0 0 320 170">
+                    <rect x="60" y="20" width="200" height="130" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5"/>
+                    <!-- Grid of tiny dipole loops -->
+                    <g stroke="#2563eb" stroke-width="1.5" fill="none">
+                        <rect x="75" y="35" width="45" height="40" rx="6"/>
+                        <rect x="135" y="35" width="45" height="40" rx="6"/>
+                        <rect x="195" y="35" width="45" height="40" rx="6"/>
+                        <rect x="75" y="90" width="45" height="40" rx="6"/>
+                        <rect x="135" y="90" width="45" height="40" rx="6"/>
+                        <rect x="195" y="90" width="45" height="40" rx="6"/>
+                    </g>
+                    <!-- Outer arrows -->
+                    <path d="M 150 15 L 175 15" stroke="#b91c1c" stroke-width="2.5" marker-end="url(#arrow)"/>
+                    <path d="M 175 160 L 150 160" stroke="#b91c1c" stroke-width="2.5"/>
+                    <text x="160" y="12" text-anchor="middle" font-size="11" fill="#b91c1c" font-weight="bold">Net Surface Current K_b = M × n̂</text>
+                </svg>
+                <div class="svg-caption">Figure: Cross-section of a uniformly magnetized slab; adjacent internal atomic currents oppose and cancel out.</div>
+            </div>`,
+
+            q11: `
+            <div class="svg-container">
+                <svg width="380" height="160" viewBox="0 0 380 160">
+                    <!-- E field lines -->
+                    <g stroke="#94a3b8" stroke-width="1.5">
+                        <line x1="40" y1="35" x2="340" y2="35"/>
+                        <line x1="40" y1="80" x2="340" y2="80"/>
+                        <line x1="40" y1="125" x2="340" y2="125"/>
+                    </g>
+                    <text x="350" y="84" font-size="14" fill="#475569" font-weight="bold">E⃗</text>
+                    <!-- Dipole rod -->
+                    <line x1="130" y1="115" x2="250" y2="45" stroke="#0f172a" stroke-width="3"/>
+                    <circle cx="130" cy="115" r="9" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+                    <text x="130" y="119" text-anchor="middle" font-size="12" font-weight="bold" fill="#b91c1c">−q</text>
+                    <circle cx="250" cy="45" r="9" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+                    <text x="250" y="49" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">+q</text>
+                    <text x="205" y="95" font-size="13" font-weight="bold" fill="#1e40af">θ</text>
+                    <text x="175" y="65" font-size="13" font-weight="bold" fill="#0f172a">p⃗</text>
+                </svg>
+                <div class="svg-caption">Figure: Electric dipole $\\vec{p}$ inclined at an angle $\\theta$ to a uniform electric field $\\vec{E}$.</div>
+            </div>`,
+
+            q12: `
+            <div class="svg-container">
+                <svg width="360" height="170" viewBox="0 0 360 170">
+                    <!-- Top & Bottom Plates -->
+                    <rect x="60" y="20" width="220" height="8" fill="#1e293b"/>
+                    <text x="170" y="15" text-anchor="middle" font-size="12" font-weight="bold" fill="#15803d">+σ (Area A)</text>
+                    <rect x="60" y="140" width="220" height="8" fill="#1e293b"/>
+                    <text x="170" y="162" text-anchor="middle" font-size="12" font-weight="bold" fill="#b91c1c">−σ</text>
+
+                    <!-- Dielectric Slab of thickness t -->
+                    <rect x="60" y="55" width="220" height="50" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+                    <text x="170" y="85" text-anchor="middle" font-size="13" font-weight="600" fill="#1e40af">Dielectric Slab (ε_r, thickness t)</text>
+                    <text x="170" y="45" text-anchor="middle" font-size="11" fill="#64748b">Free Space (E₀)</text>
+                    <text x="170" y="128" text-anchor="middle" font-size="11" fill="#64748b">Free Space (d − t)</text>
+
+                    <!-- Dimension markers -->
+                    <line x1="300" y1="28" x2="300" y2="140" stroke="#475569" stroke-width="1.5"/>
+                    <text x="315" y="88" font-size="12" font-weight="bold" fill="#475569">d</text>
+                </svg>
+                <div class="svg-caption">Figure: Parallel plate capacitor of separation $d$ partially filled with a dielectric slab of thickness $t$.</div>
+            </div>`,
+
+            q13: `
+            <div class="svg-container">
+                <svg width="340" height="220" viewBox="0 0 340 220">
+                    <!-- Axes -->
+                    <line x1="30" y1="110" x2="310" y2="110" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="170" y1="15" x2="170" y2="205" stroke="#475569" stroke-width="1.5"/>
+                    <text x="300" y="125" font-size="13" font-weight="bold">H</text>
+                    <text x="178" y="25" font-size="13" font-weight="bold">B (or M)</text>
+
+                    <!-- Initial curve -->
+                    <path d="M 170 110 Q 210 100 270 35" fill="none" stroke="#64748b" stroke-dasharray="4" stroke-width="1.5"/>
+                    <!-- Hysteresis Loop -->
+                    <path d="M 270 35 C 200 35, 140 50, 70 185 C 140 185, 200 170, 270 35" fill="rgba(37,99,235,0.08)" stroke="#1e40af" stroke-width="2.5"/>
+                    
+                    <!-- Key Points -->
+                    <circle cx="170" cy="68" r="4" fill="#b91c1c"/>
+                    <text x="135" y="65" font-size="11" font-weight="bold" fill="#b91c1c">Retentivity (B_r)</text>
+                    <circle cx="132" cy="110" r="4" fill="#15803d"/>
+                    <text x="85" y="102" font-size="11" font-weight="bold" fill="#15803d">Coercivity (−H_c)</text>
+                    <circle cx="270" cy="35" r="4" fill="#1e40af"/>
+                    <text x="245" y="28" font-size="11" font-weight="bold" fill="#1e40af">Saturation</text>
+                </svg>
+                <div class="svg-caption">Figure: Ferromagnetic Hysteresis Loop ($B$-$H$ curve).</div>
+            </div>`,
+
+            q14: `
+            <div class="svg-container">
+                <svg width="420" height="140" viewBox="0 0 420 140">
+                    <!-- Unmagnetized domains -->
+                    <rect x="30" y="25" width="140" height="90" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="30" y1="70" x2="170" y2="70" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="100" y1="25" x2="100" y2="115" stroke="#475569" stroke-width="1.5"/>
+                    <text x="65" y="52" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">↗</text>
+                    <text x="135" y="52" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">↖</text>
+                    <text x="65" y="98" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">↙</text>
+                    <text x="135" y="98" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">↘</text>
+                    <text x="100" y="132" text-anchor="middle" font-size="11" fill="#475569">Random Domains (H = 0)</text>
+
+                    <!-- Arrow -->
+                    <text x="210" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">Apply B₀ →</text>
+
+                    <!-- Aligned domains -->
+                    <rect x="250" y="25" width="140" height="90" fill="#eff6ff" stroke="#1e40af" stroke-width="2"/>
+                    <line x1="250" y1="90" x2="390" y2="55" stroke="#2563eb" stroke-dasharray="3" stroke-width="1.5"/>
+                    <text x="310" y="60" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e40af">→   →</text>
+                    <text x="330" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">→</text>
+                    <text x="320" y="132" text-anchor="middle" font-size="11" fill="#1e40af">Domain Growth & Alignment</text>
+                </svg>
+                <div class="svg-caption">Figure: Domain wall motion and alignment under an external magnetic field.</div>
+            </div>`,
+
+            q20: `
+            <div class="svg-container">
+                <svg width="340" height="170" viewBox="0 0 340 170">
+                    <!-- Copper wire cross section -->
+                    <circle cx="170" cy="85" r="45" fill="#fed7aa" stroke="#c2410c" stroke-width="2"/>
+                    <!-- Inner Amperian loop (s < R) -->
+                    <circle cx="170" cy="85" r="25" fill="none" stroke="#15803d" stroke-dasharray="4" stroke-width="2"/>
+                    <!-- Outer Amperian loop (s > R) -->
+                    <circle cx="170" cy="85" r="70" fill="none" stroke="#1e40af" stroke-dasharray="4" stroke-width="2"/>
+                    <circle cx="170" cy="85" r="3" fill="#0f172a"/>
+                    <text x="170" y="52" font-size="11" fill="#c2410c" font-weight="bold">Radius R</text>
+                    <text x="200" y="90" font-size="11" fill="#15803d" font-weight="bold">s &lt; R</text>
+                    <text x="245" y="85" font-size="11" fill="#1e40af" font-weight="bold">s &gt; R</text>
+                </svg>
+                <div class="svg-caption">Figure: Cross-section of a cylindrical copper rod of radius $R$ with concentric Amperian loops for $s < R$ and $s > R$.</div>
+            </div>`
+        };
+
+        /* =========================================================================
+           EXAM DATABASE (ALL 20 QUESTIONS + STEP-BY-STEP SUBQUESTIONS + SOLUTIONS)
+           ========================================================================= */
+        const QUESTIONS = [
+            // ---------------- SECTION A (10 Questions, 3 Marks Each) ----------------
+            {
+                id: 1,
+                section: 'A',
+                marks: 3,
+                prompt: `Write down the relation connecting polarization and electric field in linear dielectrics. What do you mean by a polar dielectric?`,
+                steps: [
+                    {
+                        q: `Which mathematical equation correctly relates polarization $\\vec{P}$ and total electric field $\\vec{E}$ in a homogeneous isotropic linear dielectric?`,
+                        options: [
+                            `$\\vec{P} = \\varepsilon_0 \\chi_e \\vec{E}$`,
+                            `$\\vec{P} = \\frac{\\chi_e}{\\varepsilon_0} \\vec{E}$`,
+                            `$\\vec{P} = \\varepsilon_0 (1 + \\chi_e) \\vec{E}$`,
+                            `$\\vec{P} = \\mu_0 \\chi_e \\vec{E}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What is the constant of proportionality $\\chi_e$ called, and what are its dimensions?`,
+                        options: [
+                            `Electric susceptibility; it is a dimensionless proportionality constant.`,
+                            `Electric permittivity; measured in Farads per meter ($\\text{F/m}$).`,
+                            `Relative permeability; it is dimensionless.`,
+                            `Bound charge density; measured in $\\text{C/m}^3$.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What is meant by a **polar dielectric**?`,
+                        options: [
+                            `A dielectric whose molecules possess permanent electric dipole moments even in the absence of an external electric field (e.g., $\\text{H}_2\\text{O}, \\text{HCl}$).`,
+                            `A dielectric whose molecules have zero dipole moment until an external magnetic field is applied.`,
+                            `A material that conducts free electrons only along one polar axis.`,
+                            `A symmetric molecule like $\\text{O}_2$ or $\\text{N}_2$ where positive and negative charge centers coincide.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>1. Relation in Linear Dielectrics:</strong> In a linear dielectric, the polarization $\\vec{P}$ (dipole moment per unit volume) is directly proportional to the total macroscopic electric field $\\vec{E}$ inside the material:</p>
+                    $$\\vec{P} = \\varepsilon_0 \\chi_e \\vec{E}$$
+                    <p>where $\\varepsilon_0$ is the permittivity of free space and $\\chi_e$ is the dimensionless <em>electric susceptibility</em> of the medium.</p>
+                    <p><strong>2. Polar Dielectric:</strong> A polar dielectric consists of molecules that have asymmetric charge distributions, giving them a <strong>permanent electric dipole moment</strong> even when no external electric field is present (examples: water $\\text{H}_2\\text{O}$, $\\text{HCl}$, $\\text{NH}_3$). Due to thermal agitation, these dipoles are randomly oriented when $\\vec{E}=0$, and they align partially when an external field is applied.</p>
+                `
+            },
+            {
+                id: 2,
+                section: 'A',
+                marks: 3,
+                prompt: `Give the relation connecting permittivity and susceptibility in linear dielectrics. Explain the terms involved. How is relative permittivity connected to susceptibility?`,
+                steps: [
+                    {
+                        q: `Starting from $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$ and $\\vec{P} = \\varepsilon_0 \\chi_e \\vec{E}$, how is the permittivity $\\varepsilon$ of a linear dielectric related to electric susceptibility $\\chi_e$?`,
+                        options: [
+                            `$\\varepsilon = \\varepsilon_0 (1 + \\chi_e)$`,
+                            `$\\varepsilon = \\varepsilon_0 \\chi_e$`,
+                            `$\\varepsilon = \\frac{\\varepsilon_0}{1 + \\chi_e}$`,
+                            `$\\varepsilon = \\varepsilon_0 (1 - \\chi_e)$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Identify the correct meaning of the terms $\\varepsilon$, $\\varepsilon_0$, and $\\chi_e$ in the above relation:`,
+                        options: [
+                            `$\\varepsilon$ is the permittivity of the material, $\\varepsilon_0$ is the permittivity of free space, and $\\chi_e$ is the electric susceptibility.`,
+                            `$\\varepsilon$ is electric field, $\\varepsilon_0$ is bound charge, and $\\chi_e$ is dielectric constant.`,
+                            `$\\varepsilon$ is relative permittivity, $\\varepsilon_0$ is absolute susceptibility, and $\\chi_e$ is conductivity.`,
+                            `$\\varepsilon$ is dipole moment, $\\varepsilon_0$ is vacuum permittivity, and $\\chi_e$ is polarization.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `How is the relative permittivity $\\varepsilon_r$ (or dielectric constant $K$) connected to susceptibility $\\chi_e$?`,
+                        options: [
+                            `$\\varepsilon_r = \\frac{\\varepsilon}{\\varepsilon_0} = 1 + \\chi_e$`,
+                            `$\\varepsilon_r = \\chi_e - 1$`,
+                            `$\\varepsilon_r = \\varepsilon_0 \\chi_e$`,
+                            `$\\varepsilon_r = \\frac{1}{1 + \\chi_e}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>1. Relation between Permittivity and Susceptibility:</strong> For a linear dielectric, the electric displacement is:</p>
+                    $$\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P} = \\varepsilon_0 \\vec{E} + \\varepsilon_0 \\chi_e \\vec{E} = \\varepsilon_0(1 + \\chi_e)\\vec{E} = \\varepsilon \\vec{E}$$
+                    <p>Comparing terms gives the required relation:</p>
+                    $$\\varepsilon = \\varepsilon_0 (1 + \\chi_e)$$
+                    <p><strong>2. Terms Involved:</strong> $\\varepsilon$ is the permittivity of the dielectric material, $\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$ is the permittivity of free space, and $\\chi_e$ is the electric susceptibility.</p>
+                    <p><strong>3. Connection to Relative Permittivity ($\\varepsilon_r$):</strong> Dividing by $\\varepsilon_0$, the relative permittivity (or dielectric constant $K$) is:</p>
+                    $$\\varepsilon_r = \\frac{\\varepsilon}{\\varepsilon_0} = 1 + \\chi_e$$
+                `
+            },
+            {
+                id: 3,
+                section: 'A',
+                marks: 3,
+                diagram: DIAGRAMS.q3,
+                prompt: `Explain physically why a string of head-to-tail dipoles leaves net charge at its two ends.`,
+                steps: [
+                    {
+                        q: `In a uniform line of identical dipoles arranged head-to-tail, what happens to the positive head of one dipole and the adjacent negative tail of the next dipole inside the interior of the chain?`,
+                        options: [
+                            `They lie right next to each other and cancel each other's net charge locally in the interior.`,
+                            `They reinforce each other to produce a large interior volume charge.`,
+                            `They annihilate into electromagnetic radiation.`,
+                            `They repel and flip $180^\\circ$.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Why does a net bound charge remain at the two extreme ends of the string?`,
+                        options: [
+                            `Because the negative tail at the starting end and the positive head at the terminating end have no adjacent partner dipole to cancel them.`,
+                            `Because free electrons migrate from the middle to the ends as in a metallic conductor.`,
+                            `Because external air molecules ionize the ends.`,
+                            `Because the dipole moment vanishes at the boundaries.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `In a 3D uniformly polarized dielectric slab, what macroscopic bound charge distribution does this head-to-tail mechanism correspond to?`,
+                        options: [
+                            `Zero volume bound charge ($\\rho_b = -\\nabla\\cdot\\vec{P} = 0$) in the interior, and non-zero surface bound charge ($\\sigma_b = \\vec{P}\\cdot\\hat{n}$) on the two opposite end surfaces.`,
+                            `Non-zero volume bound charge $\\rho_b$ everywhere and zero surface bound charge $\\sigma_b$.`,
+                            `Only free surface charge $\\sigma_f$.`,
+                            `Bound surface currents $\\vec{K}_b$.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Physical Explanation:</strong> Consider a string of electric dipoles aligned head-to-tail along the direction of polarization $\\vec{P}$:</p>
+                    <p>1. <strong>Interior Cancellation:</strong> At every interior point along the string, the positive charge ($+q$) at the head of one dipole sits immediately adjacent to the equal negative charge ($-q$) at the tail of the neighboring dipole. Macroscopically, these interior pairs neutralize each other completely ($\\rho_b = 0$).</p>
+                    <p>2. <strong>Uncompensated Ends:</strong> At the two extreme ends of the string, there are no neighboring dipoles to provide cancellation. This leaves an uncompensated negative bound charge ($-q$) at the tail end and an uncompensated positive bound charge ($+q$) at the head end, creating surface bound charge $\\sigma_b = \\vec{P}\\cdot\\hat{n}$.</p>
+                `
+            },
+            {
+                id: 4,
+                section: 'A',
+                marks: 3,
+                prompt: `Write down Gauss’s law in presence of a dielectric.`,
+                steps: [
+                    {
+                        q: `How is the total charge density $\\rho$ inside a polarized dielectric split into components?`,
+                        options: [
+                            `$\\rho = \\rho_f + \\rho_b = \\rho_f - \\nabla \\cdot \\vec{P}$`,
+                            `$\\rho = \\rho_f \\times \\rho_b$`,
+                            `$\\rho = \\nabla \\times \\vec{P}$`,
+                            `$\\rho = \\varepsilon_0 \\vec{E}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Substituting $\\varepsilon_0 \\nabla \\cdot \\vec{E} = \\rho_f - \\nabla \\cdot \\vec{P}$ and defining $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$, what is the **differential form** of Gauss's Law in a dielectric?`,
+                        options: [
+                            `$\\nabla \\cdot \\vec{D} = \\rho_f$`,
+                            `$\\nabla \\cdot \\vec{D} = \\rho_b$`,
+                            `$\\nabla \\cdot \\vec{D} = \\frac{\\rho_f}{\\varepsilon_0}$`,
+                            `$\\nabla \\times \\vec{D} = \\rho_f$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What is the **integral form** of Gauss's Law in the presence of a dielectric?`,
+                        options: [
+                            `$\\oint_S \\vec{D} \\cdot d\\vec{a} = Q_{f,\\text{enc}}$`,
+                            `$\\oint_S \\vec{D} \\cdot d\\vec{a} = \\frac{Q_{f,\\text{enc}}}{\\varepsilon_0}$`,
+                            `$\\oint_S \\vec{E} \\cdot d\\vec{a} = Q_{f,\\text{enc}}$`,
+                            `$\\oint_C \\vec{D} \\cdot d\\vec{l} = Q_{f,\\text{enc}}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Gauss's Law in a Dielectric:</strong> Inside matter, the total charge density is the sum of bound charge density $\\rho_b = -\\nabla\\cdot\\vec{P}$ and free charge density $\\rho_f$:</p>
+                    $$\\varepsilon_0 \\nabla \\cdot \\vec{E} = \\rho = \\rho_b + \\rho_f = -\\nabla \\cdot \\vec{P} + \\rho_f$$
+                    $$\\nabla \\cdot (\\varepsilon_0 \\vec{E} + \\vec{P}) = \\rho_f$$
+                    <p>Defining the electric displacement vector $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$, we obtain:</p>
+                    <p><strong>1. Differential Form:</strong> $\\nabla \\cdot \\vec{D} = \\rho_f$</p>
+                    <p><strong>2. Integral Form:</strong> $\\oint_S \\vec{D} \\cdot d\\vec{a} = Q_{f,\\text{enc}}$, where $Q_{f,\\text{enc}}$ is the total <em>free</em> charge enclosed by the Gaussian surface $S$.</p>
+                `
+            },
+            {
+                id: 5,
+                section: 'A',
+                marks: 3,
+                diagram: DIAGRAMS.q5,
+                prompt: `State the boundary condition on $D^\\perp$ and on $\\vec{D}^\\parallel$ at an interface, in terms of free charge and polarization.`,
+                steps: [
+                    {
+                        q: `Applying Gauss's law $\\oint \\vec{D}\\cdot d\\vec{a} = Q_{f,\\text{enc}}$ to a wafer-thin Gaussian pillbox straddling the interface, what is the boundary condition on the perpendicular component $D^\\perp$?`,
+                        options: [
+                            `$D_{\\text{above}}^\\perp - D_{\\text{below}}^\\perp = \\sigma_f$`,
+                            `$D_{\\text{above}}^\\perp - D_{\\text{below}}^\\perp = 0$`,
+                            `$D_{\\text{above}}^\\perp - D_{\\text{below}}^\\perp = \\frac{\\sigma_f}{\\varepsilon_0}$`,
+                            `$D_{\\text{above}}^\\perp - D_{\\text{below}}^\\perp = -\\sigma_b$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Since $\\vec{E}^\\parallel$ is always continuous across any electrostatic boundary ($\\vec{E}_{\\text{above}}^\\parallel - \\vec{E}_{\\text{below}}^\\parallel = 0$) and $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$, what is the boundary condition on the parallel component $\\vec{D}^\\parallel$?`,
+                        options: [
+                            `$\\vec{D}_{\\text{above}}^\\parallel - \\vec{D}_{\\text{below}}^\\parallel = \\vec{P}_{\\text{above}}^\\parallel - \\vec{P}_{\\text{below}}^\\parallel$`,
+                            `$\\vec{D}_{\\text{above}}^\\parallel - \\vec{D}_{\\text{below}}^\\parallel = 0$`,
+                            `$\\vec{D}_{\\text{above}}^\\parallel - \\vec{D}_{\\text{below}}^\\parallel = \\sigma_f \\hat{n}$`,
+                            `$\\vec{D}_{\\text{above}}^\\parallel - \\vec{D}_{\\text{below}}^\\parallel = \\varepsilon_0 \\vec{P}^\\parallel$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>1. Perpendicular Component ($D^\\perp$):</strong> By applying $\\oint \\vec{D}\\cdot d\\vec{a} = Q_{f,\\text{enc}}$ to a thin Gaussian pillbox across the interface, the normal component of $\\vec{D}$ is discontinuous by the free surface charge density $\\sigma_f$:</p>
+                    $$D_{\\text{above}}^\\perp - D_{\\text{below}}^\\perp = \\sigma_f$$
+                    <p><strong>2. Parallel Component ($\\vec{D}^\\parallel$):</strong> Because $\\nabla \\times \\vec{E} = 0$, the tangential electric field is continuous ($\\vec{E}_{\\text{above}}^\\parallel = \\vec{E}_{\\text{below}}^\\parallel$). Using $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$:</p>
+                    $$\\vec{D}_{\\text{above}}^\\parallel - \\vec{D}_{\\text{below}}^\\parallel = \\vec{P}_{\\text{above}}^\\parallel - \\vec{P}_{\\text{below}}^\\parallel$$
+                `
+            },
+            {
+                id: 6,
+                section: 'A',
+                marks: 3,
+                prompt: `Distinguish between permeability and permittivity.`,
+                steps: [
+                    {
+                        q: `Which physical field and material response do **permittivity ($\\varepsilon$)** and **permeability ($\\mu$)** respectively characterize?`,
+                        options: [
+                            `Permittivity ($\\varepsilon$) measures electric polarization response ($\\vec{D} = \\varepsilon \\vec{E}$), whereas permeability ($\\mu$) measures magnetic response ($\\vec{B} = \\mu \\vec{H}$).`,
+                            `Permittivity ($\\varepsilon$) applies to magnetic fields, whereas permeability ($\\mu$) applies to electric fields.`,
+                            `Both measure free electron conductivity in metals.`,
+                            `Permittivity is dimensionless while permeability has units of $\\text{F/m}$.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What are the SI units and vacuum values of $\\varepsilon_0$ and $\\mu_0$?`,
+                        options: [
+                            `$\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$ and $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$`,
+                            `$\\varepsilon_0 = 4\\pi \\times 10^{-7}\\text{ F/m}$ and $\\mu_0 = 8.85 \\times 10^{-12}\\text{ H/m}$`,
+                            `Both equal $3 \\times 10^8\\text{ m/s}$`,
+                            `$\\varepsilon_0 = 1\\text{ C/m}$ and $\\mu_0 = 1\\text{ T/m}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `How do electric susceptibility $\\chi_e$ and magnetic susceptibility $\\chi_m$ differ in sign across common materials?`,
+                        options: [
+                            `For dielectrics $\\chi_e > 0$ always ($\\varepsilon > \\varepsilon_0$), whereas $\\chi_m$ can be negative (diamagnets, $\\mu < \\mu_0$) or positive (paramagnets/ferromagnets, $\\mu > \\mu_0$).`,
+                            `Both $\\chi_e$ and $\\chi_m$ are always negative.`,
+                            `$\\chi_e$ can be negative in vacuum, while $\\chi_m$ is always zero.`,
+                            `Neither depends on susceptibility.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Distinction between Permittivity ($\\varepsilon$) and Permeability ($\\mu$):</strong></p>
+                    <p>1. <strong>Definition & Constitutive Relation:</strong> Permittivity $\\varepsilon = \\varepsilon_0(1+\\chi_e)$ relates electric displacement $\\vec{D}$ to electric field $\\vec{E}$ ($\\vec{D} = \\varepsilon \\vec{E}$). Permeability $\\mu = \\mu_0(1+\\chi_m)$ relates magnetic field $\\vec{B}$ to auxiliary field $\\vec{H}$ ($\\vec{B} = \\mu \\vec{H}$).</p>
+                    <p>2. <strong>SI Units & Vacuum Constants:</strong> Permittivity is measured in Farads per meter ($\\text{F/m}$), with $\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$. Permeability is measured in Henrys per meter ($\\text{H/m}$), with $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$.</p>
+                    <p>3. <strong>Field Effect:</strong> Permittivity always reduces the internal electric field relative to free space ($\\chi_e > 0$), whereas permeability can either slightly reduce $\\vec{B}$ (diamagnetic, $\\chi_m < 0$) or enhance $\\vec{B}$ (paramagnetic/ferromagnetic, $\\chi_m > 0$).</p>
+                `
+            },
+            {
+                id: 7,
+                section: 'A',
+                marks: 3,
+                prompt: `What is the basic difference between electric and magnetic polarizations?`,
+                steps: [
+                    {
+                        q: `What are the microscopic building blocks of electric polarization $\\vec{P}$ versus magnetic polarization (magnetization $\\vec{M}$)?`,
+                        options: [
+                            `$\\vec{P}$ arises from separated positive and negative electric charges (electric dipoles $\\vec{p} = q\\vec{d}$), whereas $\\vec{M}$ arises from microscopic electric currents—orbital motion and intrinsic spin of electrons (magnetic dipoles $\\vec{m} = I\\vec{a}$).`,
+                            `$\\vec{P}$ arises from magnetic monopoles, whereas $\\vec{M}$ arises from static electric charges.`,
+                            `Both arise from separation of north and south magnetic monopoles.`,
+                            `$\\vec{P}$ is a scalar whereas $\\vec{M}$ is a tensor.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `How do a polarized dielectric and a magnetized material differ in the direction of their internal fields?`,
+                        options: [
+                            `Electric polarization $\\vec{P}$ always opposes the external electric field (dielectric shielding), whereas magnetization $\\vec{M}$ opposes $\\vec{B}$ in diamagnets ($\\chi_m < 0$) and reinforces $\\vec{B}$ in paramagnets and ferromagnets ($\\chi_m > 0$).`,
+                            `Both always reinforce the applied field.`,
+                            `Both always oppose the applied field.`,
+                            `Electric polarization creates bound currents while magnetization creates bound static charges.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What bound sources do $\\vec{P}$ and $\\vec{M}$ produce in matter?`,
+                        options: [
+                            `$\\vec{P}$ produces bound charges ($\\rho_b = -\\nabla\\cdot\\vec{P}, \\sigma_b = \\vec{P}\\cdot\\hat{n}$), whereas $\\vec{M}$ produces bound currents ($\\vec{J}_b = \\nabla\\times\\vec{M}, \\vec{K}_b = \\vec{M}\\times\\hat{n}$).`,
+                            `$\\vec{P}$ produces bound currents, whereas $\\vec{M}$ produces bound charges.`,
+                            `Both produce only free charges.`,
+                            `Neither produces any physical source.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Basic Differences between Electric Polarization ($\\vec{P}$) and Magnetization ($\\vec{M}$):</strong></p>
+                    <p>1. <strong>Microscopic Origin:</strong> Electric polarization $\\vec{P}$ (dipole moment per unit volume, $\\text{C/m}^2$) originates from the separation of opposite electric charges ($\\vec{p}=q\\vec{d}$). Magnetic polarization or magnetization $\\vec{M}$ (magnetic moment per unit volume, $\\text{A/m}$) originates from microscopic amperian current loops due to electron orbital motion and intrinsic electron spin ($\\vec{m}=I\\vec{a}$), as magnetic monopoles do not exist.</p>
+                    <p>2. <strong>Bound Sources:</strong> $\\vec{P}$ generates bound volume and surface <em>charges</em> ($\\rho_b = -\\nabla\\cdot\\vec{P}$, $\\sigma_b = \\vec{P}\\cdot\\hat{n}$), whereas $\\vec{M}$ generates bound volume and surface <em>currents</em> ($\\vec{J}_b = \\nabla\\times\\vec{M}$, $\\vec{K}_b = \\vec{M}\\times\\hat{n}$).</p>
+                    <p>3. <strong>Susceptibility Sign:</strong> $\\vec{P}$ is always parallel to $\\vec{E}$ ($\\chi_e > 0$), whereas $\\vec{M}$ can be antiparallel to $\\vec{B}$ (diamagnetism, $\\chi_m < 0$) or parallel to $\\vec{B}$ (paramagnetism/ferromagnetism, $\\chi_m > 0$).</p>
+                `
+            },
+            {
+                id: 8,
+                section: 'A',
+                marks: 3,
+                diagram: DIAGRAMS.q8,
+                prompt: `Explain physically why a uniformly magnetized slab carries a surface current, although each atom carries only a tiny loop current.`,
+                steps: [
+                    {
+                        q: `When a slab is uniformly magnetized, what happens at the boundary between any two adjacent atomic current loops inside the interior of the slab?`,
+                        options: [
+                            `The currents along their shared interior boundary flow in opposite directions with equal magnitude, canceling each other out completely ($\\vec{J}_b = \\nabla \\times \\vec{M} = 0$).`,
+                            `The interior currents add up to create a huge volume current $\\vec{J}_b$.`,
+                            `The atoms stop orbiting in the interior.`,
+                            `Electrons jump from one atom to the next across the whole slab.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What happens at the outer perimeter (edge/surface) of the slab?`,
+                        options: [
+                            `There are no adjacent loops outside the surface to cancel the outer edges of the boundary atomic loops, leaving a net macroscopic surface current $\\vec{K}_b = \\vec{M} \\times \\hat{n}$ flowing around the rim.`,
+                            `Free electrons escape into the air.`,
+                            `Surface currents also cancel to zero.`,
+                            `A bound surface charge $\\sigma_b$ is formed instead of a current.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Physical Explanation:</strong></p>
+                    <p>1. <strong>Interior Cancellation:</strong> Represent each atom in the uniformly magnetized slab as a tiny current loop of identical dipole moment $\\vec{m}$ circulating in the same sense (say, counterclockwise). At every interior boundary shared between two neighboring atomic loops, one loop's current flows upward while its neighbor's flows downward with equal strength. Thus, all interior currents cancel out ($\vec{J}_b = \\nabla \\times \\vec{M} = 0$).</p>
+                    <p>2. <strong>Uncompensated Rim Current:</strong> At the outer surface of the slab, there are no neighboring loops beyond the boundary to cancel the outward-facing segments of the atomic loops. The uncompensated segments all point in the same direction around the perimeter, adding up to a macroscopic bound surface current $\\vec{K}_b = \\vec{M} \\times \\hat{n}$, even though no single electron travels all the way around the slab.</p>
+                `
+            },
+            {
+                id: 9,
+                section: 'A',
+                marks: 3,
+                prompt: `Discuss the magnetic field inside matter.`,
+                steps: [
+                    {
+                        q: `According to the classification of magnetic materials, what are the three primary types of magnetic behavior inside matter?`,
+                        options: [
+                            `Diamagnetism ($\\chi_m < 0$, weak), Paramagnetism ($\\chi_m > 0$, weak), and Ferromagnetism ($\\chi_m \\gg 1$, strong nonlinear domain alignment).`,
+                            `Polar, Non-polar, and Ferroelectric.`,
+                            `Conductive, Insulating, and Semiconductive.`,
+                            `Electrostatic, Magnetostatic, and Radiative.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `How is the total macroscopic magnetic field $\\vec{B}$ inside magnetized matter expressed in terms of the auxiliary field $\\vec{H}$ and magnetization $\\vec{M}$?`,
+                        options: [
+                            `$\\vec{B} = \\mu_0 (\\vec{H} + \\vec{M})$`,
+                            `$\\vec{B} = \\varepsilon_0 (\\vec{H} - \\vec{M})$`,
+                            `$\\vec{B} = \\frac{\\vec{H}}{\\mu_0} + \\vec{M}$`,
+                            `$\\vec{B} = \\mu_0 (\\vec{H} \\times \\vec{M})$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `For a linear magnetic medium where $\\vec{M} = \\chi_m \\vec{H}$, how does $\\vec{B}$ simplify?`,
+                        options: [
+                            `$\\vec{B} = \\mu_0 (1 + \\chi_m)\\vec{H} = \\mu \\vec{H}$`,
+                            `$\\vec{B} = \\mu_0 \\chi_m \\vec{H}$`,
+                            `$\\vec{B} = \\frac{\\mu_0}{1 + \\chi_m}\\vec{H}$`,
+                            `$\\vec{B} = 0$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Magnetic Field Inside Matter:</strong></p>
+                    <p>1. <strong>Macroscopic Field & Bound Currents:</strong> Inside matter, the microscopic magnetic fields of orbiting and spinning electrons average to produce a macroscopic magnetization $\\vec{M}$ (magnetic dipole moment per unit volume). This magnetization produces bound volume current density $\\vec{J}_b = \\nabla \\times \\vec{M}$ and bound surface current density $\\vec{K}_b = \\vec{M} \\times \\hat{n}$.</p>
+                    <p>2. <strong>Relation between $\\vec{B}$, $\\vec{H}$, and $\\vec{M}$:</strong> By Ampère's law $\\nabla \\times \\vec{B} = \\mu_0(\\vec{J}_f + \\vec{J}_b)$, defining the auxiliary field $\\vec{H} = \\frac{1}{\\mu_0}\\vec{B} - \\vec{M}$ gives:</p>
+                    $$\\vec{B} = \\mu_0(\\vec{H} + \\vec{M})$$
+                    <p>3. <strong>Material Response:</strong> In linear media ($\\vec{M} = \\chi_m \\vec{H}$), $\\vec{B} = \\mu_0(1+\\chi_m)\\vec{H} = \\mu \\vec{H}$. In <em>diamagnets</em> ($\\chi_m < 0$), induced moments oppose $\\vec{B}$; in <em>paramagnets</em> ($\\chi_m > 0$), thermal torques compete with alignment along $\\vec{B}$; in <em>ferromagnets</em>, exchange coupling aligns domains strongly with $\\vec{B}$.</p>
+                `
+            },
+            {
+                id: 10,
+                section: 'A',
+                marks: 3,
+                prompt: `Explain the temperature-driven phase transitions in ferromagnetic materials.`,
+                steps: [
+                    {
+                        q: `What keeps adjacent atomic magnetic dipoles aligned parallel to one another within a ferromagnetic domain below the critical temperature?`,
+                        options: [
+                            `Strong quantum-mechanical exchange coupling between neighboring electron spins.`,
+                            `Gravitational attraction between nuclei.`,
+                            `Electrostatic attraction of protons.`,
+                            `External atmospheric pressure.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `What happens to a ferromagnetic material when it is heated above its **Curie temperature ($T_c$)**?`,
+                        options: [
+                            `Thermal agitation overcomes the exchange coupling, destroying spontaneous domain alignment and causing a phase transition into a paramagnetic state.`,
+                            `It melts into a superconducting liquid.`,
+                            `Its magnetization doubles in strength.`,
+                            `It transforms into an electric insulator with permanent polarization.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Above the Curie temperature ($T > T_c$), how does the magnetic susceptibility $\\chi_m$ vary with temperature $T$ (Curie-Weiss Law)?`,
+                        options: [
+                            `$\\chi_m = \\frac{C}{T - T_c}$`,
+                            `$\\chi_m = C(T - T_c)$`,
+                            `$\\chi_m = \\frac{T_c}{C \\cdot T^2}$`,
+                            `$\\chi_m = \\text{constant}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Temperature-Driven Phase Transitions in Ferromagnets:</strong></p>
+                    <p>1. <strong>Below Curie Temperature ($T < T_c$):</strong> Strong quantum-mechanical exchange interactions lock neighboring atomic spins into parallel alignment within microscopic domains, giving rise to spontaneous magnetization even at $\\vec{H} = 0$.</p>
+                    <p>2. <strong>At the Curie Point ($T = T_c$):</strong> As temperature increases, random thermal agitation competes with the aligning exchange interaction. At a precise critical temperature called the <strong>Curie temperature ($T_c$)</strong> (e.g., $770^\\circ\\text{C}$ for Iron), thermal energy overcomes the exchange coupling, and the domains break up completely.</p>
+                    <p>3. <strong>Above Curie Temperature ($T > T_c$):</strong> The material undergoes a second-order (continuous) phase transition from a <strong>ferromagnet to a paramagnet</strong>. Its susceptibility above $T_c$ obeys the Curie-Weiss law: $\\chi_m = \\frac{C}{T - T_c}$.</p>
+                `
+            },
+
+            // ---------------- SECTION B (8 Questions, 6 Marks Each) ----------------
+            {
+                id: 11,
+                section: 'B',
+                marks: 6,
+                diagram: DIAGRAMS.q11,
+                prompt: `Show that the energy of an ideal dipole $\\vec{p}$ in an electric field $\\vec{E}$ is given by $U = -\\vec{p}\\cdot\\vec{E}$.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the electrostatic torque $\\vec{\\tau}$ experienced by an electric dipole $\\vec{p} = q\\vec{d}$ placed in a uniform electric field $\\vec{E}$ at an angle $\\theta$?`,
+                        options: [
+                            `$\\vec{\\tau} = \\vec{p} \\times \\vec{E}$ (with restoring magnitude $\\tau = pE\\sin\\theta$)`,
+                            `$\\vec{\\tau} = \\vec{p} \\cdot \\vec{E}$`,
+                            `$\\vec{\\tau} = q\\vec{E}$`,
+                            `$\\vec{\\tau} = \\frac{\\vec{p}}{E}\\cos\\theta$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: How is the potential energy $U(\\theta)$ calculated from the work done against the electric torque in rotating the dipole from a reference angle $\\theta_0$ to $\\theta$?`,
+                        options: [
+                            `$U = \\int_{\\theta_0}^{\\theta} \\tau \\, d\\theta' = \\int_{\\theta_0}^{\\theta} pE\\sin\\theta' \\, d\\theta' = pE(\\cos\\theta_0 - \\cos\\theta)$`,
+                            `$U = \\int_{\\theta_0}^{\\theta} pE\\cos\\theta' \\, d\\theta'` ,
+                            `$U = \\frac{1}{2} pE\\sin^2\\theta$`,
+                            `$U = pE\\tan\\theta$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: What standard reference angle $\\theta_0$ is chosen where potential energy $U(\\theta_0) = 0$, and what does the resulting expression reduce to?`,
+                        options: [
+                            `Choosing $\\theta_0 = \\frac{\\pi}{2}$ ($90^\\circ$) gives $\\cos(\\pi/2)=0$, so $U = -pE\\cos\\theta = -\\vec{p}\\cdot\\vec{E}$.`,
+                            `Choosing $\\theta_0 = 0^\\circ$ gives $U = pE$.`,
+                            `Choosing $\\theta_0 = \\pi$ gives $U = +\\vec{p}\\cdot\\vec{E}$.`,
+                            `Reference angle does not matter.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4 (Alternative Potential Method): If derived using electrostatic potential $V(\\vec{r})$ for charges $-q$ at $\\vec{r}$ and $+q$ at $\\vec{r}+\\vec{d}$, how does $U = q[V(\\vec{r}+\\vec{d}) - V(\\vec{r})]$ yield the same result?`,
+                        options: [
+                            `For an ideal dipole ($\\vec{d}\\to 0$), $V(\\vec{r}+\\vec{d}) - V(\\vec{r}) \\approx \\vec{d}\\cdot\\nabla V = -\\vec{d}\\cdot\\vec{E}$, so $U = -q\\vec{d}\\cdot\\vec{E} = -\\vec{p}\\cdot\\vec{E}$.`,
+                            `By setting $\\nabla V = 0$ everywhere.`,
+                            `By multiplying $V$ by $\\varepsilon_0$.`,
+                            `By integrating over a Gaussian sphere.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Derivation of $U = -\\vec{p}\\cdot\\vec{E}$:</strong></p>
+                    <p><strong>Method 1 (Work-Torque Method):</strong> Consider an electric dipole consisting of charges $-q$ and $+q$ separated by displacement $\\vec{d}$ ($\\vec{p} = q\\vec{d}$) placed in a uniform electric field $\\vec{E}$ at an angle $\\theta$.</p>
+                    <p>1. The couple of forces $+q\\vec{E}$ and $-q\\vec{E}$ produces a torque tending to align $\\vec{p}$ with $\\vec{E}$:</p>
+                    $$\\vec{\\tau} = \\vec{p} \\times \\vec{E}, \\quad \\tau = pE\\sin\\theta$$
+                    <p>2. The work done by an external agent against this torque to rotate the dipole from a reference orientation $\\theta_0$ to angle $\\theta$ is stored as potential energy $U$:</p>
+                    $$U = \\int_{\\theta_0}^{\\theta} \\tau \\, d\\theta' = \\int_{\\theta_0}^{\\theta} pE\\sin\\theta' \\, d\\theta' = pE[-\\cos\\theta']_{\\theta_0}^{\\theta} = pE(\\cos\\theta_0 - \\cos\\theta)$$
+                    <p>3. Choosing the zero of potential energy at $\\theta_0 = 90^\\circ$ ($\\vec{p} \\perp \\vec{E}$, so $\\cos 90^\\circ = 0$):</p>
+                    $$U = -pE\\cos\\theta = -\\vec{p} \\cdot \\vec{E}$$
+                    <p><strong>Method 2 (Electrostatic Potential Gradient Method):</strong> The potential energy of the pair of point charges $-q$ at $\\vec{r}$ and $+q$ at $\\vec{r}+\\vec{d}$ is:</p>
+                    $$U = -qV(\\vec{r}) + qV(\\vec{r} + \\vec{d}) = q[V(\\vec{r} + \\vec{d}) - V(\\vec{r})]$$
+                    <p>For an ideal point dipole ($d \\to 0$), using the first-order Taylor expansion $V(\\vec{r}+\\vec{d}) - V(\\vec{r}) = \\vec{d} \\cdot \\nabla V$ and $\\vec{E} = -\\nabla V$:</p>
+                    $$U = q(\\vec{d} \\cdot \\nabla V) = -q\\vec{d} \\cdot \\vec{E} = -\\vec{p} \\cdot \\vec{E}$$
+                `
+            },
+            {
+                id: 12,
+                section: 'B',
+                marks: 6,
+                diagram: DIAGRAMS.q12,
+                prompt: `Derive the expression for capacitance of a parallel plate capacitor with partially filled dielectric.`,
+                steps: [
+                    {
+                        q: `Step 1: Consider parallel plates of area $A$, charge $\\pm Q$ ($\\sigma = Q/A$), and plate separation $d$, containing a dielectric slab of thickness $t$ ($t < d$) and relative permittivity $\\varepsilon_r$. What are the electric fields $E_0$ (in the air/vacuum gap) and $E_d$ (inside the dielectric)?`,
+                        options: [
+                            `$E_0 = \\frac{\\sigma}{\\varepsilon_0}$ and $E_d = \\frac{E_0}{\\varepsilon_r} = \\frac{\\sigma}{\\varepsilon_0 \\varepsilon_r}$`,
+                            `$E_0 = \\varepsilon_0 \\sigma$ and $E_d = \\varepsilon_r E_0$`,
+                            `$E_0 = 0$ and $E_d = \\frac{\\sigma}{\\varepsilon_0}$`,
+                            `$E_0 = E_d = \\frac{\\sigma}{\\varepsilon_0}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: How is the total potential difference $V$ between the two plates obtained by integrating $\\vec{E}$ across the air region of thickness $(d-t)$ and the dielectric region of thickness $t$?`,
+                        options: [
+                            `$V = E_0(d - t) + E_d t = E_0\\left[(d - t) + \\frac{t}{\\varepsilon_r}\\right]$`,
+                            `$V = E_0 d + E_d t$`,
+                            `$V = \\frac{E_0}{d - t} + \\frac{E_d}{t}$`,
+                            `$V = E_0 t + E_d(d - t)$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: Substituting $E_0 = \\frac{Q}{\\varepsilon_0 A}$ into $V$, what is the potential difference $V$ in terms of charge $Q$?`,
+                        options: [
+                            `$V = \\frac{Q}{\\varepsilon_0 A}\\left[(d - t) + \\frac{t}{\\varepsilon_r}\\right]$`,
+                            `$V = \\frac{\\varepsilon_0 A}{Q}\\left[(d - t) + \\frac{t}{\\varepsilon_r}\\right]$`,
+                            `$V = \\frac{Q}{\\varepsilon_0 A}(d - \\varepsilon_r t)$`,
+                            `$V = \\frac{Q t}{\\varepsilon_0 \\varepsilon_r A}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: Using $C = \\frac{Q}{V}$, what is the final expression for the capacitance $C$ of the partially filled parallel plate capacitor?`,
+                        options: [
+                            `$C = \\frac{\\varepsilon_0 A}{(d - t) + \\frac{t}{\\varepsilon_r}} = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{\\varepsilon_r}\\right)}$`,
+                            `$C = \\frac{\\varepsilon_0 \\varepsilon_r A}{d + t}$`,
+                            `$C = \\frac{\\varepsilon_0 A}{d}\\left(1 - \\frac{t}{\\varepsilon_r}\\right)$`,
+                            `$C = \\frac{d - t}{\\varepsilon_0 A}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Derivation of Capacitance of a Partially Filled Parallel Plate Capacitor:</strong></p>
+                    <p>1. Consider a parallel plate capacitor with plate area $A$, separation $d$, and free charge $\\pm Q$ (free surface charge density $\\sigma = Q/A$). A dielectric slab of thickness $t$ ($t < d$) and relative permittivity $\\varepsilon_r$ is inserted between the plates.</p>
+                    <p>2. By Gauss's law $\\oint \\vec{D}\\cdot d\\vec{a} = Q_{f,\\text{enc}}$, the electric displacement everywhere between the plates is $D = \\sigma = \\frac{Q}{A}$.</p>
+                    <p>3. Therefore, the electric field in the free space region of thickness $(d-t)$ and inside the dielectric of thickness $t$ are respectively:</p>
+                    $$E_0 = \\frac{D}{\\varepsilon_0} = \\frac{Q}{\\varepsilon_0 A}, \\quad E_d = \\frac{D}{\\varepsilon_0 \\varepsilon_r} = \\frac{E_0}{\\varepsilon_r} = \\frac{Q}{\\varepsilon_0 \\varepsilon_r A}$$
+                    <p>4. The potential difference $V$ between the plates is the work done per unit charge across both regions:</p>
+                    $$V = E_0(d - t) + E_d t = \\frac{Q}{\\varepsilon_0 A}\\left[(d - t) + \\frac{t}{\\varepsilon_r}\\right]$$
+                    <p>5. From the definition of capacitance $C = \\frac{Q}{V}$, we obtain:</p>
+                    $$C = \\frac{\\varepsilon_0 A}{(d - t) + \\frac{t}{\\varepsilon_r}} = \\frac{\\varepsilon_0 A}{d - t\\left(1 - \\frac{1}{\\varepsilon_r}\\right)}$$
+                    <p><em>Special case:</em> When completely filled ($t = d$), $C = \\frac{\\varepsilon_0 \\varepsilon_r A}{d}$.</p>
+                `
+            },
+            {
+                id: 13,
+                section: 'B',
+                marks: 6,
+                diagram: DIAGRAMS.q13,
+                prompt: `Explain the hysteresis loop of ferromagnets.`,
+                steps: [
+                    {
+                        q: `Step 1: When an initially unmagnetized ferromagnet is subjected to an increasing auxiliary field $H$, why does $B$ (or $M$) eventually flatten out at **saturation**?`,
+                        options: [
+                            `All magnetic domains have aligned completely with the applied field, reaching maximum magnetization $M_{\\text{sat}}$.`,
+                            `The material reaches its melting temperature.`,
+                            `Bound currents disappear at high fields.`,
+                            `The permeability $\\mu_0$ becomes zero.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: When the external current is reduced back to zero ($H = 0$), why does $B$ not return to zero, and what is this remaining magnetic field $B_r$ called?`,
+                        options: [
+                            `Domain walls get pinned by crystal defects, leaving a permanent magnetization; this value of $B$ at $H = 0$ is called **retentivity** (or remanence).`,
+                            `It is called coercivity and equals zero.`,
+                            `It is called diamagnetic susceptibility.`,
+                            `Free currents remain trapped in the copper coil.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: What is **coercivity ($H_c$)** on the hysteresis curve?`,
+                        options: [
+                            `The magnitude of the reverse magnetic intensity ($-H_c$) required to demagnetize the material and reduce $B$ (or $M$) back to zero.`,
+                            `The maximum magnetic field at saturation.`,
+                            `The temperature at which ferromagnetism vanishes.`,
+                            `The slope at the origin.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: What is the physical significance of the **area enclosed by the hysteresis loop**?`,
+                        options: [
+                            `It represents the energy dissipated as heat per unit volume per cycle of magnetization and demagnetization.`,
+                            `It represents the total charge stored in the ferromagnet.`,
+                            `It equals the Curie temperature.`,
+                            `It is always zero for hard steel.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Explanation of the Ferromagnetic Hysteresis Loop:</strong></p>
+                    <p>When a ferromagnetic specimen is placed inside a current-carrying coil and the magnetizing field $H$ is varied cyclically, the magnetic flux density $B$ (and magnetization $M$) lags behind $H$. This lagging phenomenon is called <strong>hysteresis</strong>.</p>
+                    <p>1. <strong>Initial Magnetization & Saturation:</strong> Starting from an unmagnetized state ($H=0, B=0$), increasing $H$ causes favorably oriented domains to grow and rotate until all domains align with $H$. At this point, $M$ reaches a maximum (**saturation**).</p>
+                    <p>2. <strong>Retentivity (Remanence, $B_r$):</strong> When $H$ is reduced back to zero, irreversible domain wall movements prevent complete randomization. The material retains a residual flux density $B_r$ (and residual magnetization $M_r$), known as <strong>retentivity</strong>. The material is now a permanent magnet.</p>
+                    <p>3. <strong>Coercivity ($H_c$):</strong> To reduce $B$ back to zero, a reverse magnetizing field $H = -H_c$ must be applied. The magnitude $H_c$ is called the <strong>coercivity</strong> (or coercive force).</p>
+                    <p>4. <strong>Reverse Saturation & Loop Area:</strong> Increasing the reverse field further produces saturation in the opposite direction, and reversing $H$ again completes a closed symmetric loop. The <strong>area enclosed by the $B$-$H$ loop</strong> equals the work done (energy lost as heat) per unit volume per cycle. Soft iron has a narrow loop (low loss, used in transformers), while hard steel has a wide loop (high $B_r$ and $H_c$, used for permanent magnets).</p>
+                `
+            },
+            {
+                id: 14,
+                section: 'B',
+                marks: 6,
+                diagram: DIAGRAMS.q14,
+                prompt: `Explain the domain model of ferromagnets.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the fundamental quantum-mechanical mechanism that causes neighboring atomic magnetic moments in a ferromagnet (such as $\\text{Fe, Co, Ni}$) to align parallel to one another?`,
+                        options: [
+                            `Heisenberg **exchange interaction** (coupling) between adjacent electron spins, which lowers energy when spins are parallel.`,
+                            `Classical magnetic dipole-dipole interaction alone.`,
+                            `Electrostatic repulsion between atomic nuclei.`,
+                            `Lorentz force from Earth's magnetic field.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: If all spins within a domain are aligned, why isn't every piece of iron a strong macroscopic magnet before being magnetized?`,
+                        options: [
+                            `Because the crystal divides into billions of microscopic regions called **domains** (each containing $\\sim 10^{15}$–$10^{18}$ aligned atoms), whose magnetization vectors point in random directions and cancel macroscopically.`,
+                            `Because individual iron atoms have zero magnetic dipole moment.`,
+                            `Because free electrons cancel the nuclear spin.`,
+                            `Because room temperature is above the Curie point of iron.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: What are the two mechanisms by which domains respond when an external magnetic field $\\vec{B}_0$ is applied?`,
+                        options: [
+                            `1. **Domain wall movement**: domains aligned with $\\vec{B}_0$ grow larger at the expense of unfavorably oriented domains; 2. **Domain rotation**: at strong fields, the magnetization of entire domains rotates toward $\\vec{B}_0$.`,
+                            `Domains split into smaller sub-atomic particles and evaporate.`,
+                            `Atoms physically migrate from one end of the bar to the other.`,
+                            `Only diamagnetic opposition occurs.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: Why is the domain motion largely irreversible when the external field is turned off?`,
+                        options: [
+                            `Crystal lattice defects, impurities, and grain boundaries pin the domain walls (Bloch walls), preventing them from returning to their original random configuration.`,
+                            `The speed of light limits domain relaxation.`,
+                            `Air pressure holds the domains in place.`,
+                            `Domain motion is actually $100\\%$ reversible in all ferromagnets.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Domain Model of Ferromagnetism (Weiss Domain Theory):</strong></p>
+                    <p>1. <strong>Exchange Coupling & Spontaneous Magnetization:</strong> In ferromagnetic materials ($\\text{Fe, Co, Ni}$), a strong quantum-mechanical interaction called <em>exchange coupling</em> locks the spin magnetic moments of neighboring atoms into parallel alignment. Thus, locally, the material is spontaneously magnetized to saturation even with no external field.</p>
+                    <p>2. <strong>Formation of Domains & Bloch Walls:</strong> To minimize macroscopic magnetostatic energy, the bulk crystal subdivides into small microscopic regions ($10^{-6}$ to $10^{-4}\\text{ m}$ across) called <strong>magnetic domains</strong>. Within each domain, all atomic dipoles are aligned parallel, but in an unmagnetized sample, the magnetization vectors of different domains point in random directions, yielding zero net macroscopic moment. Adjacent domains are separated by transition layers called <em>domain walls (Bloch walls)</em>.</p>
+                    <p>3. <strong>Response to an Applied Field:</strong> When an external magnetic field $\\vec{B}_0$ is applied:</p>
+                    <p>• <em>At weak fields (Domain Growth):</em> Domain walls move so that domains magnetized parallel to $\\vec{B}_0$ expand while opposing domains shrink.</p>
+                    <p>• <em>At strong fields (Domain Rotation):</em> The magnetization direction of the remaining domains rotates into alignment with $\\vec{B}_0$, leading to magnetic saturation.</p>
+                    <p>4. <strong>Hysteresis & Pinning:</strong> Lattice imperfections and impurities impede domain wall motion, causing energy loss and permanent magnetization when $\\vec{B}_0$ is removed.</p>
+                `
+            },
+            {
+                id: 15,
+                section: 'B',
+                marks: 6,
+                prompt: `Write an expression for the field of a magnetized object. Explain the terms involved.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the magnetic vector potential $\\vec{A}(\\vec{r})$ of a single magnetic dipole $\\vec{m}$, and how is it written for a magnetized object with magnetization $\\vec{M}(\\vec{r}')$?`,
+                        options: [
+                            `$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{M}(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$, where $\\vec{\\mathscr{r}} = \\vec{r} - \\vec{r}'$`,
+                            `$\\vec{A}(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\vec{M}(\\vec{r}') \\cdot \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$`,
+                            `$\\vec{A}(\\vec{r}) = \\mu_0 \\vec{M}(\\vec{r})$`,
+                            `$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{M}(\\vec{r}')}{\\mathscr{r}^3} \\, d\\tau'$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: Using the identity $\\nabla'\\frac{1}{\\mathscr{r}} = \\frac{\\hat{\\mathscr{r}}}{\\mathscr{r}^2}$ and integration by parts, how does $\\vec{A}(\\vec{r})$ split into a volume integral and a surface integral?`,
+                        options: [
+                            `$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{J}_b(\\vec{r}')}{\\mathscr{r}} \\, d\\tau' + \\frac{\\mu_0}{4\\pi} \\oint_S \\frac{\\vec{K}_b(\\vec{r}')}{\\mathscr{r}} \\, da'$`,
+                            `$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\vec{J}_b \\, d\\tau' - \\oint_S \\vec{K}_b \\, da'$`,
+                            `$\\vec{A}(\\vec{r}) = 0$`,
+                            `$\\vec{A}(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\int \\frac{\\rho_b}{\\mathscr{r}} d\\tau'$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: What are the explicit formulas and physical meanings of $\\vec{J}_b$ and $\\vec{K}_b$?`,
+                        options: [
+                            `$\\vec{J}_b = \\nabla' \\times \\vec{M}(\\vec{r}')$ is the **bound volume current density** ($\\text{A/m}^2$), and $\\vec{K}_b = \\vec{M}(\\vec{r}') \\times \\hat{n}'$ is the **bound surface current density** ($\\text{A/m}$).`,
+                            `$\\vec{J}_b = -\\nabla \\cdot \\vec{M}$ is bound charge and $\\vec{K}_b = \\vec{M} \\cdot \\hat{n}$ is surface charge.`,
+                            `$\\vec{J}_b$ is free conduction current and $\\vec{K}_b$ is displacement current.`,
+                            `$\\vec{J}_b = \\mu_0 \\vec{M}$ and $\\vec{K}_b = \\varepsilon_0 \\vec{M}$.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: From the Biot-Savart law (or $\\vec{B} = \\nabla \\times \\vec{A}$), what is the direct expression for the magnetic field $\\vec{B}(\\vec{r})$ of the magnetized object in terms of its bound currents?`,
+                        options: [
+                            `$\\vec{B}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{J}_b(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau' + \\frac{\\mu_0}{4\\pi} \\oint_S \\frac{\\vec{K}_b(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, da'$`,
+                            `$\\vec{B}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{J}_b(\\vec{r}')}{\\mathscr{r}} \\, d\\tau'$`,
+                            `$\\vec{B}(\\vec{r}) = \\nabla \\cdot \\vec{A}$`,
+                            `$\\vec{B}(\\vec{r}) = \\mu_0 (\\vec{J}_b + \\vec{K}_b)$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Field of a Magnetized Object:</strong></p>
+                    <p>1. <strong>Vector Potential of Magnetized Matter:</strong> A magnetized object has magnetic dipole moment $\\vec{M}(\\vec{r}')\\,d\\tau'$ in each volume element $d\\tau'$. Since a single dipole $\\vec{m}$ produces vector potential $\\vec{A} = \\frac{\\mu_0}{4\\pi}\\frac{\\vec{m}\\times\\hat{\\mathscr{r}}}{\\mathscr{r}^2}$, the total vector potential is:</p>
+                    $$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{M}(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$$
+                    <p>2. <strong>Transformation to Bound Currents:</strong> Using $\\frac{\\hat{\\mathscr{r}}}{\\mathscr{r}^2} = \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right)$ and the vector identity $\\nabla' \\times \\left(\\frac{\\vec{M}}{\\mathscr{r}}\\right) = \\frac{1}{\\mathscr{r}}(\\nabla'\\times\\vec{M}) - \\vec{M}\\times\\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right)$, integration by parts yields:</p>
+                    $$\\vec{A}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{J}_b(\\vec{r}')}{\\mathscr{r}} \\, d\\tau' + \\frac{\\mu_0}{4\\pi} \\oint_S \\frac{\\vec{K}_b(\\vec{r}')}{\\mathscr{r}} \\, da'$$
+                    <p>3. <strong>Magnetic Field $\\vec{B}(\\vec{r}) = \\nabla \\times \\vec{A}(\\vec{r})$:</strong> Applying the Biot-Savart law to these bound currents gives the magnetic field:</p>
+                    $$\\vec{B}(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{J}_b(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau' + \\frac{\\mu_0}{4\\pi} \\oint_S \\frac{\\vec{K}_b(\\vec{r}') \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, da'$$
+                    <p>4. <strong>Explanation of Terms Involved:</strong></p>
+                    <p>• $\\vec{M}(\\vec{r}')$: Magnetization (magnetic dipole moment per unit volume) at source point $\\vec{r}'$.</p>
+                    <p>• $\\vec{\\mathscr{r}} = \\vec{r} - \\vec{r}'$: Separation vector from source element $\\vec{r}'$ to field point $\\vec{r}$.</p>
+                    <p>• $\\vec{J}_b = \\nabla' \\times \\vec{M}$: Bound volume current density ($\\text{A/m}^2$) inside volume $V$.</p>
+                    <p>• $\\vec{K}_b = \\vec{M} \\times \\hat{n}'$: Bound surface current density ($\\text{A/m}$) on boundary surface $S$ with outward unit normal $\\hat{n}'$.</p>
+                `
+            },
+            {
+                id: 16,
+                section: 'B',
+                marks: 6,
+                prompt: `A solid sphere of radius $2\\text{ cm}$ is uniformly polarized with $P = 1.0 \\times 10^{-6}\\text{ C/m}^2$. Find the field inside the sphere and the dipole moment of the sphere. Take $\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the standard formula for the uniform electric field $\\vec{E}$ inside a uniformly polarized sphere of polarization $\\vec{P}$?`,
+                        options: [
+                            `$\\vec{E} = -\\frac{\\vec{P}}{3\\varepsilon_0}$ (or magnitude $E = \\frac{P}{3\\varepsilon_0}$ opposing $\\vec{P}$)`,
+                            `$\\vec{E} = -\\frac{\\vec{P}}{\\varepsilon_0}$`,
+                            `$\\vec{E} = \\frac{2\\vec{P}}{3\\varepsilon_0}$`,
+                            `$\\vec{E} = 0$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: Substitute $P = 1.0 \\times 10^{-6}\\text{ C/m}^2$ and $\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$ to calculate the magnitude of the electric field $E$ inside the sphere:`,
+                        options: [
+                            `$E = \\frac{1.0 \\times 10^{-6}}{3 \\times 8.85 \\times 10^{-12}} \\approx 3.77 \\times 10^4\\text{ V/m}$`,
+                            `$E = 1.13 \\times 10^5\\text{ V/m}$`,
+                            `$E = 8.85 \\times 10^{-6}\\text{ V/m}$`,
+                            `$E = 2.65 \\times 10^{-17}\\text{ V/m}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: How is the total electric dipole moment $p$ of a uniformly polarized sphere of radius $R = 2\\text{ cm} = 0.02\\text{ m}$ related to $P$?`,
+                        options: [
+                            `$p = P \\times V = P \\left(\\frac{4}{3}\\pi R^3\\right)$`,
+                            `$p = P \\left(4\\pi R^2\\right)$`,
+                            `$p = \\frac{P}{\\frac{4}{3}\\pi R^3}$`,
+                            `$p = \\varepsilon_0 P R^3$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: Calculate the numerical value of the total dipole moment $p$ of the sphere:`,
+                        options: [
+                            `$p = (1.0 \\times 10^{-6}) \\times \\frac{4}{3}\\pi (0.02)^3 \\approx 3.35 \\times 10^{-11}\\text{ C}\\cdot\\text{m}$`,
+                            `$p = 5.03 \\times 10^{-9}\\text{ C}\\cdot\\text{m}$`,
+                            `$p = 8.00 \\times 10^{-12}\\text{ C}\\cdot\\text{m}$`,
+                            `$p = 3.35 \\times 10^{-5}\\text{ C}\\cdot\\text{m}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Given Data:</strong></p>
+                    <p>Radius of sphere $R = 2\\text{ cm} = 0.02\\text{ m}$, Polarization $P = 1.0 \\times 10^{-6}\\text{ C/m}^2$, $\\varepsilon_0 = 8.85 \\times 10^{-12}\\text{ F/m}$.</p>
+                    <p><strong>1. Electric Field Inside the Sphere:</strong></p>
+                    <p>For a uniformly polarized sphere, the internal electric field is uniform and opposes $\\vec{P}$:</p>
+                    $$\\vec{E} = -\\frac{\\vec{P}}{3\\varepsilon_0}$$
+                    <p>Magnitude of the electric field:</p>
+                    $$E = \\frac{P}{3\\varepsilon_0} = \\frac{1.0 \\times 10^{-6}}{3 \\times 8.85 \\times 10^{-12}} = \\frac{1.0 \\times 10^{-6}}{2.655 \\times 10^{-11}} = 3.766 \\times 10^4\\text{ V/m (or N/C)}$$
+                    <p><strong>2. Total Dipole Moment of the Sphere ($p$):</strong></p>
+                    <p>Since polarization $P$ is uniform, the total dipole moment is polarization times the volume of the sphere:</p>
+                    $$p = P \\cdot V = P \\left(\\frac{4}{3}\\pi R^3\\right)$$
+                    $$p = (1.0 \\times 10^{-6}\\text{ C/m}^2) \\times \\frac{4}{3} \\times \\pi \\times (0.02\\text{ m})^3 = 3.351 \\times 10^{-11}\\text{ C}\\cdot\\text{m}$$
+                `
+            },
+            {
+                id: 17,
+                section: 'B',
+                marks: 6,
+                prompt: `A uniformly magnetized sphere of radius $5\\text{ cm}$ has $M = 1.0 \\times 10^4\\text{ A/m}$. Find the magnetic field inside the sphere and its magnetic dipole moment. Take $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the formula for the uniform magnetic field $\\vec{B}$ inside a uniformly magnetized sphere of magnetization $\\vec{M}$?`,
+                        options: [
+                            `$\\vec{B} = \\frac{2}{3}\\mu_0 \\vec{M}$`,
+                            `$\\vec{B} = -\\frac{1}{3}\\mu_0 \\vec{M}$`,
+                            `$\\vec{B} = \\mu_0 \\vec{M}$`,
+                            `$\\vec{B} = \\frac{4}{3}\\pi \\mu_0 \\vec{M}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: Substitute $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$ and $M = 1.0 \\times 10^4\\text{ A/m}$ to find the magnitude of $\\vec{B}$ inside the sphere:`,
+                        options: [
+                            `$B = \\frac{2}{3} (4\\pi \\times 10^{-7}) (1.0 \\times 10^4) \\approx 8.38 \\times 10^{-3}\\text{ T}$`,
+                            `$B = 1.26 \\times 10^{-2}\\text{ T}$`,
+                            `$B = 4.19 \\times 10^{-3}\\text{ T}$`,
+                            `$B = 8.38\\text{ T}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: How is the total magnetic dipole moment $m$ of the sphere of radius $R = 5\\text{ cm} = 0.05\\text{ m}$ calculated from $M$?`,
+                        options: [
+                            `$m = M \\times V = M \\left(\\frac{4}{3}\\pi R^3\\right)$`,
+                            `$m = M \\left(4\\pi R^2\\right)$`,
+                            `$m = \\mu_0 M \\left(\\frac{4}{3}\\pi R^3\\right)$`,
+                            `$m = \\frac{M}{\\frac{4}{3}\\pi R^3}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: Compute the numerical value of the magnetic dipole moment $m$:`,
+                        options: [
+                            `$m = (1.0 \\times 10^4) \\times \\frac{4}{3}\\pi (0.05)^3 \\approx 5.24\\text{ A}\\cdot\\text{m}^2\\text{ (or J/T)}$`,
+                            `$m = 5.24 \\times 10^6\\text{ A}\\cdot\\text{m}^2$`,
+                            `$m = 0.524\\text{ A}\\cdot\\text{m}^2$`,
+                            `$m = 314.16\\text{ A}\\cdot\\text{m}^2$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Given Data:</strong></p>
+                    <p>Radius $R = 5\\text{ cm} = 0.05\\text{ m}$, Magnetization $M = 1.0 \\times 10^4\\text{ A/m}$, $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$.</p>
+                    <p><strong>1. Magnetic Field Inside the Sphere ($B$):</strong></p>
+                    <p>Inside a uniformly magnetized sphere, the magnetic field is uniform and given by:</p>
+                    $$\\vec{B} = \\frac{2}{3}\\mu_0 \\vec{M}$$
+                    $$B = \\frac{2}{3} \\times (4\\pi \\times 10^{-7}\\text{ H/m}) \\times (1.0 \\times 10^4\\text{ A/m}) = \\frac{8\\pi}{3} \\times 10^{-3}\\text{ T} \\approx 8.38 \\times 10^{-3}\\text{ T}$$
+                    <p><strong>2. Magnetic Dipole Moment of the Sphere ($m$):</strong></p>
+                    <p>Since $\\vec{M}$ is uniform, the total magnetic dipole moment is magnetization times the sphere's volume:</p>
+                    $$m = M \\cdot V = M \\left(\\frac{4}{3}\\pi R^3\\right)$$
+                    $$m = (1.0 \\times 10^4\\text{ A/m}) \\times \\frac{4}{3}\\pi (0.05\\text{ m})^3 = (1.0 \\times 10^4) \\times (5.236 \\times 10^{-4}\\text{ m}^3) = 5.24\\text{ A}\\cdot\\text{m}^2$$
+                `
+            },
+            {
+                id: 18,
+                section: 'B',
+                marks: 6,
+                prompt: `A long solenoid with $n = 1000\\text{ turns/m}$ carries a current $I = 2\\text{ A}$ and is filled with a linear material of $\\chi_m = 2 \\times 10^{-5}$. Find $\\vec{H}$, $\\vec{B}$ inside, and the bound surface current density on the surface of the material.`,
+                steps: [
+                    {
+                        q: `Step 1: What is the magnitude of the auxiliary field $\\vec{H}$ inside a long solenoid with $n = 1000\\text{ turns/m}$ carrying free current $I = 2\\text{ A}$?`,
+                        options: [
+                            `$H = nI = 1000 \\times 2 = 2000\\text{ A/m}$ along the solenoid axis`,
+                            `$H = \\mu_0 nI = 2.51 \\times 10^{-3}\\text{ A/m}$`,
+                            `$H = \\frac{n}{I} = 500\\text{ A/m}$`,
+                            `$H = \\chi_m nI = 0.04\\text{ A/m}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2: Using $\\vec{B} = \\mu_0(1 + \\chi_m)\\vec{H}$, calculate the magnetic field $B$ inside the solenoid:`,
+                        options: [
+                            `$B = (4\\pi \\times 10^{-7})(1 + 2 \\times 10^{-5})(2000) \\approx 2.5133 \\times 10^{-3}\\text{ T}$`,
+                            `$B = 5.026 \\times 10^{-8}\\text{ T}$`,
+                            `$B = 2000\\text{ T}$`,
+                            `$B = 1.256 \\times 10^{-3}\\text{ T}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3: What is the magnetization $M = \\chi_m H$ inside the linear material?`,
+                        options: [
+                            `$M = (2 \\times 10^{-5}) \\times 2000 = 0.04\\text{ A/m}$ (or $4.0 \\times 10^{-2}\\text{ A/m}$)`,
+                            `$M = 2000\\text{ A/m}$`,
+                            `$M = 2 \\times 10^{-5}\\text{ A/m}$`,
+                            `$M = 1.0 \\times 10^8\\text{ A/m}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4: Since $\\vec{M}$ is parallel to the solenoid axis ($\\hat{z}$) and the outward normal $\\hat{n}$ on the cylindrical surface is radial ($\\hat{s}$), what is the magnitude of the bound surface current density $\\vec{K}_b = \\vec{M} \\times \\hat{n}$?`,
+                        options: [
+                            `$K_b = M \\sin 90^\\circ = M = 0.04\\text{ A/m}$ circulating in the same azimuthal direction ($\\hat{\\phi}$) as the free current.`,
+                            `$K_b = 0\\text{ A/m}$ because $\\vec{M}$ is uniform.`,
+                            `$K_b = 2000\\text{ A/m}$.`,
+                            `$K_b = \\mu_0 M = 5.03 \\times 10^{-8}\\text{ A/m}$.`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Given Data:</strong></p>
+                    <p>$n = 1000\\text{ turns/m}$, $I = 2\\text{ A}$, $\\chi_m = 2 \\times 10^{-5}$, $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$.</p>
+                    <p><strong>1. Auxiliary Field $\\vec{H}$ Inside:</strong></p>
+                    <p>By Ampère's law for $\\vec{H}$ inside a long solenoid along the $z$-axis:</p>
+                    $$\\vec{H} = nI\\,\\hat{z} = (1000\\text{ m}^{-1})(2\\text{ A})\\,\\hat{z} = 2000\\,\\hat{z}\\text{ A/m}$$
+                    <p><strong>2. Magnetic Field $\\vec{B}$ Inside:</strong></p>
+                    $$\\vec{B} = \\mu_0(1 + \\chi_m)\\vec{H} = (4\\pi \\times 10^{-7}\\text{ H/m})(1 + 2 \\times 10^{-5})(2000\\text{ A/m})\\,\\hat{z}$$
+                    $$\\vec{B} = 8\\pi \\times 10^{-4} (1.00002)\\,\\hat{z} \\approx 2.5133 \\times 10^{-3}\\,\\hat{z}\\text{ T}$$
+                    <p><strong>3. Bound Surface Current Density ($\\vec{K}_b$):</strong></p>
+                    <p>First find the magnetization $\\vec{M}$ inside the core:</p>
+                    $$\\vec{M} = \\chi_m \\vec{H} = (2 \\times 10^{-5})(2000)\\,\\hat{z} = 0.04\\,\\hat{z}\\text{ A/m}$$
+                    <p>On the cylindrical surface of the material, the outward normal is $\\hat{n} = \\hat{s}$ (perpendicular to $\\hat{z}$). Therefore:</p>
+                    $$\\vec{K}_b = \\vec{M} \\times \\hat{n} = (0.04\\,\\hat{z}) \\times \\hat{s} = 0.04\\,\\hat{\\phi}\\text{ A/m}$$
+                    <p>Magnitude of bound surface current density is $K_b = 0.04\\text{ A/m}$.</p>
+                `
+            },
+
+            // ---------------- SECTION C (2 Questions, Answer Any ONE, 10 Marks) ----------------
+            {
+                id: 19,
+                section: 'C',
+                marks: 10,
+                prompt: `Explain the terms polarization and displacement. Derive the relation connecting them. Derive an expression for potential of polarized objects.`,
+                steps: [
+                    {
+                        q: `Step 1 (Definitions): Which statement accurately defines Electric Polarization ($\\vec{P}$) and Electric Displacement ($\\vec{D}$)?`,
+                        options: [
+                            `Polarization $\\vec{P}$ is the induced or aligned electric dipole moment per unit volume ($\\text{C/m}^2$), and Electric Displacement $\\vec{D}$ is the auxiliary field vector whose divergence equals the free charge density ($\\nabla\\cdot\\vec{D} = \\rho_f$, units $\\text{C/m}^2$).`,
+                            `Polarization $\\vec{P}$ is total charge and $\\vec{D}$ is magnetic flux density.`,
+                            `Both $\\vec{P}$ and $\\vec{D}$ are scalar potentials measured in Volts.`,
+                            `$\\vec{P}$ is free current density and $\\vec{D}$ is bound current density.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2 (Deriving Relation between $\\vec{P}$ and $\\vec{D}$): How do we derive $\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$ from Gauss's law?`,
+                        options: [
+                            `Total charge density is $\\rho = \\rho_b + \\rho_f = -\\nabla\\cdot\\vec{P} + \\rho_f$. Substituting into Gauss's law $\\varepsilon_0\\nabla\\cdot\\vec{E} = \\rho$ gives $\\nabla\\cdot(\\varepsilon_0\\vec{E} + \\vec{P}) = \\rho_f$, defining $\\vec{D} = \\varepsilon_0\\vec{E} + \\vec{P}$.`,
+                            `By taking the curl of $\\vec{E}$ and setting it equal to $\\vec{P}$.`,
+                            `By multiplying $\\vec{E}$ by $\\mu_0$.`,
+                            `By setting $\\rho_f = 0$ everywhere.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3 (Potential of a Polarized Object - Setup): If an object has polarization $\\vec{P}(\\vec{r}')$, what is the dipole moment $d\\vec{p}$ of an infinitesimal volume element $d\\tau'$, and what is the total electrostatic potential $V(\\vec{r})$ it produces?`,
+                        options: [
+                            `$d\\vec{p} = \\vec{P}(\\vec{r}')\\,d\\tau'$ and $V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\vec{P}(\\vec{r}') \\cdot \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$`,
+                            `$d\\vec{p} = \\frac{\\vec{P}}{d\\tau'}$ and $V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{P}{\\mathscr{r}} \\, d\\tau'$`,
+                            `$V(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\vec{P} \\times \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$`,
+                            `$V(\\vec{r}) = -\\vec{P}\\cdot\\vec{E}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4 (Mathematical Identity & Integration by Parts): Using $\\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\frac{\\hat{\\mathscr{r}}}{\\mathscr{r}^2}$ (differentiation with respect to source coordinates $\\vec{r}'$), how do we rewrite the integrand $\\vec{P}(\\vec{r}') \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right)$?`,
+                        options: [
+                            `$\\vec{P} \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\nabla' \\cdot \\left(\\frac{\\vec{P}}{\\mathscr{r}}\\right) - \\frac{1}{\\mathscr{r}}(\\nabla' \\cdot \\vec{P})$`,
+                            `$\\vec{P} \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\nabla' \\times \\left(\\frac{\\vec{P}}{\\mathscr{r}}\\right)$`,
+                            `$\\vec{P} \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = 0$`,
+                            `$\\vec{P} \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\frac{\\nabla' \\cdot \\vec{P}}{\\mathscr{r}^2}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 5 (Divergence Theorem & Bound Charges): Applying the divergence theorem to the first term gives the final expression for $V(\\vec{r})$ in terms of bound surface charge $\\sigma_b$ and bound volume charge $\\rho_b$. Which expression is correct?`,
+                        options: [
+                            `$V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\oint_S \\frac{\\sigma_b}{\\mathscr{r}} \\, da' + \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\rho_b}{\\mathscr{r}} \\, d\\tau'$, where $\\sigma_b = \\vec{P}\\cdot\\hat{n}'$ and $\\rho_b = -\\nabla'\\cdot\\vec{P}$`,
+                            `$V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\oint_S \\frac{\\rho_b}{\\mathscr{r}^2} \\, da' - \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\sigma_b}{\\mathscr{r}^2} \\, d\\tau'$`,
+                            `$V(\\vec{r}) = \\varepsilon_0(\\sigma_b + \\rho_b)$`,
+                            `$V(\\vec{r}) = \\frac{\\mu_0}{4\\pi} \\int_V \\frac{\\rho_b}{\\mathscr{r}} \\, d\\tau'$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Part 1: Polarization ($\\vec{P}$) and Electric Displacement ($\\vec{D}$) & Their Relation</strong></p>
+                    <p>• <strong>Polarization ($\\vec{P}$):</strong> When a dielectric material is placed in an electric field, its molecules acquire or align their dipole moments. The <em>electric dipole moment per unit volume</em> is called the polarization $\\vec{P}$ (SI unit: $\\text{C/m}^2$).</p>
+                    <p>• <strong>Relation & Electric Displacement ($\\vec{D}$):</strong> Inside a polarized dielectric, the total charge density $\\rho$ is the sum of the bound charge density $\\rho_b = -\\nabla \\cdot \\vec{P}$ and the free charge density $\\rho_f$:</p>
+                    $$\\rho = \\rho_b + \\rho_f = -\\nabla \\cdot \\vec{P} + \\rho_f$$
+                    <p>By Gauss's law in differential form:</p>
+                    $$\\varepsilon_0 \\nabla \\cdot \\vec{E} = \\rho = -\\nabla \\cdot \\vec{P} + \\rho_f \\implies \\nabla \\cdot (\\varepsilon_0 \\vec{E} + \\vec{P}) = \\rho_f$$
+                    <p>The quantity inside the parentheses is defined as the <strong>electric displacement vector $\\vec{D}$</strong>:</p>
+                    $$\\vec{D} = \\varepsilon_0 \\vec{E} + \\vec{P}$$
+                    <p>Thus $\\nabla \\cdot \\vec{D} = \\rho_f$.</p>
+                    <hr style="margin:14px 0; border:none; border-top:1px solid #bbf7d0;">
+                    <p><strong>Part 2: Derivation of the Potential of a Polarized Object</strong></p>
+                    <p>1. Consider a polarized object with dipole moment per unit volume $\\vec{P}(\\vec{r}')$. A small volume element $d\\tau'$ at $\\vec{r}'$ carries dipole moment $d\\vec{p} = \\vec{P}(\\vec{r}')\\,d\\tau'$.</p>
+                    <p>2. Since the potential of a single point dipole $\\vec{p}$ is $V = \\frac{1}{4\\pi\\varepsilon_0}\\frac{\\vec{p}\\cdot\\hat{\\mathscr{r}}}{\\mathscr{r}^2}$ (where $\\vec{\\mathscr{r}} = \\vec{r} - \\vec{r}'$), the total potential at field point $\\vec{r}$ is:</p>
+                    $$V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\vec{P}(\\vec{r}') \\cdot \\hat{\\mathscr{r}}}{\\mathscr{r}^2} \\, d\\tau'$$
+                    <p>3. Noting that differentiation with respect to the source coordinates gives $\\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\frac{\\hat{\\mathscr{r}}}{\\mathscr{r}^2}$, we rewrite the integrand using the product rule:</p>
+                    $$\\vec{P} \\cdot \\nabla'\\left(\\frac{1}{\\mathscr{r}}\\right) = \\nabla' \\cdot \\left(\\frac{\\vec{P}}{\\mathscr{r}}\\right) - \\frac{1}{\\mathscr{r}}(\\nabla' \\cdot \\vec{P})$$
+                    <p>4. Substituting this into $V(\\vec{r})$ and applying the Divergence Theorem to the first integral:</p>
+                    $$V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\oint_S \\frac{1}{\\mathscr{r}} \\vec{P}(\\vec{r}') \\cdot d\\vec{a}' - \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{1}{\\mathscr{r}} [\\nabla' \\cdot \\vec{P}(\\vec{r}')] \\, d\\tau'$$
+                    <p>5. Defining the <strong>bound surface charge density</strong> $\\sigma_b \\equiv \\vec{P} \\cdot \\hat{n}'$ and <strong>bound volume charge density</strong> $\\rho_b \\equiv -\\nabla' \\cdot \\vec{P}$, we obtain:</p>
+                    $$V(\\vec{r}) = \\frac{1}{4\\pi\\varepsilon_0} \\oint_S \\frac{\\sigma_b(\\vec{r}')}{\\mathscr{r}} \\, da' + \\frac{1}{4\\pi\\varepsilon_0} \\int_V \\frac{\\rho_b(\\vec{r}')}{\\mathscr{r}} \\, d\\tau'$$
+                    <p>This proves that the potential of a polarized object is identical to the potential produced by its bound volume charge $\\rho_b$ plus its bound surface charge $\\sigma_b$.</p>
+                `
+            },
+            {
+                id: 20,
+                section: 'C',
+                marks: 10,
+                diagram: DIAGRAMS.q20,
+                prompt: `Discuss in detail Ampère’s law in magnetized materials. Derive an expression for the magnetic field at any point inside and outside of a long copper rod of radius $R$ carrying a uniformly distributed current $I$.`,
+                steps: [
+                    {
+                        q: `Step 1 (Ampère's Law in Magnetized Materials): How is total current density $\\vec{J}$ separated inside magnetized matter, and how does this lead to the definition of the auxiliary field $\\vec{H}$?`,
+                        options: [
+                            `$\\vec{J} = \\vec{J}_f + \\vec{J}_b = \\vec{J}_f + \\nabla\\times\\vec{M}$. Substituting into $\\frac{1}{\\mu_0}\\nabla\\times\\vec{B} = \\vec{J}$ gives $\\nabla\\times\\left(\\frac{1}{\\mu_0}\\vec{B} - \\vec{M}\\right) = \\vec{J}_f$, defining $\\vec{H} \\equiv \\frac{1}{\\mu_0}\\vec{B} - \\vec{M}$.`,
+                            `$\\vec{J} = \\vec{J}_f - \\nabla\\cdot\\vec{M}$, leading to $\\nabla\\cdot\\vec{H} = \\vec{J}_f$.`,
+                            `$\\vec{H} = \\mu_0 \\vec{B} + \\vec{M}$.`,
+                            `$\\vec{H}$ is defined only in vacuum.`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 2 (Differential and Integral Forms for $\\vec{H}$): What are the differential and integral forms of Ampère's law in terms of $\\vec{H}$ and free current?`,
+                        options: [
+                            `Differential: $\\nabla \\times \\vec{H} = \\vec{J}_f$; Integral: $\\oint_C \\vec{H} \\cdot d\\vec{l} = I_{f,\\text{enc}}$`,
+                            `Differential: $\\nabla \\times \\vec{H} = \\mu_0 \\vec{J}_f$; Integral: $\\oint_C \\vec{H} \\cdot d\\vec{l} = \\mu_0 I_{f,\\text{enc}}$`,
+                            `Differential: $\\nabla \\cdot \\vec{H} = I_{f,\\text{enc}}$`,
+                            `Differential: $\\nabla \\times \\vec{H} = \\vec{J}_b$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 3 (Copper Rod - Inside $s < R$): A long cylindrical copper rod of radius $R$ and permeability $\\mu = \\mu_0(1+\\chi_m)$ carries a steady uniformly distributed free current $I$ ($J_f = \\frac{I}{\\pi R^2}$). For a circular Amperian loop of radius $s < R$, what is $I_{f,\\text{enc}}$ and $\\vec{H}$?`,
+                        options: [
+                            `$I_{f,\\text{enc}} = I\\frac{s^2}{R^2}$, so $H(2\\pi s) = I\\frac{s^2}{R^2} \\implies \\vec{H} = \\frac{Is}{2\\pi R^2}\\,\\hat{\\phi}$`,
+                            `$I_{f,\\text{enc}} = I$, so $\\vec{H} = \\frac{I}{2\\pi s}\\,\\hat{\\phi}$`,
+                            `$I_{f,\\text{enc}} = 0$, so $\\vec{H} = 0$`,
+                            `$\\vec{H} = \\frac{Is^2}{2\\pi R^3}\\,\\hat{z}$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 4 (Magnetic Field $\\vec{B}$ Inside the Copper Rod, $s < R$): Since copper is a linear medium ($\\vec{B} = \\mu \\vec{H} = \\mu_0(1+\\chi_m)\\vec{H}$), what is the magnetic field $\\vec{B}$ inside the rod ($s < R$)?`,
+                        options: [
+                            `$\\vec{B}_{\\text{inside}} = \\frac{\\mu_0 (1 + \\chi_m) I s}{2\\pi R^2}\\,\\hat{\\phi} = \\frac{\\mu I s}{2\\pi R^2}\\,\\hat{\\phi}$`,
+                            `$\\vec{B}_{\\text{inside}} = \\frac{\\mu_0 I}{2\\pi s}\\,\\hat{\\phi}$`,
+                            `$\\vec{B}_{\\text{inside}} = \\frac{I s}{2\\pi \\mu_0 R^2}\\,\\hat{\\phi}$`,
+                            `$\\vec{B}_{\\text{inside}} = 0$`
+                        ],
+                        ans: 0
+                    },
+                    {
+                        q: `Step 5 (Magnetic Field $\\vec{B}$ Outside the Copper Rod, $s > R$): For an Amperian loop of radius $s > R$ in the vacuum/air outside the rod ($\\chi_m = 0$), what are $\\vec{H}$ and $\\vec{B}$?`,
+                        options: [
+                            `$I_{f,\\text{enc}} = I$, so $\\vec{H}_{\\text{outside}} = \\frac{I}{2\\pi s}\\,\\hat{\\phi}$ and $\\vec{B}_{\\text{outside}} = \\mu_0 \\vec{H} = \\frac{\\mu_0 I}{2\\pi s}\\,\\hat{\\phi}$`,
+                            `$\\vec{B}_{\\text{outside}} = \\frac{\\mu_0(1+\\chi_m)I}{2\\pi s}\\,\\hat{\\phi}$`,
+                            `$\\vec{B}_{\\text{outside}} = 0$`,
+                            `$\\vec{B}_{\\text{outside}} = \\frac{\\mu_0 I s}{2\\pi R^2}\\,\\hat{\\phi}$`
+                        ],
+                        ans: 0
+                    }
+                ],
+                solution: `
+                    <p><strong>Part 1: Ampère's Law in Magnetized Materials</strong></p>
+                    <p>1. In the presence of magnetized matter, the total current density $\\vec{J}$ is the sum of the free current density $\\vec{J}_f$ (conducted by mobile charges) and the bound current density $\\vec{J}_b = \\nabla \\times \\vec{M}$ (due to magnetization):</p>
+                    $$\\vec{J} = \\vec{J}_f + \\vec{J}_b = \\vec{J}_f + \\nabla \\times \\vec{M}$$
+                    <p>2. Substituting this into Ampère's law $\\nabla \\times \\vec{B} = \\mu_0 \\vec{J}$:</p>
+                    $$\\frac{1}{\\mu_0}(\\nabla \\times \\vec{B}) = \\vec{J}_f + \\nabla \\times \\vec{M} \\implies \\nabla \\times \\left(\\frac{1}{\\mu_0}\\vec{B} - \\vec{M}\\right) = \\vec{J}_f$$
+                    <p>3. Defining the <strong>auxiliary magnetic field $\\vec{H}$</strong> as:</p>
+                    $$\\vec{H} \\equiv \\frac{1}{\\mu_0}\\vec{B} - \\vec{M} \\quad \\left(\\text{or } \\vec{B} = \\mu_0(\\vec{H} + \\vec{M})\\right)$$
+                    <p>Ampère's law in differential form becomes:</p>
+                    $$\\nabla \\times \\vec{H} = \\vec{J}_f$$
+                    <p>4. Applying Stokes' theorem over an open surface bounded by a closed Amperian loop $C$ yields the <strong>integral form</strong>:</p>
+                    $$\\oint_C \\vec{H} \\cdot d\\vec{l} = \\int_S (\\nabla \\times \\vec{H}) \\cdot d\\vec{a} = \\int_S \\vec{J}_f \\cdot d\\vec{a} = I_{f,\\text{enc}}$$
+                    <hr style="margin:14px 0; border:none; border-top:1px solid #bbf7d0;">
+                    <p><strong>Part 2: Magnetic Field Inside and Outside a Long Copper Rod of Radius $R$</strong></p>
+                    <p>Consider a long cylindrical copper rod of radius $R$ and magnetic susceptibility $\\chi_m$ (permeability $\\mu = \\mu_0(1+\\chi_m)$) carrying a steady, uniformly distributed free current $I$ along the $+z$-axis. By cylindrical symmetry, $\\vec{H}$ and $\\vec{B}$ point in the azimuthal ($\\hat{\\phi}$) direction.</p>
+                    <p><strong>Case 1: Inside the Copper Rod ($s < R$):</strong></p>
+                    <p>Draw a concentric circular Amperian loop of radius $s < R$. Since the current is uniformly distributed over cross-sectional area $\\pi R^2$, the enclosed free current is:</p>
+                    $$I_{f,\\text{enc}} = J_f (\\pi s^2) = \\left(\\frac{I}{\\pi R^2}\\right) \\pi s^2 = I \\frac{s^2}{R^2}$$
+                    <p>Applying $\\oint \\vec{H} \\cdot d\\vec{l} = I_{f,\\text{enc}}$:</p>
+                    $$H (2\\pi s) = I \\frac{s^2}{R^2} \\implies \\vec{H} = \\frac{I s}{2\\pi R^2}\\,\\hat{\\phi}$$
+                    <p>Since copper is a linear medium ($\\vec{B} = \\mu_0(1+\\chi_m)\\vec{H} = \\mu \\vec{H}$), the magnetic field inside the rod is:</p>
+                    $$\\vec{B}_{\\text{inside}}(s < R) = \\frac{\\mu_0 (1 + \\chi_m) I s}{2\\pi R^2}\\,\\hat{\\phi} = \\frac{\\mu I s}{2\\pi R^2}\\,\\hat{\\phi}$$
+                    <p><strong>Case 2: Outside the Copper Rod ($s > R$):</strong></p>
+                    <p>For a concentric circular Amperian loop of radius $s > R$ outside the wire, the entire free current $I$ is enclosed ($I_{f,\\text{enc}} = I$):</p>
+                    $$H (2\\pi s) = I \\implies \\vec{H} = \\frac{I}{2\\pi s}\\,\\hat{\\phi}$$
+                    <p>Outside the rod in free space, $\\vec{M} = 0$ ($\\chi_m = 0$), so $\\vec{B} = \\mu_0 \\vec{H}$:</p>
+                    $$\\vec{B}_{\\text{outside}}(s > R) = \\frac{\\mu_0 I}{2\\pi s}\\,\\hat{\\phi}$$
+                `
+            }
+        ];
+
+        /* =========================================================================
+           STATE MANAGEMENT & SCORING WITH CUFYUGP CEILING LOGIC
+           ========================================================================= */
+        const STORAGE_KEY = 'cufyugp_electrodynamics_scores_v1';
+        let userScores = {}; // { qId: { earned: number, max: number } }
+        let currentQuestion = null;
+
+        function loadSavedScores() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) userScores = JSON.parse(saved);
+            } catch (e) {
+                userScores = {};
+            }
+        }
+
+        function saveScores() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userScores));
+            } catch (e) {}
+            updateTopProgressBar();
+        }
+
+        function resetAllScores() {
+            if (confirm('Reset all your saved question scores and start fresh?')) {
+                userScores = {};
+                saveScores();
+                renderQuestionLists();
+                showScreen1();
+            }
+        }
+
+        function calculateExamTotals() {
+            let rawA = 0, rawB = 0, bestC = 0;
+
+            QUESTIONS.forEach(q => {
+                const entry = userScores[q.id];
+                const earned = entry ? entry.earned : 0;
+                if (q.section === 'A') rawA += earned;
+                else if (q.section === 'B') rawB += earned;
+                else if (q.section === 'C') {
+                    if (earned > bestC) bestC = earned; // Answer any ONE in Section C
+                }
+            });
+
+            const cappedA = Math.min(24, rawA);
+            const cappedB = Math.min(36, rawB);
+            const cappedC = Math.min(10, bestC);
+            const total = cappedA + cappedB + cappedC;
+
+            return {
+                cappedA: Math.round(cappedA * 10) / 10,
+                cappedB: Math.round(cappedB * 10) / 10,
+                cappedC: Math.round(cappedC * 10) / 10,
+                total: Math.round(total * 10) / 10
+            };
+        }
+
+        function updateTopProgressBar() {
+            const totals = calculateExamTotals();
+            const pct = Math.min(100, (totals.total / 70) * 100);
+
+            document.getElementById('total-score-text').textContent = `Score: ${totals.total} / 70 Marks`;
+            document.getElementById('total-progress-bar').style.width = `${pct}%`;
+
+            document.getElementById('cap-sec-a').textContent = `Section A: ${totals.cappedA} / 24 (Ceiling 24)`;
+            document.getElementById('cap-sec-b').textContent = `Section B: ${totals.cappedB} / 36 (Ceiling 36)`;
+            document.getElementById('cap-sec-c').textContent = `Section C: ${totals.cappedC} / 10 (Best 1 of 2, Max 10)`;
+        }
+
+        /* =========================================================================
+           SCREEN 1: RENDER QUESTION LISTS
+           ========================================================================= */
+        function renderQuestionLists() {
+            const containers = {
+                A: document.getElementById('list-sec-A'),
+                B: document.getElementById('list-sec-B'),
+                C: document.getElementById('list-sec-C')
+            };
+
+            containers.A.innerHTML = '';
+            containers.B.innerHTML = '';
+            containers.C.innerHTML = '';
+
+            QUESTIONS.forEach(q => {
+                const row = document.createElement('div');
+                row.className = 'question-row';
+                row.onclick = () => openQuestion(q.id);
+
+                const record = userScores[q.id];
+                let badgeHtml = '';
+                if (!record) {
+                    badgeHtml = `
+                        <span class="badge badge-unattempted">
+                            <span class="material-symbols-outlined" style="font-size:16px;">radio_button_unchecked</span>
+                            ${q.marks} Marks
+                        </span>`;
+                } else if (record.earned >= q.marks - 0.05) {
+                    badgeHtml = `
+                        <span class="badge badge-complete">
+                            <span class="material-symbols-outlined" style="font-size:16px;">check_circle</span>
+                            ${record.earned} / ${q.marks}
+                        </span>`;
+                } else {
+                    badgeHtml = `
+                        <span class="badge badge-partial">
+                            <span class="material-symbols-outlined" style="font-size:16px;">timelapse</span>
+                            ${record.earned} / ${q.marks}
+                        </span>`;
+                }
+
+                row.innerHTML = `
+                    <div class="q-left">
+                        <div class="q-num">${q.id}</div>
+                        <div class="q-text">${q.prompt}</div>
+                    </div>
+                    <div class="q-right">
+                        ${badgeHtml}
+                        <span class="material-symbols-outlined" style="color:var(--text-muted);">chevron_right</span>
+                    </div>
+                `;
+
+                containers[q.section].appendChild(row);
+            });
+
+            typesetMath();
+        }
+
+        /* =========================================================================
+           SCREEN 2: QUESTION SOLVER & SUBQUESTION STEP VALIDATOR
+           ========================================================================= */
+        // Utility to deterministically shuffle options while tracking the right answer
+        function getShuffledOptions(step, seed) {
+            const indexed = step.options.map((text, idx) => ({ text, isCorrect: idx === step.ans }));
+            // Simple deterministic shuffle based on seed so options aren't always index 0
+            for (let i = indexed.length - 1; i > 0; i--) {
+                const j = (seed * 17 + i * 31) % (i + 1);
+                const temp = indexed[i];
+                indexed[i] = indexed[j];
+                indexed[j] = temp;
+            }
+            return indexed;
+        }
+
+        function openQuestion(qId) {
+            currentQuestion = QUESTIONS.find(item => item.id === qId);
+            if (!currentQuestion) return;
+
+            document.getElementById('screen-1').classList.add('hidden');
+            document.getElementById('screen-2').classList.remove('hidden');
+
+            document.getElementById('active-q-section').textContent = `Section ${currentQuestion.section} — Question ${currentQuestion.id}`;
+            document.getElementById('active-q-marks').textContent = `Maximum Marks: ${currentQuestion.marks}`;
+            document.getElementById('active-q-text').innerHTML = currentQuestion.prompt;
+            document.getElementById('active-q-diagram').innerHTML = currentQuestion.diagram || '';
+
+            // Reset states for Screen 2
+            document.getElementById('paper-prompt-area').classList.remove('hidden');
+            document.getElementById('validation-area').classList.add('hidden');
+            document.getElementById('full-solution-box').classList.add('hidden');
+            document.getElementById('validate-btn-bar').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            typesetMath();
+        }
+
+        function revealSubquestions() {
+            document.getElementById('paper-prompt-area').classList.add('hidden');
+            const valArea = document.getElementById('validation-area');
+            valArea.classList.remove('hidden');
+
+            const container = document.getElementById('subquestions-container');
+            container.innerHTML = '';
+
+            currentQuestion.steps.forEach((step, sIdx) => {
+                const card = document.createElement('div');
+                card.className = 'subq-card';
+
+                const shuffled = getShuffledOptions(step, currentQuestion.id * 10 + sIdx);
+                // Store shuffled state on DOM dataset for grading
+                let optionsHtml = '';
+                shuffled.forEach((opt, oIdx) => {
+                    optionsHtml += `
+                        <label class="option-label" id="label-s${sIdx}-o${oIdx}" data-correct="${opt.isCorrect}">
+                            <input type="radio" name="step-${sIdx}" value="${oIdx}">
+                            <span>${opt.text}</span>
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="subq-title">
+                        <span class="step-tag">Check ${sIdx + 1} of ${currentQuestion.steps.length}</span>
+                        <span>${step.q}</span>
+                    </div>
+                    <div class="options-list">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            typesetMath();
+        }
+
+        function evaluateCurrentQuestion() {
+            if (!currentQuestion) return;
+
+            const totalSteps = currentQuestion.steps.length;
+            let correctCount = 0;
+
+            // Check all steps answered
+            for (let sIdx = 0; sIdx < totalSteps; sIdx++) {
+                const selected = document.querySelector(`input[name="step-${sIdx}"]:checked`);
+                if (!selected) {
+                    alert(`Please select an option for Check ${sIdx + 1} before evaluating.`);
+                    return;
+                }
+            }
+
+            // Grade & highlight options
+            for (let sIdx = 0; sIdx < totalSteps; sIdx++) {
+                const radios = document.querySelectorAll(`input[name="step-${sIdx}"]`);
+                radios.forEach(radio => {
+                    radio.disabled = true;
+                    const label = radio.closest('.option-label');
+                    const isRight = label.getAttribute('data-correct') === 'true';
+
+                    if (isRight) {
+                        label.classList.add('correct-choice');
+                    }
+                    if (radio.checked && isRight) {
+                        correctCount++;
+                    } else if (radio.checked && !isRight) {
+                        label.classList.add('wrong-choice');
+                    }
+                });
+            }
+
+            // Calculate proportional score rounded to 1 decimal place
+            const rawEarned = (correctCount / totalSteps) * currentQuestion.marks;
+            const roundedEarned = Math.round(rawEarned * 10) / 10;
+
+            // Save score
+            userScores[currentQuestion.id] = {
+                earned: roundedEarned,
+                max: currentQuestion.marks
+            };
+            saveScores();
+
+            // Reveal full reference solution
+            document.getElementById('validate-btn-bar').classList.add('hidden');
+            const solBox = document.getElementById('full-solution-box');
+            document.getElementById('earned-score-badge').textContent = `You Scored: ${roundedEarned} / ${currentQuestion.marks} Marks`;
+            document.getElementById('full-solution-content').innerHTML = currentQuestion.solution;
+            solBox.classList.remove('hidden');
+
+            typesetMath();
+            solBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showScreen1() {
+            document.getElementById('screen-2').classList.add('hidden');
+            document.getElementById('screen-1').classList.remove('hidden');
+            renderQuestionLists();
+            updateTopProgressBar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function typesetMath() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedScores();
+            renderQuestionLists();
+            updateTopProgressBar();
+        });
+    </script>
+</body>
+</html>
